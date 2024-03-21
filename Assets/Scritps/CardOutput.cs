@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 public class CardOutput : MonoBehaviour
 {
-    // Start is called before the first frame update
 public Card card;
 public Image picture;
 public Text nametext;
@@ -27,7 +26,7 @@ public Image effect;
         //texteffect.text = card.effect;
         effect.sprite = card.effectimage;
         //texteffect.text = card.effect;
-        
+  
     }
 
 }
