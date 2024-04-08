@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4dfd910eb9478b44b597dd1c2add0e8, type: 3}
+  m_Name: Loki
+  m_EditorClassIdentifier: 
+  picture: {fileID: 21300000, guid: 6ae4f30019f34974c89acae77a62b102, type: 3}
+  cardname: Loki
+  description: 
+  power: 6
+  faction: Nordics
+  type: Ranged
+  typeimage: {fileID: 21300000, guid: 8fe1cc6334f8e08479919dded592c1aa, type: 3}
+  rank: Gold
+  rankicon: {fileID: 21300000, guid: 3575df903fce5444aab1186bd9a8b338, type: 3}

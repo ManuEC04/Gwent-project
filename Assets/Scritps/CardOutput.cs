@@ -1,18 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 public class CardOutput : MonoBehaviour
 {
-public Card card;
+public UnitCard card;
 public Image picture;
 public Text nametext;
 public Text description;
 public Text power;
 public Image type;
-//public Text texttype;
-public Image effect;
-//public Text texteffect;
+public Image rank;
 
 
     void Start()
@@ -21,12 +20,8 @@ public Image effect;
         nametext.text = card.cardname;
         description.text = card.description;
         power.text = card.power.ToString();
-        //texttype.text = card.type;
         type.sprite = card.typeimage;
-        //texteffect.text = card.effect;
-        effect.sprite = card.effectimage;
-        //texteffect.text = card.effect;
-  
+        rank.sprite = card.rankicon;
     }
 
 }

@@ -21,12 +21,12 @@ public class Deck : MonoBehaviour
         }
         for(int i = 0 ; i<hand.Count; i++)
         {
-            hand[i].transform.position = new Vector3(120f + distance,370f , 0f);
-            distance+=70;
+            //int k = UnityEngine.Random.Range(0, 24);
+            hand[i].transform.position = new Vector3(650f + distance,40f , 0f);
+            distance+=85;
         }
         //Indica que la función se ejecutó
             FirstDrawExecuted = true;
-           
     }
 }
 }

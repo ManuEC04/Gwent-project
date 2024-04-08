@@ -1,33 +1,57 @@
 using System;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.XR;
 
-public class DragAndDrop : MonoBehaviour,  IDragHandler , IDropHandler
+public class DragAndDrop : MonoBehaviour,  IDragHandler , IDropHandler 
 {
     private RectTransform rectTransform;
-    public RectTransform row;
     private Canvas canvas;
     private Vector2 posinicial;
-
-
-    private void Start()
+    public bool isOverDropZone  = false;
+    public GameObject meleeZone;
+    private string type;
+    void Start()
     {
-       
         rectTransform = GetComponent<RectTransform>();
         
-         posinicial =  rectTransform.anchoredPosition;
+        posinicial =  rectTransform.anchoredPosition;
 
         canvas = GetComponentInParent<Canvas>();
+
+        type = gameObject.tag;
     }
 
+    //Gestiona cuando se está arrastrando el GameObject
     public void OnDrag(PointerEventData eventData)
     { 
-        rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
-    
+        if (!isOverDropZone)
+        {
+           rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+        }
+        else
+        {
+        return;
+        }
     }
+    //Gestiona cuando se suelta el GameObject
     public void OnDrop(PointerEventData eventData)
     {
-        rectTransform.anchoredPosition = posinicial;
+        if (!isOverDropZone)
+        {
+           rectTransform.anchoredPosition = posinicial;
+        }
     }
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+   if (collider.gameObject.CompareTag(type))
+   {
+   isOverDropZone = true;
+   }
+
+    }
+
 }
 
