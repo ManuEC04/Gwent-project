@@ -4,5 +4,5 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "newcard", menuName = "OtherCard")]
 public class OtherCard : Card
 {
-public Sprite effecticon;
+    public Sprite effecticon;
 }

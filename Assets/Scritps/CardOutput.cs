@@ -5,13 +5,13 @@ using UnityEngine;
 using UnityEngine.UI;
 public class CardOutput : MonoBehaviour
 {
-public UnitCard card;
-public Image picture;
-public Text nametext;
-public Text description;
-public Text power;
-public Image type;
-public Image rank;
+    public UnitCard card;
+    public Image picture;
+    public Text nametext;
+    public Text description;
+    public Text power;
+    public Image type;
+    public Image rank;
     void Start()
     {
         picture.sprite = card.picture;

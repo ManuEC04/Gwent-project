@@ -13,20 +13,23 @@ public class TurnController : MonoBehaviour
     private int count = 0;
     void Start()
     {
-    Player2.SetActive(false);
+        Player2.SetActive(false);
     }
     public void Pass()
     {
-    if(haspassed == false)
-    {   
-        GameFunctions.EndTurn(Player1,Player2,animator);
-        haspassed = true;
-    } 
-    count++;
-    if(count == 2)
-    {
-        //TerminarRonda
-    }
+        if (Deck.DrawExecuted)
+        {
+            if (haspassed == false)
+            {
+                GameFunctions.EndTurn(Player1, Player2, animator);
+                haspassed = true;
+            }
+            count++;
+            if (count == 2)
+            {
+                //TerminarRonda
+            }
+        }
     }
 
 }

@@ -11,6 +11,6 @@ public class Card : ScriptableObject
     public string faction;
     public string type;
 }
-        
+
 
 

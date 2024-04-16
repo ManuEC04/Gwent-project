@@ -6,11 +6,11 @@ using UnityEngine.UI;
 
 public class OtherCardOutput : MonoBehaviour
 {
-public OtherCard card;
-public Image picture;
-public Text nametext;
-public Text description;
-public Image effecticon;
+    public OtherCard card;
+    public Image picture;
+    public Text nametext;
+    public Text description;
+    public Image effecticon;
     void Start()
     {
         picture.sprite = card.picture;

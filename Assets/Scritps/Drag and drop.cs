@@ -18,12 +18,14 @@ public class DragAndDrop : MonoBehaviour,  IDragHandler , IDropHandler
     private GameObject Player2;
     private GameObject board;
     private Animator animator;
+    public Deck deck;
     void Awake()
     {
         Player1 = GameObject.Find("Player 1");
         Player2 = GameObject.Find("Player 2");
         board = GameObject.Find("Board");
         animator = board.GetComponent<Animator>();
+        deck = GetComponentInParent<Deck>();
     }
     void Start()
     {
@@ -39,10 +41,16 @@ public class DragAndDrop : MonoBehaviour,  IDragHandler , IDropHandler
 
     //Gestiona cuando se está arrastrando el GameObject
     public void OnDrag(PointerEventData eventData)
-    { 
+    { if(Deck.DrawExecuted == true)
+        {
         if (!isOverDropZone)
         {
         rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+        }
+        }
+        else
+        {
+        return;
         }
     }
     //Gestiona cuando se suelta el GameObject
@@ -59,6 +67,14 @@ public class DragAndDrop : MonoBehaviour,  IDragHandler , IDropHandler
         {
         isOverDropZone = true;
         playmade = true;
+        for(int i = 0 ; i < deck.hand.Count ; i++)
+        {
+            //Borrar la carta de la mano
+            if(gameObject == deck.hand[i])
+            {
+                deck.hand.RemoveAt(i);
+            }
+        }
         }
     }
     void PlayMade()

@@ -7,11 +7,12 @@ public class MenuManager : MonoBehaviour
 {
     public void GameScene(string scenename)
     {
-    SceneManager.LoadScene(scenename);
+        SceneManager.LoadScene(scenename);
     }
-    public void ExitGame(){
-    Application.Quit();
+    public void ExitGame()
+    {
+        Application.Quit();
     }
-  
+
 
 }

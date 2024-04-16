@@ -8,4 +8,9 @@ public class UnitCard : Card
     public Sprite typeimage;
     public string rank;
     public Sprite rankicon;
+    public int GetPower()
+    {
+        Debug.Log(power);
+        return power;
+    }
 }

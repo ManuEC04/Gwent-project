@@ -1,80 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8804121071123658
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4415809107268144053}
-  - component: {fileID: 5257978420158285050}
-  - component: {fileID: 2258060134748415814}
-  m_Layer: 0
-  m_Name: CardBack
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &4415809107268144053
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8804121071123658}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4784762944650668842}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1558.3451, y: 199.60423}
-  m_SizeDelta: {x: 84.0901, y: 147.9916}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &5257978420158285050
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8804121071123658}
-  m_CullTransparentMesh: 1
---- !u!114 &2258060134748415814
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8804121071123658}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 553ccca1ec4ccc34aada9a2b4f1a4c7e, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &1902161977111009452
 GameObject:
   m_ObjectHideFlags: 0
@@ -87,7 +12,7 @@ GameObject:
   - component: {fileID: 1601598537137364657}
   m_Layer: 0
   m_Name: Deck
-  m_TagString: Untagged
+  m_TagString: Deck
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1902161977111009452}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1200.5612, y: -257.26227, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -129,7 +54,7 @@ Transform:
   - {fileID: 3235376826070129569}
   - {fileID: 304104345561714160}
   - {fileID: 1028166814712321868}
-  - {fileID: 4415809107268144053}
+  - {fileID: 6917791490825536792}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1601598537137364657
@@ -145,12 +70,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deck:
-  - {fileID: 24781076696279871}
+  - {fileID: 2821412969713829912}
   - {fileID: 5287636178228871324}
-  - {fileID: 5020141469537211741}
-  - {fileID: 2866242370087868410}
+  - {fileID: 2562264445606649945}
   - {fileID: 2877880161562924616}
-  - {fileID: 5835802992805439534}
+  - {fileID: 5020141469537211741}
   - {fileID: 4714934213889380756}
   - {fileID: 2523543273919463412}
   - {fileID: 570590540327622274}
@@ -158,6 +82,7 @@ MonoBehaviour:
   - {fileID: 3601840215167729444}
   - {fileID: 24781076696279871}
   - {fileID: 3133787073838899233}
+  - {fileID: 5201333842619502707}
   - {fileID: 6818952802807489383}
   - {fileID: 2866242370087868410}
   - {fileID: 4230300864234115285}
@@ -170,7 +95,84 @@ MonoBehaviour:
   - {fileID: 995661771656100622}
   - {fileID: 553344709580382642}
   hand: []
+  horizontalpos: 642
+  verticalpos: 40
   FirstDrawExecuted: 0
+--- !u!1 &8849773051922308693
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6917791490825536792}
+  - component: {fileID: 568045755543304645}
+  - component: {fileID: 342720370659547993}
+  m_Layer: 0
+  m_Name: CardBack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &6917791490825536792
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8849773051922308693}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4784762944650668842}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 1559, y: 200.1}
+  m_SizeDelta: {x: 84.0901, y: 147.9916}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &568045755543304645
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8849773051922308693}
+  m_CullTransparentMesh: 1
+--- !u!114 &342720370659547993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8849773051922308693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 553ccca1ec4ccc34aada9a2b4f1a4c7e, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1001 &522517760562278302
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -343,7 +345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a26f6a3ddcd584db88f7c9df1f26ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOverDropZone: 0
+  playmade: 0
 --- !u!61 &3619550170626806450
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -599,7 +601,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a26f6a3ddcd584db88f7c9df1f26ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOverDropZone: 0
+  playmade: 0
 --- !u!61 &4851172812015550335
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -842,7 +844,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a26f6a3ddcd584db88f7c9df1f26ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOverDropZone: 0
+  playmade: 0
 --- !u!61 &4898508961471251406
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -927,7 +929,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a26f6a3ddcd584db88f7c9df1f26ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOverDropZone: 0
+  playmade: 0
 --- !u!114 &9138644864742348608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1144,7 +1146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a26f6a3ddcd584db88f7c9df1f26ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOverDropZone: 0
+  playmade: 0
 --- !u!61 &576785959523303694
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1400,7 +1402,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a26f6a3ddcd584db88f7c9df1f26ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOverDropZone: 0
+  playmade: 0
 --- !u!61 &2627997334219256223
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1656,7 +1658,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a26f6a3ddcd584db88f7c9df1f26ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOverDropZone: 0
+  playmade: 0
 --- !u!61 &1493958383025188163
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1921,7 +1923,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a26f6a3ddcd584db88f7c9df1f26ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOverDropZone: 0
+  playmade: 0
 --- !u!61 &413000686967005409
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2006,7 +2008,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a26f6a3ddcd584db88f7c9df1f26ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOverDropZone: 0
+  playmade: 0
 --- !u!114 &4046306830493180667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2178,12 +2180,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4201174878717518517, guid: 8e730814738fa774db2b3981bd927f03, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4169890431825609117}
-    - targetCorrespondingSourceObject: {fileID: 4201174878717518517, guid: 8e730814738fa774db2b3981bd927f03, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3967660549547214727}
-    - targetCorrespondingSourceObject: {fileID: 4201174878717518517, guid: 8e730814738fa774db2b3981bd927f03, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5145651751503048344}
   m_SourcePrefab: {fileID: 100100000, guid: 8e730814738fa774db2b3981bd927f03, type: 3}
 --- !u!224 &1420375448962354527 stripped
 RectTransform:
@@ -2207,7 +2203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a26f6a3ddcd584db88f7c9df1f26ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOverDropZone: 0
+  playmade: 0
 --- !u!50 &7137124258153297356
 Rigidbody2D:
   serializedVersion: 4
@@ -2280,74 +2276,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 520, y: 850}
   m_EdgeRadius: 0
---- !u!114 &3967660549547214727
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2821412969713829912}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 0
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5145651751503048344}
-        m_TargetAssemblyTypeName: CardInfo, Assembly-CSharp
-        m_MethodName: ShowCardInfo
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &5145651751503048344
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2821412969713829912}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c814d5c96b5347a49b8bd15fb41d150b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5821524372755542901 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5593483914630322648, guid: 8e730814738fa774db2b3981bd927f03, type: 3}
@@ -2531,7 +2459,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a26f6a3ddcd584db88f7c9df1f26ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOverDropZone: 0
+  playmade: 0
 --- !u!61 &6100921964491763001
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2779,7 +2707,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a26f6a3ddcd584db88f7c9df1f26ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOverDropZone: 0
+  playmade: 0
 --- !u!61 &7457979864102937756
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2864,7 +2792,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a26f6a3ddcd584db88f7c9df1f26ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOverDropZone: 0
+  playmade: 0
 --- !u!114 &7371996905916848765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3063,7 +2991,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a26f6a3ddcd584db88f7c9df1f26ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOverDropZone: 0
+  playmade: 0
 --- !u!61 &7822839858033653114
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3148,7 +3076,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a26f6a3ddcd584db88f7c9df1f26ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOverDropZone: 0
+  playmade: 0
 --- !u!114 &6463036725638292040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3379,7 +3307,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a26f6a3ddcd584db88f7c9df1f26ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOverDropZone: 0
+  playmade: 0
 --- !u!61 &1863293828813874756
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3464,7 +3392,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a26f6a3ddcd584db88f7c9df1f26ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOverDropZone: 0
+  playmade: 0
 --- !u!114 &1791719375654881725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3649,7 +3577,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a26f6a3ddcd584db88f7c9df1f26ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOverDropZone: 0
+  playmade: 0
 --- !u!61 &1876537315862086648
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3905,7 +3833,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a26f6a3ddcd584db88f7c9df1f26ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOverDropZone: 0
+  playmade: 0
 --- !u!50 &7024476755472300210
 Rigidbody2D:
   serializedVersion: 4
@@ -4136,7 +4064,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a26f6a3ddcd584db88f7c9df1f26ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOverDropZone: 0
+  playmade: 0
 --- !u!61 &5577239436987868416
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4221,7 +4149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a26f6a3ddcd584db88f7c9df1f26ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOverDropZone: 0
+  playmade: 0
 --- !u!114 &826097611232246466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4420,7 +4348,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a26f6a3ddcd584db88f7c9df1f26ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOverDropZone: 0
+  playmade: 0
 --- !u!61 &5735895613729136280
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4505,7 +4433,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a26f6a3ddcd584db88f7c9df1f26ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOverDropZone: 0
+  playmade: 0
 --- !u!114 &5620551181756243856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4750,7 +4678,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a26f6a3ddcd584db88f7c9df1f26ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOverDropZone: 0
+  playmade: 0
 --- !u!61 &1867859132711407440
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4965,7 +4893,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a26f6a3ddcd584db88f7c9df1f26ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOverDropZone: 0
+  playmade: 0
 --- !u!61 &8292846536243197960
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5050,7 +4978,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a26f6a3ddcd584db88f7c9df1f26ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOverDropZone: 0
+  playmade: 0
 --- !u!114 &8063580906184129962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5254,7 +5182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a26f6a3ddcd584db88f7c9df1f26ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOverDropZone: 0
+  playmade: 0
 --- !u!61 &9186774380950245622
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5339,7 +5267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a26f6a3ddcd584db88f7c9df1f26ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOverDropZone: 0
+  playmade: 0
 --- !u!114 &8139630544581544306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5584,7 +5512,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a26f6a3ddcd584db88f7c9df1f26ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOverDropZone: 0
+  playmade: 0
 --- !u!61 &5625242033535542840
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5840,7 +5768,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a26f6a3ddcd584db88f7c9df1f26ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOverDropZone: 0
+  playmade: 0
 --- !u!61 &7310816812993303183
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6082,7 +6010,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a26f6a3ddcd584db88f7c9df1f26ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOverDropZone: 0
+  playmade: 0
 --- !u!61 &4038194831492926463
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6167,7 +6095,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a26f6a3ddcd584db88f7c9df1f26ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOverDropZone: 0
+  playmade: 0
 --- !u!114 &6745141951382802505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6385,7 +6313,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a26f6a3ddcd584db88f7c9df1f26ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOverDropZone: 0
+  playmade: 0
 --- !u!61 &712801677116424582
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6641,7 +6569,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a26f6a3ddcd584db88f7c9df1f26ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOverDropZone: 0
+  playmade: 0
 --- !u!61 &8958409058270777466
 BoxCollider2D:
   m_ObjectHideFlags: 0
