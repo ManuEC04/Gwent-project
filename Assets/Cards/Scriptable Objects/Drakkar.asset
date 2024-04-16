@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4dfd910eb9478b44b597dd1c2add0e8, type: 3}
-  m_Name: Fenrir
+  m_Name: Drakkar
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 34e896d53ed23d24f965b49ab080ebd7, type: 3}
-  cardname: Fenrir
+  picture: {fileID: 21300000, guid: b7ff9a75b52ddb44f9bfeb454a1c6e59, type: 3}
+  cardname: Drakkar La Nave Vikinga
   description: 
   power: 4
   faction: Nordics
-  type: Ranged
-  typeimage: {fileID: 21300000, guid: cd9e7d99822667144ae3880441a252f1, type: 3}
+  type: Siege
+  typeimage: {fileID: 21300000, guid: e8f801d5abd8621469220a7b7a832e6d, type: 3}
   rank: Silver
-  rankicon: {fileID: 21300000, guid: bf268825fac783a499d614e733fde8d8, type: 3}
+  rankicon: {fileID: 21300000, guid: e8f801d5abd8621469220a7b7a832e6d, type: 3}

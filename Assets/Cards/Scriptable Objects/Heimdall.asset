@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4dfd910eb9478b44b597dd1c2add0e8, type: 3}
-  m_Name: Fenrir
+  m_Name: Heimdall
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 34e896d53ed23d24f965b49ab080ebd7, type: 3}
-  cardname: Fenrir
+  picture: {fileID: 21300000, guid: 0b163378b7fed574e864b80a77484bd3, type: 3}
+  cardname: Heimdall
   description: 
-  power: 4
+  power: 5
   faction: Nordics
-  type: Ranged
-  typeimage: {fileID: 21300000, guid: cd9e7d99822667144ae3880441a252f1, type: 3}
+  type: Melee
+  typeimage: {fileID: 21300000, guid: aa94d1d1591e60a40bfa255e1a7110de, type: 3}
   rank: Silver
   rankicon: {fileID: 21300000, guid: bf268825fac783a499d614e733fde8d8, type: 3}
