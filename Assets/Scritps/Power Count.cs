@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PowerCount : MonoBehaviour
+public class PowerCounter : MonoBehaviour
 {
     public MeleeRow meleerow;
     public RangedRow rangedrow;
