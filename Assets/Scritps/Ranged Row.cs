@@ -18,6 +18,7 @@ public class RangedRow : MonoBehaviour
     void Update()
     {
         GameFunctions.ChangeParent(rangedcards, rangedzone);
+        GameFunctions.ClearPositions(rangedcards , rowposition);
     }
 }
 

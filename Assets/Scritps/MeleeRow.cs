@@ -19,6 +19,7 @@ public class MeleeRow : MonoBehaviour
    void Update()
    {
       GameFunctions.ChangeParent(meleecards, meleerow);
+      GameFunctions.ClearPositions(meleecards , rowposition);
    }
 }
 

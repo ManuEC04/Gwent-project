@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d7114bda982e00469c8178a20d40b0a, type: 3}
   m_Name: Gjallarhorn
   m_EditorClassIdentifier: 
-  picture: {fileID: 0}
+  picture: {fileID: 21300000, guid: 70385808deb3a5e48b5c2375316441e5, type: 3}
   cardname: Gjallarhorn
   description: 
-  effecticon: {fileID: 21300000, guid: 9a04b8aa32f71c54baa194eaa72cf845, type: 3}
   faction: Nordics
   type: Increase
+  haseffect: 1
+  effecticon: {fileID: 21300000, guid: 9a04b8aa32f71c54baa194eaa72cf845, type: 3}

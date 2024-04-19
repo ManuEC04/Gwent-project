@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -155,13 +156,15 @@ public class GameFunctions : MonoBehaviour
         GameObject Player2powcounter = GameObject.Find("Player 2 Power Counter");
         PowerCounter powercounter1 = Player1powcounter.GetComponent<PowerCounter>();
         PowerCounter powercounter2 = Player2powcounter.GetComponent<PowerCounter>();
+        LifeCounter lifecounter1 =  GameObject.Find("Player 1 Life Counter").GetComponent<LifeCounter>();
+        LifeCounter lifecounter2 =  GameObject.Find("Player 2 Life Counter").GetComponent<LifeCounter>();
 
         if (powercounter1.powfield < powercounter2.powfield)
         {
             CheckLife();
             Debug.Log("El jugador 2 ha gando la ronda");
             ClearField();
-            LifeCounter.player1life--;
+            lifecounter1.playerlife --;
             CheckLife();
             player2turn.ismyturn = true;
             player2turn.passed = false;
@@ -175,7 +178,7 @@ public class GameFunctions : MonoBehaviour
         {
             Debug.Log("El jugador 1 ha gando la ronda");
             ClearField();
-            LifeCounter.player2life--;
+            lifecounter2.playerlife--;
             CheckLife();
             player2turn.ismyturn = false;
             player2turn.passed = false;
@@ -189,8 +192,8 @@ public class GameFunctions : MonoBehaviour
         {
             Debug.Log("La ronda ha quedado empatada");
             ClearField();
-            LifeCounter.player1life--;
-            LifeCounter.player2life--;
+            lifecounter1.playerlife--;
+            lifecounter2.playerlife--;
             CheckLife();
             player2turn.ismyturn = true;
             player2turn.passed = false;
@@ -215,6 +218,12 @@ public class GameFunctions : MonoBehaviour
         RangedRow rangedrow2 = Player2Field.GetComponentInChildren<RangedRow>();
         SiegeRow siegerow2 = Player2Field.GetComponentInChildren<SiegeRow>();
         WeatherRow weatherrow = GameObject.Find("WeatherRow").GetComponent<WeatherRow>();
+        IncreaseBox meleeincrease = GameObject.Find("Player1 MeleeIncrease").GetComponent<IncreaseBox>();
+        IncreaseBox rangedincrease = GameObject.Find("Player1 RangedIncrease").GetComponent<IncreaseBox>();
+        IncreaseBox siegeincrease = GameObject.Find("Player1 SiegeIncrease").GetComponent<IncreaseBox>();
+        IncreaseBox meleeincrease2 = GameObject.Find("Player2 MeleeIncrease").GetComponent<IncreaseBox>();
+        IncreaseBox rangedincrease2 = GameObject.Find("Player2 RangedIncrease").GetComponent<IncreaseBox>();
+        IncreaseBox siegeincrease2 = GameObject.Find("Player2 SiegeIncrease").GetComponent<IncreaseBox>();
         for (int i = 0; i < meleerow1.meleecards.Count; i++)
         {
             meleerow1.meleecards[i].transform.SetParent(player1graveyard.transform);
@@ -264,6 +273,45 @@ public class GameFunctions : MonoBehaviour
             player1graveyard.graveyard.Add(weatherrow.weathercards[i]);
         }
         weatherrow.weathercards.Clear();
+         
+         if(meleeincrease.increasebox.Count == 1)
+         {
+         meleeincrease.increasebox[0].transform.SetParent(player1graveyard.transform);
+         player1graveyard.graveyard.Add(meleeincrease.increasebox[0]);
+         meleeincrease.increasebox.RemoveAt(0);
+         }
+         if(rangedincrease.increasebox.Count == 1)
+         {
+         rangedincrease.increasebox[0].transform.SetParent(player1graveyard.transform);
+         player1graveyard.graveyard.Add(rangedincrease.increasebox[0]);
+         rangedincrease.increasebox.RemoveAt(0);
+         }
+         if(siegeincrease.increasebox.Count == 1)
+         {
+         siegeincrease.increasebox[0].transform.SetParent(player1graveyard.transform);
+         player1graveyard.graveyard.Add(siegeincrease.increasebox[0]);
+         siegeincrease.increasebox.RemoveAt(0);
+         }
+         if(meleeincrease2.increasebox.Count == 1)
+         {
+         meleeincrease2.increasebox[0].transform.SetParent(player2graveyard.transform);
+         player2graveyard.graveyard.Add(meleeincrease2.increasebox[0]);
+         meleeincrease2.increasebox.RemoveAt(0);
+         }
+         if(rangedincrease2.increasebox.Count == 1)
+         {
+         rangedincrease2.increasebox[0].transform.SetParent(player2graveyard.transform);
+         player2graveyard.graveyard.Add(rangedincrease2.increasebox[0]);
+         rangedincrease2.increasebox.RemoveAt(0);
+         }
+         if(siegeincrease2.increasebox.Count == 1)
+         {
+         siegeincrease2.increasebox[0].transform.SetParent(player2graveyard.transform);
+         player2graveyard.graveyard.Add(siegeincrease2.increasebox[0]);
+         siegeincrease2.increasebox.RemoveAt(0);
+         }
+
+
 
     }
     //Posicionar las cartas del cementerio
@@ -310,19 +358,21 @@ public class GameFunctions : MonoBehaviour
     //Chequear los LifePoints del jugador
     public static void CheckLife()
     {
-        if (LifeCounter.player1life == 0)
+        LifeCounter lifecounter1 = GameObject.Find("Player 1 Life Counter").GetComponent<LifeCounter>();
+        LifeCounter lifecounter2 = GameObject.Find("Player 2 Life Counter").GetComponent<LifeCounter>();
+        if (lifecounter1.playerlife == 0)
         {
             Debug.Log("El jugador 2 ha ganado la partida");
             SceneManager.LoadScene("Jugador2 Ha Ganado");
             return;
         }
-        else if (LifeCounter.player2life == 0)
+        else if (lifecounter2.playerlife == 0)
         {
             Debug.Log("El jugador 1 ha ganado la partida");
             SceneManager.LoadScene("Jugador1 Ha Ganado");
             return;
         }
-        else if (LifeCounter.player1life == 0 && LifeCounter.player2life == 0)
+        else if (lifecounter1.playerlife == 0 && lifecounter2.playerlife == 0)
         {
             Debug.Log("La partida ha quedado empatada");
             SceneManager.LoadScene("Empate");
@@ -340,5 +390,27 @@ public class GameFunctions : MonoBehaviour
                 hand.RemoveAt(hand.Count - 1);
             }
         }
+    }
+    //Posicionar las cartas de la casilla de Aumento
+
+    public static void IncreaseOnField(GameObject Increase, List<GameObject>box , string tag, Collider2D other)
+    {
+       if(box.Count < 1){
+       if (other.gameObject.CompareTag(tag))
+       {
+       RectTransform boxposition = Increase.GetComponent<RectTransform>();
+       box.Add(other.gameObject);
+       box[0].transform.position = boxposition.position;
+       box[0].transform.SetParent(Increase.transform);
+       }
+       }
+    }
+    //Limpiar las posiciones de la fila
+    public static void ClearPositions(List<GameObject>cards , List<GameObject>rowposition)
+    {
+         if(cards.Count == 0)
+      {
+         rowposition.Clear();
+      }
     }
 }

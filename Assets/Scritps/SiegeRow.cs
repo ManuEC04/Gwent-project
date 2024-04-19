@@ -19,5 +19,6 @@ public class SiegeRow : MonoBehaviour
     void Update()
     {
         GameFunctions.ChangeParent(siegecards, siegezone);
+        GameFunctions.ClearPositions(siegecards , rowposition);
     }
 }

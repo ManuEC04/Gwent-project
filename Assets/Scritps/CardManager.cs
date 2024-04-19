@@ -53,7 +53,7 @@ public class CardManager : MonoBehaviour, IDragHandler, IDropHandler
                 card = GetComponent<CardOutput>();
                 power = card.card.power;
             }
-            else if (gameObject.tag == "Weather" || gameObject.tag == "Increase" || gameObject.tag == "Lure")
+            else if (gameObject.tag == "Weather" || gameObject.tag == "MeleeIncrease" || gameObject.tag == "RangedIncrease" || gameObject.tag == "SiegeIncrease" || gameObject.tag == "Lure")
             {
                 othercard = GetComponent<OtherCardOutput>();
             }
@@ -68,7 +68,7 @@ public class CardManager : MonoBehaviour, IDragHandler, IDropHandler
                 card = GetComponent<CardOutput>();
                 power = card.card.power;
             }
-            else if (gameObject.tag == "Weather" || gameObject.tag == "Increase2" || gameObject.tag == "Lure2")
+            else if (gameObject.tag == "Weather" || gameObject.tag == "MeleeIncrease2" || gameObject.tag == "RangedIncrease2" || gameObject.tag == "SiegeIncrease2" || gameObject.tag == "Lure2")
             {
                 othercard = GetComponent<OtherCardOutput>();
             }
@@ -99,6 +99,8 @@ public class CardManager : MonoBehaviour, IDragHandler, IDropHandler
         else if (othercard != null)
         {
          CardEffects.CheckWeatherEffect(othercard);
+         CardEffects.CheckIncreaseEffect(othercard);
+          
         }
         
     }
@@ -144,8 +146,7 @@ public class CardManager : MonoBehaviour, IDragHandler, IDropHandler
             }
             else if(othercard !=null)
             {
-              othercard.isonthefield = true;
-              
+               othercard.isonthefield = true;
             }
             if (opponentturn.passed == false)
             {

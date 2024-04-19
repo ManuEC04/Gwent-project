@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class CardEffects : MonoBehaviour
@@ -114,14 +115,112 @@ public class CardEffects : MonoBehaviour
             }
         }
     }
-    //Chequear si en el campo hay algun clima
+    //Chequear los efectos de los incrementos
+    public static void CheckIncreaseEffect(OtherCardOutput card)
+    {
+        if (card.isonthefield == true)
+        {
+            if (card.card.cardname == "Mjolnir")
+            {
+                //Aumenta en 3 el poder de las filas de melee
+                MjolnirEffect(card);
+            }
+           else if (card.card.cardname == "Gungnir")
+            {
+                //Aumenta en 4 el poder de las filas de Rango
+                GungnirEffect(card);
+               
+            }
+            else if (card.card.cardname == "Gjallarhorn")
+            {
+                //Aumenta en 2 el poder de las filas de Asedio
+                GjallarhornEffect(card);
+            }
+        }
+    }
+    public static void MjolnirEffect(OtherCardOutput card)
+    {
+        MeleeRow meleerow = null;
+        if(card.gameObject.tag == "MeleeIncrease")
+        {
+            meleerow = GameObject.Find("Player1 Melee Row").GetComponent<MeleeRow>();
+        }
+        else if (card.gameObject.tag == "MeleeIncrease2")
+        {
+            meleerow = GameObject.Find("Player2 Melee Row").GetComponent<MeleeRow>();
+        }
+        for(int i = 0 ; i < meleerow.meleecards.Count ; i++)
+            {
+                if(!CheckRankCard(meleerow.meleecards[i]))
+                {
+                    if(meleerow.meleecards[i].GetComponent<CardOutput>().affectedbyeffect == false)
+                    {
+                    meleerow.meleecards[i].GetComponent<CardOutput>().powercard += 3;
+                    meleerow.meleecards[i].GetComponent<CardOutput>().affectedbyeffect = true;
+                    }
+                    else{continue;}
+                }
+                else{continue;}
+            }
+    }
+    //Efecto de Gungnir
+    public static void GungnirEffect(OtherCardOutput card)
+    {
+        RangedRow rangedrow = null;
+        if(card.gameObject.tag == "RangedIncrease")
+        {
+            rangedrow = GameObject.Find("Player1 Ranged Row").GetComponent<RangedRow>();
+        }
+        else if (card.gameObject.tag == "RangedIncrease2")
+        {
+            rangedrow = GameObject.Find("Player2 Ranged Row").GetComponent<RangedRow>();
+        }
+        for(int i = 0 ; i < rangedrow.rangedcards.Count ; i++)
+            {
+                if(!CheckRankCard(rangedrow.rangedcards[i]))
+                {
+                    if(rangedrow.rangedcards[i].GetComponent<CardOutput>().affectedbyeffect == false)
+                    {
+                    rangedrow.rangedcards[i].GetComponent<CardOutput>().powercard += 4;
+                    rangedrow.rangedcards[i].GetComponent<CardOutput>().affectedbyeffect = true;
+                    }
+                    else{continue;}
+                }
+                else{continue;}
+            }
+    }
+    public static void GjallarhornEffect(OtherCardOutput card)
+    {
+        SiegeRow siegerow = null;
+        if(card.gameObject.tag == "SiegeIncrease")
+        {
+            siegerow = GameObject.Find("Player1 Siege Row").GetComponent<SiegeRow>();
+        }
+        else if (card.gameObject.tag == "SiegeIncrease2")
+        {
+            siegerow = GameObject.Find("Player2 Siege Row").GetComponent<SiegeRow>();
+        }
+        for(int i = 0 ; i < siegerow.siegecards.Count ; i++)
+            {
+                if(!CheckRankCard(siegerow.siegecards[i]))
+                {
+                    if(siegerow.siegecards[i].GetComponent<CardOutput>().affectedbyeffect == false)
+                    {
+                    siegerow.siegecards[i].GetComponent<CardOutput>().powercard += 2;
+                    siegerow.siegecards[i].GetComponent<CardOutput>().affectedbyeffect = true;
+                    }
+                    else{continue;}
+                }
+                else{continue;}
+            }
+    }
 
     //Verificar si la carta es de tipo oro
     public static bool CheckRankCard(GameObject gameObject)
     {
-        UnitCard card = gameObject.GetComponent<UnitCard>();
+        CardOutput card = gameObject.GetComponent<CardOutput>();
 
-        if (card.rank == "Gold")
+        if (card.card.rank == "Gold")
         {
             return true;
         }
@@ -169,16 +268,23 @@ public class CardEffects : MonoBehaviour
         {
             if(meleerow1.meleecards[i].GetComponent<CardOutput>().affectedbyweather == false)
             {
+                if(!CheckRankCard(meleerow1.meleecards[i]))
+                {
                 meleerow1.meleecards[i].GetComponent<CardOutput>().affectedbyweather = true;
                 meleerow1.meleecards[i].GetComponent<CardOutput>().powercard -=3;
+                }
+                else{continue;}
             }
         }
         for(int i = 0 ; i < meleerow2.meleecards.Count ; i++)
         {
             if(meleerow2.meleecards[i].GetComponent<CardOutput>().affectedbyweather == false)
+            {   if(!CheckRankCard(meleerow2.meleecards[i]))
             {
                 meleerow2.meleecards[i].GetComponent<CardOutput>().affectedbyweather = true;
                 meleerow2.meleecards[i].GetComponent<CardOutput>().powercard -=3;
+                }
+                else{continue;}
             }
         }
     }
@@ -194,16 +300,22 @@ public class CardEffects : MonoBehaviour
         {
             if(siegerow1.siegecards[i].GetComponent<CardOutput>().affectedbyweather == false)
             {
+                if(!CheckRankCard(siegerow1.siegecards[i])){
                 siegerow1.siegecards[i].GetComponent<CardOutput>().affectedbyweather = true;
                 siegerow1.siegecards[i].GetComponent<CardOutput>().powercard -=4;
+                }
+                else{continue;}
             }
         }
         for(int i = 0 ; i < siegerow2.siegecards.Count ; i++)
         {
             if(siegerow2.siegecards[i].GetComponent<CardOutput>().affectedbyweather == false)
             {
+                if(!CheckRankCard(siegerow2.siegecards[i])){
                 siegerow2.siegecards[i].GetComponent<CardOutput>().affectedbyweather = true;
                 siegerow2.siegecards[i].GetComponent<CardOutput>().powercard -=4;
+                }
+                else{continue;}
             }
         }
     }
@@ -219,16 +331,22 @@ public class CardEffects : MonoBehaviour
         {
             if(rangedrow1.rangedcards[i].GetComponent<CardOutput>().affectedbyweather == false)
             {
+                if(!CheckRankCard(rangedrow1.rangedcards[i])){
                 rangedrow1.rangedcards[i].GetComponent<CardOutput>().affectedbyweather = true;
                 rangedrow1.rangedcards[i].GetComponent<CardOutput>().powercard -=2;
+                }
+                else{continue;}
             }
         }
         for(int i = 0 ; i < rangedrow2.rangedcards.Count ; i++)
         {
             if(rangedrow2.rangedcards[i].GetComponent<CardOutput>().affectedbyweather == false)
             {
+                if(!CheckRankCard(rangedrow2.rangedcards[i])){
                 rangedrow2.rangedcards[i].GetComponent<CardOutput>().affectedbyweather = true;
                 rangedrow2.rangedcards[i].GetComponent<CardOutput>().powercard -=2;
+                }
+                else{continue;}
             }
         }
     }

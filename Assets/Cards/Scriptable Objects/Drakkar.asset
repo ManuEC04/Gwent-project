@@ -18,7 +18,7 @@ MonoBehaviour:
   faction: Nordics
   type: Siege
   haseffect: 1
-  power: 8
+  power: 5
   typeimage: {fileID: 21300000, guid: e8f801d5abd8621469220a7b7a832e6d, type: 3}
   rank: Silver
   rankicon: {fileID: 21300000, guid: e8f801d5abd8621469220a7b7a832e6d, type: 3}
