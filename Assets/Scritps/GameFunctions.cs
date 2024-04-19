@@ -1,11 +1,38 @@
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 public class GameFunctions : MonoBehaviour
 {
+
+    //Barajear el mazo
+    public static void DeckRandom(List<GameObject> deck)
+    {
+        int k = 0;
+        List<int> index = new List<int>();
+        for (int i = 0; i < deck.Count; i++)
+        {
+            k = Random.Range(0, deck.Count);
+            if (!index.Contains(k))
+            {
+                index.Add(k);
+            }
+            else
+            {
+                i--;
+            }
+        }
+        for (int i = 0; i < deck.Count; i++)
+        {
+            GameObject temp = deck[i];
+            deck[i] = deck[index[i]];
+            deck[index[i]] = temp;
+        }
+    }
     //Robar 10 Cartas al inicio de la primera ronda
     public static void FirstDraw(List<GameObject> deck, List<GameObject> hand, float horizontalpos, float verticalpos, float distance)
     {
-
+        //DeckRandom(deck);
         for (int i = 0; i <= 9; i++)
         {
             int k = 0;
@@ -182,49 +209,103 @@ public class GameFunctions : MonoBehaviour
         MeleeRow meleerow1 = Player1Field.GetComponentInChildren<MeleeRow>();
         RangedRow rangedrow1 = Player1Field.GetComponentInChildren<RangedRow>();
         SiegeRow siegerow1 = Player1Field.GetComponentInChildren<SiegeRow>();
-
         GameObject Player2Field = GameObject.Find("Player2 Rows");
         Graveyard player2graveyard = GameObject.Find("Player2 Graveyard").GetComponent<Graveyard>();
         MeleeRow meleerow2 = Player2Field.GetComponentInChildren<MeleeRow>();
         RangedRow rangedrow2 = Player2Field.GetComponentInChildren<RangedRow>();
         SiegeRow siegerow2 = Player2Field.GetComponentInChildren<SiegeRow>();
-
+        WeatherRow weatherrow = GameObject.Find("WeatherRow").GetComponent<WeatherRow>();
         for (int i = 0; i < meleerow1.meleecards.Count; i++)
         {
             meleerow1.meleecards[i].transform.SetParent(player1graveyard.transform);
+            meleerow1.meleecards[i].GetComponent<CardOutput>().isonthefield = false;
             player1graveyard.graveyard.Add(meleerow1.meleecards[i]);
         }
         meleerow1.meleecards.Clear();
         for (int i = 0; i < siegerow1.siegecards.Count; i++)
         {
             siegerow1.siegecards[i].transform.SetParent(player1graveyard.transform);
+            siegerow1.siegecards[i].GetComponent<CardOutput>().isonthefield = false;
             player1graveyard.graveyard.Add(siegerow1.siegecards[i]);
         }
         siegerow1.siegecards.Clear();
         for (int i = 0; i < rangedrow1.rangedcards.Count; i++)
         {
             rangedrow1.rangedcards[i].transform.SetParent(player1graveyard.transform);
+            rangedrow1.rangedcards[i].GetComponent<CardOutput>().isonthefield = false;
             player1graveyard.graveyard.Add(rangedrow1.rangedcards[i]);
         }
         rangedrow1.rangedcards.Clear();
         for (int i = 0; i < meleerow2.meleecards.Count; i++)
         {
             meleerow2.meleecards[i].transform.SetParent(player2graveyard.transform);
+            meleerow2.meleecards[i].GetComponent<CardOutput>().isonthefield = false;
             player2graveyard.graveyard.Add(meleerow2.meleecards[i]);
         }
         meleerow2.meleecards.Clear();
         for (int i = 0; i < siegerow2.siegecards.Count; i++)
         {
             siegerow2.siegecards[i].transform.SetParent(player2graveyard.transform);
+            siegerow2.siegecards[i].GetComponent<CardOutput>().isonthefield = false;
             player2graveyard.graveyard.Add(siegerow2.siegecards[i]);
         }
         siegerow2.siegecards.Clear();
         for (int i = 0; i < rangedrow2.rangedcards.Count; i++)
         {
             rangedrow2.rangedcards[i].transform.SetParent(player2graveyard.transform);
+            rangedrow2.rangedcards[i].GetComponent<CardOutput>().isonthefield = false;
             player2graveyard.graveyard.Add(rangedrow2.rangedcards[i]);
         }
         rangedrow2.rangedcards.Clear();
+        for (int i = 0; i < weatherrow.weathercards.Count; i++)
+        {
+            weatherrow.weathercards[i].transform.SetParent(player1graveyard.transform);
+            weatherrow.weathercards[i].GetComponent<OtherCardOutput>().isonthefield = false;
+            player1graveyard.graveyard.Add(weatherrow.weathercards[i]);
+        }
+        weatherrow.weathercards.Clear();
+
+    }
+    //Posicionar las cartas del cementerio
+    public static void GraveyardPosition(RectTransform cardposition, List<GameObject> graveyard)
+    {
+        for (int i = 0; i < graveyard.Count; i++)
+        {
+            graveyard[i].transform.position = cardposition.position;
+            graveyard[i].transform.SetParent(graveyard[i].transform);
+        }
+    }
+    //Si la carta esta en el cementerio reiniciar su estado
+    public static void CheckCardsOnGraveyard()
+    {
+        Graveyard player1graveyard = GameObject.Find("Player1 Graveyard").GetComponent<Graveyard>();
+        Graveyard player2graveyard = GameObject.Find("Player2 Graveyard").GetComponent<Graveyard>();
+        for (int i = 0; i < player1graveyard.graveyard.Count; i++)
+        {
+            if (player1graveyard.graveyard[i].GetComponent<CardOutput>() != null)
+            {
+                player1graveyard.graveyard[i].GetComponent<CardOutput>().affectedbyweather = false;
+                player1graveyard.graveyard[i].GetComponent<CardOutput>().affectedbyeffect = false;
+                player1graveyard.graveyard[i].GetComponent<CardOutput>().isonthefield = false;
+            }
+            else if (player1graveyard.graveyard[i].GetComponent<OtherCardOutput>() != null)
+            {
+                player1graveyard.graveyard[i].GetComponent<OtherCardOutput>().isonthefield = false;
+            }
+        }
+        for (int i = 0; i < player2graveyard.graveyard.Count; i++)
+        {
+            if (player2graveyard.graveyard[i].GetComponent<CardOutput>() != null)
+            {
+                player2graveyard.graveyard[i].GetComponent<CardOutput>().affectedbyweather = false;
+                player2graveyard.graveyard[i].GetComponent<CardOutput>().affectedbyeffect = false;
+                player2graveyard.graveyard[i].GetComponent<CardOutput>().isonthefield = false;
+            }
+            else if (player2graveyard.graveyard[i].GetComponent<OtherCardOutput>() != null)
+            {
+                player2graveyard.graveyard[i].GetComponent<OtherCardOutput>().isonthefield = false;
+            }
+        }
     }
     //Chequear los LifePoints del jugador
     public static void CheckLife()
@@ -232,15 +313,32 @@ public class GameFunctions : MonoBehaviour
         if (LifeCounter.player1life == 0)
         {
             Debug.Log("El jugador 2 ha ganado la partida");
+            SceneManager.LoadScene("Jugador2 Ha Ganado");
             return;
         }
         else if (LifeCounter.player2life == 0)
         {
             Debug.Log("El jugador 1 ha ganado la partida");
+            SceneManager.LoadScene("Jugador1 Ha Ganado");
             return;
         }
         else if (LifeCounter.player1life == 0 && LifeCounter.player2life == 0)
+        {
             Debug.Log("La partida ha quedado empatada");
+            SceneManager.LoadScene("Empate");
             return;
+        }
+    }
+    //Asegurar que la mano siempre tenga 10 cartas
+    public static void CheckHandCount(List<GameObject> hand, Graveyard graveyard)
+    {
+        if (hand.Count > 10)
+        {
+            while (hand.Count > 10)
+            {
+                graveyard.graveyard.Add(hand[hand.Count - 1]);
+                hand.RemoveAt(hand.Count - 1);
+            }
+        }
     }
 }

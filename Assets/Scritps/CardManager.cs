@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.XR;
 
-public class DragAndDrop : MonoBehaviour, IDragHandler, IDropHandler
+public class CardManager : MonoBehaviour, IDragHandler, IDropHandler
 {
     private RectTransform rectTransform;
     private Canvas canvas;
@@ -21,7 +21,10 @@ public class DragAndDrop : MonoBehaviour, IDragHandler, IDropHandler
     private GameObject Player2Visual;
     private GameObject Player1;
     private GameObject Player2;
-    private Deck deck;
+    private CardOutput card;
+    private  OtherCardOutput othercard;
+    private int power;
+   private Deck deck;
     private Hand hand;
     private Turn playerturn;
     private Turn opponentturn;
@@ -44,15 +47,34 @@ public class DragAndDrop : MonoBehaviour, IDragHandler, IDropHandler
             hand = Player1Visual.GetComponentInChildren<Hand>();
             playerturn = Player1.GetComponentInChildren<Turn>();
             opponentturn = Player2.GetComponentInChildren<Turn>();
+
+            if (gameObject.tag == "Melee" || gameObject.tag == "Ranged" || gameObject.tag == "Siege")
+            {
+                card = GetComponent<CardOutput>();
+                power = card.card.power;
+            }
+            else if (gameObject.tag == "Weather" || gameObject.tag == "Increase" || gameObject.tag == "Lure")
+            {
+                othercard = GetComponent<OtherCardOutput>();
+            }
         }
         else if (deck.gameObject.tag == "Player2")
         {
             hand = Player2Visual.GetComponentInChildren<Hand>();
             playerturn = Player2.GetComponentInChildren<Turn>();
             opponentturn = Player1.GetComponentInChildren<Turn>();
-
+            if (gameObject.tag == "Melee2" || gameObject.tag == "Ranged2" || gameObject.tag == "Siege2")
+            {
+                card = GetComponent<CardOutput>();
+                power = card.card.power;
+            }
+            else if (gameObject.tag == "Weather" || gameObject.tag == "Increase2" || gameObject.tag == "Lure2")
+            {
+                othercard = GetComponent<OtherCardOutput>();
+            }
         }
     }
+    //Verifica si la carta esta en el campo y 
     void Update()
     {
         //Obtener la posicion de la carta despues de ser robada
@@ -61,13 +83,25 @@ public class DragAndDrop : MonoBehaviour, IDragHandler, IDropHandler
             posinicial = GetComponent<RectTransform>().anchoredPosition;
             received = true;
         }
-          if (!received2 && playerturn.StartRoundDraw == true)
+        if (!received2 && playerturn.StartRoundDraw == true)
         {
             posinicial = GetComponent<RectTransform>().anchoredPosition;
             received2 = true;
         }
+        if(card!=null)
+        {
+        if(card.affectedbyweather == false && card.affectedbyeffect == false)
+        {
+            card.powercard = power;
+        }
+        CardEffects.CheckCardEffect(card);
+        }
+        else if (othercard != null)
+        {
+         CardEffects.CheckWeatherEffect(othercard);
+        }
+        
     }
-
     //Gestiona cuando se está arrastrando el GameObject
     public void OnDrag(PointerEventData eventData)
     {
@@ -103,6 +137,15 @@ public class DragAndDrop : MonoBehaviour, IDragHandler, IDropHandler
                 {
                     hand.hand.RemoveAt(i);
                 }
+            }
+            if(card != null)
+            {
+              card.isonthefield = true;
+            }
+            else if(othercard !=null)
+            {
+              othercard.isonthefield = true;
+              
             }
             if (opponentturn.passed == false)
             {

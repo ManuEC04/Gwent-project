@@ -15,9 +15,10 @@ MonoBehaviour:
   picture: {fileID: 21300000, guid: 4ebb24dd626e0d04d9699e51e1d8684f, type: 3}
   cardname: "Jarl\xB4s Catapulta de Trueno"
   description: 
-  power: 9
   faction: Nordics
   type: Siege
+  haseffect: 1
+  power: 9
   typeimage: {fileID: 21300000, guid: e8f801d5abd8621469220a7b7a832e6d, type: 3}
   rank: Gold
   rankicon: {fileID: 21300000, guid: 3575df903fce5444aab1186bd9a8b338, type: 3}

@@ -8,7 +8,7 @@ public class RangedRow : MonoBehaviour
     private List<GameObject> rowposition = new List<GameObject>();
     public List<GameObject> rangedcards = new List<GameObject>();
     public GameObject rangedzone;
-    public string fieldtag = "Ranged";
+    public string fieldtag;
     public float horizontalpos = 842f;
     public float verticalpos = 313f;
     void OnTriggerEnter2D(Collider2D other)

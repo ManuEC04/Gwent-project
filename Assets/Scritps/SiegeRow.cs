@@ -8,7 +8,7 @@ public class SiegeRow : MonoBehaviour
     private List<GameObject> rowposition = new List<GameObject>();
     public List<GameObject> siegecards = new List<GameObject>();
     public GameObject siegezone;
-    public string fieldtag = "Siege";
+    public string fieldtag;
     public float horizontalpos = 842f;
     public float verticalpos = 174f;
 

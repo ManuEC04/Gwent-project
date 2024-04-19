@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4d7114bda982e00469c8178a20d40b0a, type: 3}
-  m_Name: Tormenta
+  m_Name: Supertormenta
   m_EditorClassIdentifier: 
   picture: {fileID: 21300000, guid: facd0e6d5dfc4924fb8957bab9d0edca, type: 3}
-  cardname: Tormenta
+  cardname: Supertormenta
   description: 
-  effecticon: {fileID: 21300000, guid: 7a78cd4c7e5df8842a38488e3cf18741, type: 3}
   faction: Neutral
   type: Weather
+  haseffect: 1
+  effecticon: {fileID: 21300000, guid: 7a78cd4c7e5df8842a38488e3cf18741, type: 3}

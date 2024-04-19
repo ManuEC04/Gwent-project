@@ -15,9 +15,10 @@ MonoBehaviour:
   picture: {fileID: 21300000, guid: 79c614d8f813ec84f8e004784bd280c4, type: 3}
   cardname: Vali
   description: 
-  power: 5
   faction: Nordics
   type: Melee
+  haseffect: 1
+  power: 5
   typeimage: {fileID: 21300000, guid: aa94d1d1591e60a40bfa255e1a7110de, type: 3}
   rank: Silver
   rankicon: {fileID: 21300000, guid: bf268825fac783a499d614e733fde8d8, type: 3}

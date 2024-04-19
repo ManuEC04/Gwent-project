@@ -15,9 +15,10 @@ MonoBehaviour:
   picture: {fileID: 21300000, guid: 6ae4f30019f34974c89acae77a62b102, type: 3}
   cardname: Loki
   description: 
-  power: 6
   faction: Nordics
   type: Ranged
+  haseffect: 1
+  power: 6
   typeimage: {fileID: 21300000, guid: 8fe1cc6334f8e08479919dded592c1aa, type: 3}
   rank: Gold
   rankicon: {fileID: 21300000, guid: 3575df903fce5444aab1186bd9a8b338, type: 3}

@@ -15,9 +15,10 @@ MonoBehaviour:
   picture: {fileID: 21300000, guid: d2817fa4e2ae49d429973a6efdb24666, type: 3}
   cardname: Freya
   description: 
-  power: 4
   faction: Nordics
   type: Ranged
+  haseffect: 1
+  power: 4
   typeimage: {fileID: 21300000, guid: cd9e7d99822667144ae3880441a252f1, type: 3}
   rank: Gold
   rankicon: {fileID: 21300000, guid: 3575df903fce5444aab1186bd9a8b338, type: 3}

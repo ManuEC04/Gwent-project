@@ -33,15 +33,15 @@ public class PowerCounter : MonoBehaviour
         int powsiege = 0;
         for (int i = 0; i < meleerow.meleecards.Count; i++)
         {
-            powmelee += meleerow.meleecards[i].GetComponent<CardOutput>().card.power;
+            powmelee += meleerow.meleecards[i].GetComponent<CardOutput>().powercard;
         }
         for (int i = 0; i < rangedrow.rangedcards.Count; i++)
         {
-            powranged += rangedrow.rangedcards[i].GetComponent<CardOutput>().card.power;
+            powranged += rangedrow.rangedcards[i].GetComponent<CardOutput>().powercard;
         }
         for (int i = 0; i < siegerow.siegecards.Count; i++)
         {
-            powsiege += siegerow.siegecards[i].GetComponent<CardOutput>().card.power;
+            powsiege += siegerow.siegecards[i].GetComponent<CardOutput>().powercard;
         }
         powfield = powmelee + powranged + powsiege;
     }

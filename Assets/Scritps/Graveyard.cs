@@ -9,4 +9,14 @@ public int horizontalpos;
 public int verticalpos;
 public List<GameObject> graveyard = new List<GameObject>();
 
+private RectTransform rectTransform;
+
+void Start(){
+    rectTransform = GetComponent<RectTransform>();
+}
+void Update()
+{
+    GameFunctions.GraveyardPosition(rectTransform , graveyard);
+    GameFunctions.CheckCardsOnGraveyard();
+}
 }

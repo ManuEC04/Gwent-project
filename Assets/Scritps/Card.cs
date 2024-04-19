@@ -10,6 +10,8 @@ public class Card : ScriptableObject
     public string description;
     public string faction;
     public string type;
+    public bool haseffect = true;
+
 }
 
 

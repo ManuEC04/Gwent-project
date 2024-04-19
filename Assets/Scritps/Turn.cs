@@ -6,6 +6,7 @@ using UnityEngine;
 public class Turn : MonoBehaviour
 {
     public bool FirstDrawExecuted = false;
+    public bool RedrawExecuted = false;
     public bool DrawExecuted = false;
     public bool StartRoundDraw = false;
     public bool ismyturn = false;
