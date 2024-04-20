@@ -18,6 +18,7 @@ public class CardOutput : MonoBehaviour
   public bool isonthehand = false;
   public bool affectedbyweather = false;
   public bool affectedbyeffect;
+  public bool buffed = false;
   void Start()
   {
     picture.sprite = card.picture;

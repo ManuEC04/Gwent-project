@@ -216,12 +216,12 @@ public class CardEffects : MonoBehaviour
                     GameFunctions.CheckTurn();
                 }
             }
-        else
-        {
-            card.effectexecuted = true;
-            card.GetComponent<CardManager>().playerturn.playmade = true;
-            GameFunctions.CheckTurn();
-        }
+            else
+            {
+                card.effectexecuted = true;
+                card.GetComponent<CardManager>().playerturn.playmade = true;
+                GameFunctions.CheckTurn();
+            }
         }
         else if (card.gameObject.tag == "Melee2")
         {
@@ -282,12 +282,12 @@ public class CardEffects : MonoBehaviour
                     GameFunctions.CheckTurn();
                 }
             }
-        else
-        {
-            card.effectexecuted = true;
-            card.GetComponent<CardManager>().playerturn.playmade = true;
-            GameFunctions.CheckTurn();
-        }
+            else
+            {
+                card.effectexecuted = true;
+                card.GetComponent<CardManager>().playerturn.playmade = true;
+                GameFunctions.CheckTurn();
+            }
         }
     }
     public static void MjolnirEffect(OtherCardOutput card)
@@ -305,10 +305,10 @@ public class CardEffects : MonoBehaviour
         {
             if (!CheckRankCard(meleerow.meleecards[i]))
             {
-                if (meleerow.meleecards[i].GetComponent<CardOutput>().affectedbyeffect == false)
+                if (meleerow.meleecards[i].GetComponent<CardOutput>().buffed == false)
                 {
                     meleerow.meleecards[i].GetComponent<CardOutput>().powercard += 3;
-                    meleerow.meleecards[i].GetComponent<CardOutput>().affectedbyeffect = true;
+                    meleerow.meleecards[i].GetComponent<CardOutput>().buffed = true;
                 }
                 else { continue; }
             }
@@ -331,10 +331,10 @@ public class CardEffects : MonoBehaviour
         {
             if (!CheckRankCard(rangedrow.rangedcards[i]))
             {
-                if (rangedrow.rangedcards[i].GetComponent<CardOutput>().affectedbyeffect == false)
+                if (rangedrow.rangedcards[i].GetComponent<CardOutput>().buffed == false)
                 {
                     rangedrow.rangedcards[i].GetComponent<CardOutput>().powercard += 4;
-                    rangedrow.rangedcards[i].GetComponent<CardOutput>().affectedbyeffect = true;
+                    rangedrow.rangedcards[i].GetComponent<CardOutput>().buffed = true;
                 }
                 else { continue; }
             }
@@ -356,10 +356,10 @@ public class CardEffects : MonoBehaviour
         {
             if (!CheckRankCard(siegerow.siegecards[i]))
             {
-                if (siegerow.siegecards[i].GetComponent<CardOutput>().affectedbyeffect == false)
+                if (siegerow.siegecards[i].GetComponent<CardOutput>().buffed == false)
                 {
                     siegerow.siegecards[i].GetComponent<CardOutput>().powercard += 2;
-                    siegerow.siegecards[i].GetComponent<CardOutput>().affectedbyeffect = true;
+                    siegerow.siegecards[i].GetComponent<CardOutput>().buffed = true;
                 }
                 else { continue; }
             }
@@ -510,11 +510,71 @@ public class CardEffects : MonoBehaviour
     public static void BaldurBlessing()
     {
         WeatherRow weatherRow = GameObject.Find("WeatherRow").GetComponent<WeatherRow>();
+        MeleeRow player1meleerow = GameObject.Find("Player1 Melee Row").GetComponent<MeleeRow>();
+        RangedRow player1rangedrow = GameObject.Find("Player1 Ranged Row").GetComponent<RangedRow>();
+        SiegeRow player1siegerow = GameObject.Find("Player1 Siege Row").GetComponent<SiegeRow>();
+        MeleeRow player2meleerow = GameObject.Find("Player2 Melee Row").GetComponent<MeleeRow>();
+        RangedRow player2rangedrow = GameObject.Find("Player2 Ranged Row").GetComponent<RangedRow>();
+        SiegeRow player2siegerow = GameObject.Find("Player2 Siege Row").GetComponent<SiegeRow>();
         Graveyard player1graveyard = GameObject.Find("Player1 Graveyard").GetComponent<Graveyard>();
         Graveyard player2graveyard = GameObject.Find("Player2 Graveyard").GetComponent<Graveyard>();
         Turn player1turn = GameObject.Find("Player1Turn").GetComponent<Turn>();
         Turn player2turn = GameObject.Find("Player2Turn").GetComponent<Turn>();
 
+        foreach (GameObject i in player1meleerow.meleecards)
+        {
+            if (i.GetComponent<CardOutput>().affectedbyweather == true)
+            {
+                i.GetComponent<CardOutput>().powercard += 3;
+                i.GetComponent<CardOutput>().affectedbyweather = false;
+            }
+            else { continue; }
+        }
+        foreach (GameObject i in player2meleerow.meleecards)
+        {
+            if (i.GetComponent<CardOutput>().affectedbyweather == true)
+            {
+                i.GetComponent<CardOutput>().powercard += 3;
+                i.GetComponent<CardOutput>().affectedbyweather = false;
+            }
+            else { continue; }
+        }
+        foreach (GameObject i in player1rangedrow.rangedcards)
+        {
+            if (i.GetComponent<CardOutput>().affectedbyweather == true)
+            {
+                i.GetComponent<CardOutput>().powercard += 2;
+                i.GetComponent<CardOutput>().affectedbyweather = false;
+            }
+            else { continue; }
+        }
+        foreach (GameObject i in player2rangedrow.rangedcards)
+        {
+            if (i.GetComponent<CardOutput>().affectedbyweather == true)
+            {
+                i.GetComponent<CardOutput>().powercard += 2;
+                i.GetComponent<CardOutput>().affectedbyweather = false;
+            }
+            else { continue; }
+        }
+        foreach (GameObject i in player1siegerow.siegecards)
+        {
+            if (i.GetComponent<CardOutput>().affectedbyweather == true)
+            {
+                i.GetComponent<CardOutput>().powercard += 4;
+                i.GetComponent<CardOutput>().affectedbyweather = false;
+            }
+            else { continue; }
+        }
+        foreach (GameObject i in player2siegerow.siegecards)
+        {
+            if (i.GetComponent<CardOutput>().affectedbyweather == true)
+            {
+                i.GetComponent<CardOutput>().powercard += 4;
+                i.GetComponent<CardOutput>().affectedbyweather = false;
+            }
+            else { continue; }
+        }
         if (!player1turn.ismyturn)
         {
             for (int i = 0; i < weatherRow.weathercards.Count; i++)

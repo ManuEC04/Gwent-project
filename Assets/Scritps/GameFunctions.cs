@@ -439,6 +439,21 @@ public class GameFunctions : MonoBehaviour
        }
        }
     }
+    // Verifica si hay climas en juego
+
+    public static bool CheckWeatherOnField()
+    {
+        WeatherRow weatherRow = GameObject.Find("WeatherRow").GetComponent<WeatherRow>();
+        for(int i = 0 ; i < weatherRow.weathercards.Count ; i++)
+        {
+            if(weatherRow.weathercards[i] != null)
+            {
+                return true;
+            }
+            else{continue;}
+        }
+        return false;
+    }
     //Limpiar las posiciones de la fila
     public static void ClearPositions(List<GameObject>cards , List<GameObject>rowposition)
     {

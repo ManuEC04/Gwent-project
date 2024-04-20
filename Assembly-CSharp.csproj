@@ -65,9 +65,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scritps\CardEffects.cs" />
+    <Compile Include="Assets\Scritps\Redraw.cs" />
     <Compile Include="Assets\Scritps\OtherCards.cs" />
     <Compile Include="Assets\Scritps\SiegeRow.cs" />
     <Compile Include="Assets\Scritps\Life Counter.cs" />
+    <Compile Include="Assets\Scritps\Lure.cs" />
     <Compile Include="Assets\Scritps\CardOutput.cs" />
     <Compile Include="Assets\Scritps\GameFunctions.cs" />
     <Compile Include="Assets\Scritps\Power Count.cs" />
