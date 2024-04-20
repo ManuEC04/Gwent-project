@@ -34,5 +34,6 @@ public class WeatherRow : MonoBehaviour
    void Update()
    {
       GameFunctions.ChangeParent(weathercards, Weatherrow);
+      GameFunctions.ClearPositions(weathercards , rowposition);
    }
 }

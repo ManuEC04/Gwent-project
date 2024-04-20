@@ -25,6 +25,7 @@ TagManager:
   - SiegeIncrease2
   - RangedIncrease
   - SiegeIncrease
+  - LureMelee
   layers:
   - Default
   - TransparentFX

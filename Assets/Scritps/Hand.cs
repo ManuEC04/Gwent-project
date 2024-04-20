@@ -7,6 +7,7 @@ using UnityEngine;
 public class Hand : MonoBehaviour
 {
     public List<GameObject> hand = new List<GameObject>();
+    bool[]handpositions = new bool[10];
     public Deck playerdeck;
     public Turn playerturn;
     public Graveyard graveyard;
@@ -14,6 +15,7 @@ public class Hand : MonoBehaviour
     public float horizontalpos;
     public float verticalpos;
     public float distance = 0;
+    public GameObject redraw;
 
     private GameObject playerhand;
 
@@ -37,12 +39,11 @@ public class Hand : MonoBehaviour
     }
     public void Draw()
     {
-        if(playerturn.FirstDrawExecuted == false)
+        if(playerturn.FirstDrawExecuted == false && !redraw.activeSelf)
         {
             GameFunctions.FirstDraw(playerdeck.deck , hand , horizontalpos , verticalpos , distance);
             GameFunctions.ChangeParent(hand,playerhand);
-            playerturn.FirstDrawExecuted = true;
-            playerturn.DrawExecuted = true;
+            redraw.SetActive(true);
             if(playerturn.RedrawExecuted == false)
             {
             playerturn.RedrawExecuted = true;
@@ -60,4 +61,5 @@ public class Hand : MonoBehaviour
     {
         GameFunctions.CheckHandCount(hand , graveyard);
     }
+    
 }

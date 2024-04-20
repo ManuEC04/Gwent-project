@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor.SearchService;
 using UnityEngine;
@@ -31,23 +32,62 @@ public class GameFunctions : MonoBehaviour
         }
     }
     //Robar 10 Cartas al inicio de la primera ronda
-    public static void FirstDraw(List<GameObject> deck, List<GameObject> hand, float horizontalpos, float verticalpos, float distance)
+    public static void FirstDraw(List<GameObject> deck, List<GameObject> hand , float horizontalpos, float verticalpos, float distance)
     {
         //DeckRandom(deck);
         for (int i = 0; i <= 9; i++)
         {
-            int k = 0;
-            hand.Add(deck[k]);
-            deck.RemoveAt(k);
+            
+            hand.Add(deck[i]);
+            deck.RemoveAt(i);
         }
-        for (int i = 0; i < hand.Count; i++)
-        {
-            //int k = UnityEngine.Random.Range(0, 24);
-            hand[i].transform.position = new Vector3(horizontalpos + distance, verticalpos, 0f);
-            distance += 85;
-        }
+        CheckHandPosition(hand , horizontalpos ,verticalpos , distance);
+    }
+    //Redraw
+    public static void Redraw(Hand hand , Deck deck , float horizontalpos , float verticalpos , float distance)
+    {
+      DeckRandom(deck.deck);
+      hand.hand[9].transform.SetParent(deck.gameObject.transform); hand.hand[9].transform.position = deck.deck[6].transform.position;
+      hand.hand[8].transform.SetParent(deck.gameObject.transform); hand.hand[8].transform.position = deck.deck[6].gameObject.transform.position;
+      deck.deck.Add(hand.hand[9]);
+      deck.deck.Add(hand.hand[8]);
+      hand.hand.RemoveAt(9);
+      hand.hand.RemoveAt(8);
+      deck.deck[0].transform.SetParent(hand.gameObject.transform);
+      deck.deck[1].transform.SetParent(hand.gameObject.transform);
+      hand.hand.Add(deck.deck[0]);
+      hand.hand.Add(deck.deck[1]);
+      deck.deck.RemoveAt(0);
+      deck.deck.RemoveAt(1);
+      CheckHandPosition(hand.hand ,horizontalpos , verticalpos , distance);
 
     }
+    //Ajustar posiciones de la mano
+    public static void CheckHandPosition(List <GameObject>hand , float horizontalpos , float verticalpos , float distance)
+    {
+         for (int i = 0; i < hand.Count; i++)
+        {
+           hand[i].transform.position = new Vector3(horizontalpos + distance, verticalpos, 0f);
+            distance += 85;
+            if(hand[i].GetComponent<CardOutput>()!=null)
+            {
+                hand[i].GetComponent<CardOutput>().isonthefield = false;
+                hand[i].GetComponent<CardOutput>().affectedbyeffect = false;
+                hand[i].GetComponent<CardOutput>().affectedbyweather = false;
+                hand[i].GetComponent<CardManager>().received = false;
+
+            }
+            else if(hand[i].GetComponent<OtherCardOutput>()!=null)
+            {
+                hand[i].GetComponent<OtherCardOutput>().isonthefield = false;
+                hand[i].GetComponent<CardManager>().received = false;
+            }
+        }
+    }
+
+
+
+
     //Robar 2 cartas al inicio e cada ronda
     public static void StartRoundDraw(List<GameObject> deck, List<GameObject> hand, float horizontalpos, float verticalpos, float distance)
     {
@@ -60,13 +100,7 @@ public class GameFunctions : MonoBehaviour
                 deck.RemoveAt(i);
             }
         }
-        for (int i = 0; i < hand.Count; i++)
-        {
-            //int k = UnityEngine.Random.Range(0, 24);
-            hand[i].transform.position = new Vector2(horizontalpos + distance, verticalpos);
-            horizontalpos -= 5;
-            distance += 85;
-        }
+        CheckHandPosition(hand , horizontalpos ,verticalpos , distance);
     }
     //Verificar que jugador esta activado 
     public static void CheckVisualTurn(GameObject Player1, GameObject Player2, GameObject Player1Visual, GameObject Player2Visual)
@@ -412,5 +446,33 @@ public class GameFunctions : MonoBehaviour
       {
          rowposition.Clear();
       }
+    }
+    public static bool CheckFieldNoNull(List<GameObject> meleerow , List<GameObject>rangedrow , List<GameObject>siegerow)
+    {
+      for(int i = 0 ; i < meleerow.Count ; i++)
+      {
+        if(meleerow[i] != null && meleerow[i].GetComponent<CardOutput>().card.type != "Lure" && meleerow[i].GetComponent<CardOutput>().card.rank != "Gold")
+        {
+            return true;
+        }
+        else{continue;}
+      }
+      for(int i = 0 ; i < rangedrow.Count ; i++)
+      {
+        if(rangedrow[i] != null && rangedrow[i].GetComponent<CardOutput>().card.rank != "Gold")
+        {
+            return true;
+        }
+        else{continue;}
+      }
+      for(int i = 0 ; i < siegerow.Count ; i++ )
+      {
+        if(siegerow[i] != null && siegerow[i].GetComponent<CardOutput>().card.rank != "Gold")
+        {
+            return true;
+        }
+        else{continue;}
+      }
+      return false;
     }
 }

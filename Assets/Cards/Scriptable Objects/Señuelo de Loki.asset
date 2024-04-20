@@ -9,12 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d7114bda982e00469c8178a20d40b0a, type: 3}
+  m_Script: {fileID: 11500000, guid: b4dfd910eb9478b44b597dd1c2add0e8, type: 3}
   m_Name: "Se\xF1uelo de Loki"
   m_EditorClassIdentifier: 
-  picture: {fileID: 0}
+  picture: {fileID: 21300000, guid: 48cced68d16afc54fa8a15a053837217, type: 3}
   cardname: "Se\xF1uelo de Loki"
   description: 
-  effecticon: {fileID: 21300000, guid: 1406f11642cb6d14299ecea10b925268, type: 3}
-  faction: Neutral
+  faction: Nordics
   type: Lure
+  haseffect: 1
+  power: 0
+  typeimage: {fileID: 21300000, guid: 1406f11642cb6d14299ecea10b925268, type: 3}
+  rank: None
+  rankicon: {fileID: 21300000, guid: bf268825fac783a499d614e733fde8d8, type: 3}

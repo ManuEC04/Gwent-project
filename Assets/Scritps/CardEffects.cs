@@ -103,7 +103,7 @@ public class CardEffects : MonoBehaviour
                 //Disminuye en 3 el poder de las filas de Melee
                 SupertormentaEffect();
             }
-           else if (card.card.cardname == "Frio de Nilfheim")
+            else if (card.card.cardname == "Frio de Nilfheim")
             {
                 //Disminuye en 2 el poder de las filas de Asedio
                 NilfheimEffect();
@@ -112,6 +112,10 @@ public class CardEffects : MonoBehaviour
             {
                 //Disminuye en 4 el poder de las filas de Rango
                 AlfheimEffect();
+            }
+            else if (card.card.cardname == "Bendición de Baldur")
+            {
+                BaldurBlessing();
             }
         }
     }
@@ -125,11 +129,11 @@ public class CardEffects : MonoBehaviour
                 //Aumenta en 3 el poder de las filas de melee
                 MjolnirEffect(card);
             }
-           else if (card.card.cardname == "Gungnir")
+            else if (card.card.cardname == "Gungnir")
             {
                 //Aumenta en 4 el poder de las filas de Rango
                 GungnirEffect(card);
-               
+
             }
             else if (card.card.cardname == "Gjallarhorn")
             {
@@ -138,10 +142,158 @@ public class CardEffects : MonoBehaviour
             }
         }
     }
+
+    //Chequear si hay un señuelo en el campo
+    public static void CheckLureEffect(CardOutput card, Lure lure)
+    {
+        if (card.isonthefield == true && card.effectexecuted == false)
+        {
+            if (card.card.type == "Lure")
+            {
+                LureEffect(card, lure);
+            }
+        }
+    }
+    //Efecto de la carta señuelo
+    public static void LureEffect(CardOutput card, Lure lure)
+    {
+        if (card.gameObject.tag == "Melee")
+        {
+            GameObject Player1Field = GameObject.Find("Player1 Rows");
+            MeleeRow meleerow1 = Player1Field.GetComponentInChildren<MeleeRow>();
+            RangedRow rangedrow1 = Player1Field.GetComponentInChildren<RangedRow>();
+            SiegeRow siegerow1 = Player1Field.GetComponentInChildren<SiegeRow>();
+            Hand player1hand = GameObject.Find("Player1Hand").GetComponent<Hand>();
+            if (GameFunctions.CheckFieldNoNull(meleerow1.meleecards, rangedrow1.rangedcards, siegerow1.siegecards) == true)
+            {
+                if (lure.lurechange != null)
+                {
+                    player1hand.hand.Add(lure.lurechange);
+                    lure.lurechange.transform.SetParent(player1hand.transform);
+
+                    if (meleerow1.meleecards.Contains(lure.lurechange))
+                    {
+                        for (int i = 0; i < meleerow1.meleecards.Count; i++)
+                        {
+
+                            if (meleerow1.meleecards[i] == lure.lurechange)
+                            {
+                                meleerow1.meleecards.RemoveAt(i);
+
+                            }
+                            else { continue; }
+                        }
+                    }
+                    else if (rangedrow1.rangedcards.Contains(lure.lurechange))
+                    {
+                        for (int i = 0; i < rangedrow1.rangedcards.Count; i++)
+                        {
+                            if (rangedrow1.rangedcards[i] == lure.lurechange)
+                            {
+                                rangedrow1.rangedcards.RemoveAt(i);
+
+                            }
+                            else { continue; }
+                        }
+                    }
+                    else if (siegerow1.siegecards.Contains(lure.lurechange))
+                    {
+                        for (int i = 0; i < siegerow1.siegecards.Count; i++)
+                        {
+                            if (siegerow1.siegecards[i] == lure.lurechange)
+                            {
+                                siegerow1.siegecards.RemoveAt(i);
+
+                            }
+                            else { continue; }
+                        }
+                    }
+                    GameFunctions.CheckHandPosition(player1hand.hand, player1hand.horizontalpos, player1hand.verticalpos, player1hand.distance);
+                    card.effectexecuted = true;
+                    lure.lurechange.GetComponent<CardManager>().isOverDropZone = false;
+                    lure.lurechange = null;
+                    card.GetComponent<CardManager>().playerturn.playmade = true;
+                    GameFunctions.CheckTurn();
+                }
+            }
+        else
+        {
+            card.effectexecuted = true;
+            card.GetComponent<CardManager>().playerturn.playmade = true;
+            GameFunctions.CheckTurn();
+        }
+        }
+        else if (card.gameObject.tag == "Melee2")
+        {
+            GameObject Player2Field = GameObject.Find("Player2 Rows");
+            MeleeRow meleerow1 = Player2Field.GetComponentInChildren<MeleeRow>();
+            RangedRow rangedrow1 = Player2Field.GetComponentInChildren<RangedRow>();
+            SiegeRow siegerow1 = Player2Field.GetComponentInChildren<SiegeRow>();
+            Hand player1hand = GameObject.Find("Player2Hand").GetComponent<Hand>();
+            if (GameFunctions.CheckFieldNoNull(meleerow1.meleecards, rangedrow1.rangedcards, siegerow1.siegecards) == true)
+            {
+                if (lure.lurechange != null)
+                {
+                    player1hand.hand.Add(lure.lurechange);
+                    lure.lurechange.transform.SetParent(player1hand.transform);
+
+                    if (meleerow1.meleecards.Contains(lure.lurechange))
+                    {
+                        for (int i = 0; i < meleerow1.meleecards.Count; i++)
+                        {
+
+                            if (meleerow1.meleecards[i] == lure.lurechange)
+                            {
+                                meleerow1.meleecards.RemoveAt(i);
+
+                            }
+                            else { continue; }
+                        }
+                    }
+                    else if (rangedrow1.rangedcards.Contains(lure.lurechange))
+                    {
+                        for (int i = 0; i < rangedrow1.rangedcards.Count; i++)
+                        {
+                            if (rangedrow1.rangedcards[i] == lure.lurechange)
+                            {
+                                rangedrow1.rangedcards.RemoveAt(i);
+
+                            }
+                            else { continue; }
+                        }
+                    }
+                    else if (siegerow1.siegecards.Contains(lure.lurechange))
+                    {
+                        for (int i = 0; i < siegerow1.siegecards.Count; i++)
+                        {
+                            if (siegerow1.siegecards[i] == lure.lurechange)
+                            {
+                                siegerow1.siegecards.RemoveAt(i);
+
+                            }
+                            else { continue; }
+                        }
+                    }
+                    GameFunctions.CheckHandPosition(player1hand.hand, player1hand.horizontalpos, player1hand.verticalpos, player1hand.distance);
+                    card.effectexecuted = true;
+                    lure.lurechange.GetComponent<CardManager>().isOverDropZone = false;
+                    lure.lurechange = null;
+                    card.GetComponent<CardManager>().playerturn.playmade = true;
+                    GameFunctions.CheckTurn();
+                }
+            }
+        else
+        {
+            card.effectexecuted = true;
+            card.GetComponent<CardManager>().playerturn.playmade = true;
+            GameFunctions.CheckTurn();
+        }
+        }
+    }
     public static void MjolnirEffect(OtherCardOutput card)
     {
         MeleeRow meleerow = null;
-        if(card.gameObject.tag == "MeleeIncrease")
+        if (card.gameObject.tag == "MeleeIncrease")
         {
             meleerow = GameObject.Find("Player1 Melee Row").GetComponent<MeleeRow>();
         }
@@ -149,25 +301,25 @@ public class CardEffects : MonoBehaviour
         {
             meleerow = GameObject.Find("Player2 Melee Row").GetComponent<MeleeRow>();
         }
-        for(int i = 0 ; i < meleerow.meleecards.Count ; i++)
+        for (int i = 0; i < meleerow.meleecards.Count; i++)
+        {
+            if (!CheckRankCard(meleerow.meleecards[i]))
             {
-                if(!CheckRankCard(meleerow.meleecards[i]))
+                if (meleerow.meleecards[i].GetComponent<CardOutput>().affectedbyeffect == false)
                 {
-                    if(meleerow.meleecards[i].GetComponent<CardOutput>().affectedbyeffect == false)
-                    {
                     meleerow.meleecards[i].GetComponent<CardOutput>().powercard += 3;
                     meleerow.meleecards[i].GetComponent<CardOutput>().affectedbyeffect = true;
-                    }
-                    else{continue;}
                 }
-                else{continue;}
+                else { continue; }
             }
+            else { continue; }
+        }
     }
     //Efecto de Gungnir
     public static void GungnirEffect(OtherCardOutput card)
     {
         RangedRow rangedrow = null;
-        if(card.gameObject.tag == "RangedIncrease")
+        if (card.gameObject.tag == "RangedIncrease")
         {
             rangedrow = GameObject.Find("Player1 Ranged Row").GetComponent<RangedRow>();
         }
@@ -175,24 +327,24 @@ public class CardEffects : MonoBehaviour
         {
             rangedrow = GameObject.Find("Player2 Ranged Row").GetComponent<RangedRow>();
         }
-        for(int i = 0 ; i < rangedrow.rangedcards.Count ; i++)
+        for (int i = 0; i < rangedrow.rangedcards.Count; i++)
+        {
+            if (!CheckRankCard(rangedrow.rangedcards[i]))
             {
-                if(!CheckRankCard(rangedrow.rangedcards[i]))
+                if (rangedrow.rangedcards[i].GetComponent<CardOutput>().affectedbyeffect == false)
                 {
-                    if(rangedrow.rangedcards[i].GetComponent<CardOutput>().affectedbyeffect == false)
-                    {
                     rangedrow.rangedcards[i].GetComponent<CardOutput>().powercard += 4;
                     rangedrow.rangedcards[i].GetComponent<CardOutput>().affectedbyeffect = true;
-                    }
-                    else{continue;}
                 }
-                else{continue;}
+                else { continue; }
             }
+            else { continue; }
+        }
     }
     public static void GjallarhornEffect(OtherCardOutput card)
     {
         SiegeRow siegerow = null;
-        if(card.gameObject.tag == "SiegeIncrease")
+        if (card.gameObject.tag == "SiegeIncrease")
         {
             siegerow = GameObject.Find("Player1 Siege Row").GetComponent<SiegeRow>();
         }
@@ -200,19 +352,19 @@ public class CardEffects : MonoBehaviour
         {
             siegerow = GameObject.Find("Player2 Siege Row").GetComponent<SiegeRow>();
         }
-        for(int i = 0 ; i < siegerow.siegecards.Count ; i++)
+        for (int i = 0; i < siegerow.siegecards.Count; i++)
+        {
+            if (!CheckRankCard(siegerow.siegecards[i]))
             {
-                if(!CheckRankCard(siegerow.siegecards[i]))
+                if (siegerow.siegecards[i].GetComponent<CardOutput>().affectedbyeffect == false)
                 {
-                    if(siegerow.siegecards[i].GetComponent<CardOutput>().affectedbyeffect == false)
-                    {
                     siegerow.siegecards[i].GetComponent<CardOutput>().powercard += 2;
                     siegerow.siegecards[i].GetComponent<CardOutput>().affectedbyeffect = true;
-                    }
-                    else{continue;}
                 }
-                else{continue;}
+                else { continue; }
             }
+            else { continue; }
+        }
     }
 
     //Verificar si la carta es de tipo oro
@@ -220,7 +372,7 @@ public class CardEffects : MonoBehaviour
     {
         CardOutput card = gameObject.GetComponent<CardOutput>();
 
-        if (card.card.rank == "Gold")
+        if (card.card.rank == "Gold" || card.card.type == "Lure")
         {
             return true;
         }
@@ -264,27 +416,28 @@ public class CardEffects : MonoBehaviour
         GameObject Player2Field = GameObject.Find("Player2 Rows");
         MeleeRow meleerow2 = Player2Field.GetComponentInChildren<MeleeRow>();
 
-        for(int i = 0 ; i < meleerow1.meleecards.Count ; i++)
+        for (int i = 0; i < meleerow1.meleecards.Count; i++)
         {
-            if(meleerow1.meleecards[i].GetComponent<CardOutput>().affectedbyweather == false)
+            if (meleerow1.meleecards[i].GetComponent<CardOutput>().affectedbyweather == false)
             {
-                if(!CheckRankCard(meleerow1.meleecards[i]))
+                if (!CheckRankCard(meleerow1.meleecards[i]))
                 {
-                meleerow1.meleecards[i].GetComponent<CardOutput>().affectedbyweather = true;
-                meleerow1.meleecards[i].GetComponent<CardOutput>().powercard -=3;
+                    meleerow1.meleecards[i].GetComponent<CardOutput>().affectedbyweather = true;
+                    meleerow1.meleecards[i].GetComponent<CardOutput>().powercard -= 3;
                 }
-                else{continue;}
+                else { continue; }
             }
         }
-        for(int i = 0 ; i < meleerow2.meleecards.Count ; i++)
+        for (int i = 0; i < meleerow2.meleecards.Count; i++)
         {
-            if(meleerow2.meleecards[i].GetComponent<CardOutput>().affectedbyweather == false)
-            {   if(!CheckRankCard(meleerow2.meleecards[i]))
+            if (meleerow2.meleecards[i].GetComponent<CardOutput>().affectedbyweather == false)
             {
-                meleerow2.meleecards[i].GetComponent<CardOutput>().affectedbyweather = true;
-                meleerow2.meleecards[i].GetComponent<CardOutput>().powercard -=3;
+                if (!CheckRankCard(meleerow2.meleecards[i]))
+                {
+                    meleerow2.meleecards[i].GetComponent<CardOutput>().affectedbyweather = true;
+                    meleerow2.meleecards[i].GetComponent<CardOutput>().powercard -= 3;
                 }
-                else{continue;}
+                else { continue; }
             }
         }
     }
@@ -296,26 +449,28 @@ public class CardEffects : MonoBehaviour
         GameObject Player2Field = GameObject.Find("Player2 Rows");
         SiegeRow siegerow2 = Player2Field.GetComponentInChildren<SiegeRow>();
 
-        for(int i = 0 ; i < siegerow1.siegecards.Count ; i++)
+        for (int i = 0; i < siegerow1.siegecards.Count; i++)
         {
-            if(siegerow1.siegecards[i].GetComponent<CardOutput>().affectedbyweather == false)
+            if (siegerow1.siegecards[i].GetComponent<CardOutput>().affectedbyweather == false)
             {
-                if(!CheckRankCard(siegerow1.siegecards[i])){
-                siegerow1.siegecards[i].GetComponent<CardOutput>().affectedbyweather = true;
-                siegerow1.siegecards[i].GetComponent<CardOutput>().powercard -=4;
+                if (!CheckRankCard(siegerow1.siegecards[i]))
+                {
+                    siegerow1.siegecards[i].GetComponent<CardOutput>().affectedbyweather = true;
+                    siegerow1.siegecards[i].GetComponent<CardOutput>().powercard -= 4;
                 }
-                else{continue;}
+                else { continue; }
             }
         }
-        for(int i = 0 ; i < siegerow2.siegecards.Count ; i++)
+        for (int i = 0; i < siegerow2.siegecards.Count; i++)
         {
-            if(siegerow2.siegecards[i].GetComponent<CardOutput>().affectedbyweather == false)
+            if (siegerow2.siegecards[i].GetComponent<CardOutput>().affectedbyweather == false)
             {
-                if(!CheckRankCard(siegerow2.siegecards[i])){
-                siegerow2.siegecards[i].GetComponent<CardOutput>().affectedbyweather = true;
-                siegerow2.siegecards[i].GetComponent<CardOutput>().powercard -=4;
+                if (!CheckRankCard(siegerow2.siegecards[i]))
+                {
+                    siegerow2.siegecards[i].GetComponent<CardOutput>().affectedbyweather = true;
+                    siegerow2.siegecards[i].GetComponent<CardOutput>().powercard -= 4;
                 }
-                else{continue;}
+                else { continue; }
             }
         }
     }
@@ -327,28 +482,58 @@ public class CardEffects : MonoBehaviour
         GameObject Player2Field = GameObject.Find("Player2 Rows");
         RangedRow rangedrow2 = Player2Field.GetComponentInChildren<RangedRow>();
 
-        for(int i = 0 ; i < rangedrow1.rangedcards.Count ; i++)
+        for (int i = 0; i < rangedrow1.rangedcards.Count; i++)
         {
-            if(rangedrow1.rangedcards[i].GetComponent<CardOutput>().affectedbyweather == false)
+            if (rangedrow1.rangedcards[i].GetComponent<CardOutput>().affectedbyweather == false)
             {
-                if(!CheckRankCard(rangedrow1.rangedcards[i])){
-                rangedrow1.rangedcards[i].GetComponent<CardOutput>().affectedbyweather = true;
-                rangedrow1.rangedcards[i].GetComponent<CardOutput>().powercard -=2;
+                if (!CheckRankCard(rangedrow1.rangedcards[i]))
+                {
+                    rangedrow1.rangedcards[i].GetComponent<CardOutput>().affectedbyweather = true;
+                    rangedrow1.rangedcards[i].GetComponent<CardOutput>().powercard -= 2;
                 }
-                else{continue;}
+                else { continue; }
             }
         }
-        for(int i = 0 ; i < rangedrow2.rangedcards.Count ; i++)
+        for (int i = 0; i < rangedrow2.rangedcards.Count; i++)
         {
-            if(rangedrow2.rangedcards[i].GetComponent<CardOutput>().affectedbyweather == false)
+            if (rangedrow2.rangedcards[i].GetComponent<CardOutput>().affectedbyweather == false)
             {
-                if(!CheckRankCard(rangedrow2.rangedcards[i])){
-                rangedrow2.rangedcards[i].GetComponent<CardOutput>().affectedbyweather = true;
-                rangedrow2.rangedcards[i].GetComponent<CardOutput>().powercard -=2;
+                if (!CheckRankCard(rangedrow2.rangedcards[i]))
+                {
+                    rangedrow2.rangedcards[i].GetComponent<CardOutput>().affectedbyweather = true;
+                    rangedrow2.rangedcards[i].GetComponent<CardOutput>().powercard -= 2;
                 }
-                else{continue;}
+                else { continue; }
             }
         }
+    }
+    public static void BaldurBlessing()
+    {
+        WeatherRow weatherRow = GameObject.Find("WeatherRow").GetComponent<WeatherRow>();
+        Graveyard player1graveyard = GameObject.Find("Player1 Graveyard").GetComponent<Graveyard>();
+        Graveyard player2graveyard = GameObject.Find("Player2 Graveyard").GetComponent<Graveyard>();
+        Turn player1turn = GameObject.Find("Player1Turn").GetComponent<Turn>();
+        Turn player2turn = GameObject.Find("Player2Turn").GetComponent<Turn>();
+
+        if (!player1turn.ismyturn)
+        {
+            for (int i = 0; i < weatherRow.weathercards.Count; i++)
+            {
+                player1graveyard.graveyard.Add(weatherRow.weathercards[i]);
+                weatherRow.weathercards[i].transform.SetParent(player1graveyard.transform);
+            }
+            weatherRow.weathercards.Clear();
+        }
+        else if (!player2turn.ismyturn)
+        {
+            for (int i = 0; i < weatherRow.weathercards.Count; i++)
+            {
+                player2graveyard.graveyard.Add(weatherRow.weathercards[i]);
+                weatherRow.weathercards[i].transform.SetParent(player2graveyard.transform);
+            }
+            weatherRow.weathercards.Clear();
+        }
+
     }
 
 }

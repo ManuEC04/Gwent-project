@@ -566,11 +566,32 @@ PrefabInstance:
       propertyPath: m_Name
       value: 'Card '
       objectReference: {fileID: 0}
+    - target: {fileID: 9034937173769184889, guid: 8e730814738fa774db2b3981bd927f03, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9034937173769184889, guid: 8e730814738fa774db2b3981bd927f03, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9034937173769184889, guid: 8e730814738fa774db2b3981bd927f03, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2411201780202654962}
+    - target: {fileID: 9034937173769184889, guid: 8e730814738fa774db2b3981bd927f03, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e730814738fa774db2b3981bd927f03, type: 3}
+--- !u!1 &2411201780202654962 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4201174878717518517, guid: 8e730814738fa774db2b3981bd927f03, type: 3}
+  m_PrefabInstance: {fileID: 2411201780202654961}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

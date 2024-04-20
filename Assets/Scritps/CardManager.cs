@@ -11,10 +11,10 @@ public class CardManager : MonoBehaviour, IDragHandler, IDropHandler
 {
     private RectTransform rectTransform;
     private Canvas canvas;
-    private UnityEngine.Vector3 posinicial;
-    private bool received = false;
-    private bool received2 = false;
-    private bool isOverDropZone = false;
+    public UnityEngine.Vector3 posinicial;
+    public bool received = false;
+    public bool received2 = false;
+    public bool isOverDropZone = false;
     private string type;
     public bool playmade = false;
     private GameObject Player1Visual;
@@ -22,12 +22,13 @@ public class CardManager : MonoBehaviour, IDragHandler, IDropHandler
     private GameObject Player1;
     private GameObject Player2;
     private CardOutput card;
-    private  OtherCardOutput othercard;
+    private OtherCardOutput othercard;
     private int power;
-   private Deck deck;
+    private Deck deck;
     private Hand hand;
-    private Turn playerturn;
+    public Turn playerturn;
     private Turn opponentturn;
+    Lure lurecard;
     void Awake()
     {
         Player1Visual = GameObject.Find("Player 1 Visual");
@@ -42,18 +43,20 @@ public class CardManager : MonoBehaviour, IDragHandler, IDropHandler
         posinicial = rectTransform.anchoredPosition;
         canvas = GetComponentInParent<Canvas>();
         type = gameObject.tag;
+        lurecard = GameObject.Find("Lure").GetComponent<Lure>();
+
         if (deck.gameObject.tag == "Player1")
         {
             hand = Player1Visual.GetComponentInChildren<Hand>();
             playerturn = Player1.GetComponentInChildren<Turn>();
             opponentturn = Player2.GetComponentInChildren<Turn>();
 
-            if (gameObject.tag == "Melee" || gameObject.tag == "Ranged" || gameObject.tag == "Siege")
+            if (gameObject.tag == "Melee" || gameObject.tag == "Ranged" || gameObject.tag == "Siege" || gameObject.tag == "Lure")
             {
                 card = GetComponent<CardOutput>();
                 power = card.card.power;
             }
-            else if (gameObject.tag == "Weather" || gameObject.tag == "MeleeIncrease" || gameObject.tag == "RangedIncrease" || gameObject.tag == "SiegeIncrease" || gameObject.tag == "Lure")
+            else if (gameObject.tag == "Weather" || gameObject.tag == "MeleeIncrease" || gameObject.tag == "RangedIncrease" || gameObject.tag == "SiegeIncrease")
             {
                 othercard = GetComponent<OtherCardOutput>();
             }
@@ -63,18 +66,17 @@ public class CardManager : MonoBehaviour, IDragHandler, IDropHandler
             hand = Player2Visual.GetComponentInChildren<Hand>();
             playerturn = Player2.GetComponentInChildren<Turn>();
             opponentturn = Player1.GetComponentInChildren<Turn>();
-            if (gameObject.tag == "Melee2" || gameObject.tag == "Ranged2" || gameObject.tag == "Siege2")
+            if (gameObject.tag == "Melee2" || gameObject.tag == "Ranged2" || gameObject.tag == "Siege2" || gameObject.tag == "Lure")
             {
                 card = GetComponent<CardOutput>();
                 power = card.card.power;
             }
-            else if (gameObject.tag == "Weather" || gameObject.tag == "MeleeIncrease2" || gameObject.tag == "RangedIncrease2" || gameObject.tag == "SiegeIncrease2" || gameObject.tag == "Lure2")
+            else if (gameObject.tag == "Weather" || gameObject.tag == "MeleeIncrease2" || gameObject.tag == "RangedIncrease2" || gameObject.tag == "SiegeIncrease2")
             {
                 othercard = GetComponent<OtherCardOutput>();
             }
         }
     }
-    //Verifica si la carta esta en el campo y 
     void Update()
     {
         //Obtener la posicion de la carta despues de ser robada
@@ -88,21 +90,21 @@ public class CardManager : MonoBehaviour, IDragHandler, IDropHandler
             posinicial = GetComponent<RectTransform>().anchoredPosition;
             received2 = true;
         }
-        if(card!=null)
+        if (card != null)
         {
-        if(card.affectedbyweather == false && card.affectedbyeffect == false)
-        {
-            card.powercard = power;
-        }
-        CardEffects.CheckCardEffect(card);
+            if (card.affectedbyweather == false && card.affectedbyeffect == false)
+            {
+                card.powercard = power;
+            }
+            CardEffects.CheckCardEffect(card);
+            CardEffects.CheckLureEffect(card, lurecard);
         }
         else if (othercard != null)
         {
-         CardEffects.CheckWeatherEffect(othercard);
-         CardEffects.CheckIncreaseEffect(othercard);
-          
+            CardEffects.CheckWeatherEffect(othercard);
+            CardEffects.CheckIncreaseEffect(othercard);
         }
-        
+
     }
     //Gestiona cuando se está arrastrando el GameObject
     public void OnDrag(PointerEventData eventData)
@@ -140,21 +142,91 @@ public class CardManager : MonoBehaviour, IDragHandler, IDropHandler
                     hand.hand.RemoveAt(i);
                 }
             }
-            if(card != null)
+            if (card != null)
             {
-              card.isonthefield = true;
+                card.isonthefield = true;
+                if (card != null && card.card.type == "Lure")
+                {
+                    if (card.effectexecuted == true)
+                    {
+                        playerturn.playmade = true;
+                        playerturn.ismyturn = false;
+                        GameFunctions.CheckTurn();
+                        Debug.Log("Se ejecuto el efecto");
+                    }
+                    else if (card.effectexecuted == false)
+                    {
+                        playerturn.playmade = false;
+                        Debug.Log("No se ha ejecutado el efecto");
+                    }
+                }
+                else if (card != null && card.card.type != "Lure")
+                {
+                    playerturn.playmade = true;
+                    playerturn.ismyturn = false;
+                    GameFunctions.CheckTurn();
+                }
+
+
             }
-            else if(othercard !=null)
+            else if (othercard != null)
             {
-               othercard.isonthefield = true;
-            }
-            if (opponentturn.passed == false)
-            {
+                othercard.isonthefield = true;
                 playerturn.playmade = true;
                 playerturn.ismyturn = false;
                 GameFunctions.CheckTurn();
             }
+            if (opponentturn.passed == true)
+            {
+                playerturn.ismyturn = true;
+            }
         }
+    }
+    public void OnClick()
+    {
+        //Funcion para la carta señuelo
+        if (gameObject.tag != "Weather" && gameObject.tag != "MeleeIncrease" && gameObject.tag != "MeleeIncrease2" && gameObject.tag != "RangedIncrease" && gameObject.tag != "RangedIncrease2" && gameObject.tag != "SiegeIncrease" && gameObject.tag != "SiegeIncrease2")
+        {
+            if (GameObject.Find("Card Lure 1") != null && GameObject.Find("Card Lure 1").GetComponent<CardOutput>().isonthefield == true)
+            {
+                if (gameObject.GetComponent<CardOutput>().card.cardname == "Señuelo de Loki")
+                {
+                    return;
+                }
+                else
+                {
+                    if (!CardEffects.CheckRankCard(gameObject))
+                    {
+                        if (gameObject.GetComponent<CardOutput>().isonthefield)
+                        {
+                            lurecard.lurechange = gameObject;
+                        }
+                    }
+                }
+            }
+            else if (GameObject.Find("Card Lure 2") != null && GameObject.Find("Card Lure 2").GetComponent<CardOutput>().isonthefield == true)
+            {
+                if (gameObject.GetComponent<CardOutput>().card.cardname == "Señuelo de Loki")
+                {
+                    return;
+                }
+                else
+                {
+                    if (!CardEffects.CheckRankCard(gameObject))
+                    {
+                        if (gameObject.GetComponent<CardOutput>().isonthefield)
+                        {
+                            lurecard.lurechange = gameObject;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                return;
+            }
+        }
+        //Funcion para hacer redraw
     }
 }
 

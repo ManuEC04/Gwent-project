@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d7114bda982e00469c8178a20d40b0a, type: 3}
   m_Name: Bendicion de Baldur
   m_EditorClassIdentifier: 
-  picture: {fileID: 0}
+  picture: {fileID: 21300000, guid: ef1d3797187445a4b93ab33e595c8dff, type: 3}
   cardname: "Bendici\xF3n de Baldur"
   description: 
-  effecticon: {fileID: 21300000, guid: 60b97fc7f8a13474cad0c7f3a6c17d9c, type: 3}
   faction: Nordics
   type: Clearance
+  haseffect: 1
+  effecticon: {fileID: 21300000, guid: 60b97fc7f8a13474cad0c7f3a6c17d9c, type: 3}
