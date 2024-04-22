@@ -163,11 +163,12 @@ public class CardEffects : MonoBehaviour
             MeleeRow meleerow1 = Player1Field.GetComponentInChildren<MeleeRow>();
             RangedRow rangedrow1 = Player1Field.GetComponentInChildren<RangedRow>();
             SiegeRow siegerow1 = Player1Field.GetComponentInChildren<SiegeRow>();
-            Hand player1hand = GameObject.Find("Player1Hand").GetComponent<Hand>();
+            Hand player1hand;
             if (GameFunctions.CheckFieldNoNull(meleerow1.meleecards, rangedrow1.rangedcards, siegerow1.siegecards) == true)
             {
                 if (lure.lurechange != null)
                 {
+                    player1hand =  GameObject.Find("Player1Hand").GetComponent<Hand>();
                     player1hand.hand.Add(lure.lurechange);
                     lure.lurechange.transform.SetParent(player1hand.transform);
 
@@ -229,11 +230,12 @@ public class CardEffects : MonoBehaviour
             MeleeRow meleerow1 = Player2Field.GetComponentInChildren<MeleeRow>();
             RangedRow rangedrow1 = Player2Field.GetComponentInChildren<RangedRow>();
             SiegeRow siegerow1 = Player2Field.GetComponentInChildren<SiegeRow>();
-            Hand player1hand = GameObject.Find("Player2Hand").GetComponent<Hand>();
+            Hand player1hand;
             if (GameFunctions.CheckFieldNoNull(meleerow1.meleecards, rangedrow1.rangedcards, siegerow1.siegecards) == true)
             {
                 if (lure.lurechange != null)
                 {
+                    player1hand =  GameObject.Find("Player2Hand").GetComponent<Hand>();
                     player1hand.hand.Add(lure.lurechange);
                     lure.lurechange.transform.SetParent(player1hand.transform);
 

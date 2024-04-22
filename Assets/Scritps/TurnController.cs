@@ -27,7 +27,6 @@ public class TurnController : MonoBehaviour
     void Update()
     {
         GameFunctions.CheckVisualTurn(Player1, Player2, Player1Visual, Player2Visual);
-        //GameFunctions.CheckLife();
     }
 
 

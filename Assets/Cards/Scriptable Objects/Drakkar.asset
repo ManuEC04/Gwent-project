@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4dfd910eb9478b44b597dd1c2add0e8, type: 3}
+  m_Script: {fileID: 11500000, guid: c6e88f6d673c6d84684911355f1d0329, type: 3}
   m_Name: Drakkar
   m_EditorClassIdentifier: 
   picture: {fileID: 21300000, guid: b7ff9a75b52ddb44f9bfeb454a1c6e59, type: 3}
-  cardname: Drakkar La Nave Vikinga
+  cardname: Drakkar
   description: 
   faction: Nordics
   type: Siege
@@ -21,4 +21,4 @@ MonoBehaviour:
   power: 5
   typeimage: {fileID: 21300000, guid: e8f801d5abd8621469220a7b7a832e6d, type: 3}
   rank: Silver
-  rankicon: {fileID: 21300000, guid: e8f801d5abd8621469220a7b7a832e6d, type: 3}
+  rankicon: {fileID: 21300000, guid: bf268825fac783a499d614e733fde8d8, type: 3}

@@ -9,15 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4dfd910eb9478b44b597dd1c2add0e8, type: 3}
+  m_Script: {fileID: 11500000, guid: c6e88f6d673c6d84684911355f1d0329, type: 3}
   m_Name: Thor
   m_EditorClassIdentifier: 
   picture: {fileID: 21300000, guid: cb743c8778936784f89412b8716a96df, type: 3}
   cardname: Thor
-  description: Lord of Thunder
+  description: 
   faction: Nordics
-  type: RangedMelee
-  haseffect: 1
+  type: Melee
+  haseffect: 0
   power: 7
   typeimage: {fileID: 21300000, guid: aa94d1d1591e60a40bfa255e1a7110de, type: 3}
   rank: Gold

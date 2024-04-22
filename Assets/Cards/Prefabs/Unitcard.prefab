@@ -211,8 +211,10 @@ MonoBehaviour:
   rank: {fileID: 0}
   effectexecuted: 0
   isonthefield: 0
+  isonthehand: 0
   affectedbyweather: 0
   affectedbyeffect: 0
+  buffed: 0
 --- !u!114 &9034937173769184889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -684,8 +686,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 15.34491, y: -246.56714}
-  m_SizeDelta: {x: 294.6899, y: 54.8657}
+  m_AnchoredPosition: {x: -9.7866, y: -246.56714}
+  m_SizeDelta: {x: 458.77, y: 54.8657}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3613372944285254798
 CanvasRenderer:
@@ -717,12 +719,12 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 45
+    m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 300
-    m_Alignment: 1
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0

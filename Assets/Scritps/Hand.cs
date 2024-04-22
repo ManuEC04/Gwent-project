@@ -7,7 +7,6 @@ using UnityEngine;
 public class Hand : MonoBehaviour
 {
     public List<GameObject> hand = new List<GameObject>();
-    bool[]handpositions = new bool[10];
     public Deck playerdeck;
     public Turn playerturn;
     public Graveyard graveyard;

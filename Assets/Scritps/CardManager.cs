@@ -22,12 +22,14 @@ public class CardManager : MonoBehaviour, IDragHandler, IDropHandler
     private GameObject Player1;
     private GameObject Player2;
     private CardOutput card;
+    private int power;
     private OtherCardOutput othercard;
     private Deck deck;
     private Hand hand;
     public Turn playerturn;
     private Turn opponentturn;
     Lure lurecard;
+
     void Awake()
     {
         Player1Visual = GameObject.Find("Player 1 Visual");
@@ -53,6 +55,7 @@ public class CardManager : MonoBehaviour, IDragHandler, IDropHandler
             if (gameObject.tag == "Melee" || gameObject.tag == "Ranged" || gameObject.tag == "Siege" || gameObject.tag == "Lure")
             {
                 card = GetComponent<CardOutput>();
+                power = card.powercard;
             }
             else if (gameObject.tag == "Weather" || gameObject.tag == "MeleeIncrease" || gameObject.tag == "RangedIncrease" || gameObject.tag == "SiegeIncrease")
             {
@@ -67,6 +70,7 @@ public class CardManager : MonoBehaviour, IDragHandler, IDropHandler
             if (gameObject.tag == "Melee2" || gameObject.tag == "Ranged2" || gameObject.tag == "Siege2" || gameObject.tag == "Lure")
             {
                 card = GetComponent<CardOutput>();
+                power = card.powercard;
             }
             else if (gameObject.tag == "Weather" || gameObject.tag == "MeleeIncrease2" || gameObject.tag == "RangedIncrease2" || gameObject.tag == "SiegeIncrease2")
             {
@@ -91,18 +95,28 @@ public class CardManager : MonoBehaviour, IDragHandler, IDropHandler
         {
             CardEffects.CheckCardEffect(card);
             CardEffects.CheckLureEffect(card, lurecard);
+
+            if (card.isonthefield == false)
+            {
+                card.powercard = power;
+            }
         }
         else if (othercard != null)
         {
             CardEffects.CheckWeatherEffect(othercard);
             CardEffects.CheckIncreaseEffect(othercard);
+
+        }
+        if (opponentturn.passed == true)
+        {
+            playerturn.ismyturn = true;
         }
 
     }
     //Gestiona cuando se está arrastrando el GameObject
     public void OnDrag(PointerEventData eventData)
     {
-        if (playerturn.DrawExecuted == true)
+        if (playerturn.DrawExecuted == true && playerturn.playmade == false)
         {
             if (!isOverDropZone)
             {
@@ -140,25 +154,25 @@ public class CardManager : MonoBehaviour, IDragHandler, IDropHandler
                 card.isonthefield = true;
                 if (card != null && card.card.type == "Lure")
                 {
-                    if (card.effectexecuted == true)
+                    if (card.effectexecuted == true && opponentturn.passed == false)
                     {
                         playerturn.playmade = true;
                         playerturn.ismyturn = false;
                         GameFunctions.CheckTurn();
-                        Debug.Log("Se ejecuto el efecto");
                     }
-                    else if (card.effectexecuted == false)
+                    else if (card.effectexecuted == false && opponentturn.passed == false)
                     {
-                        playerturn.playmade = false;
-                        Debug.Log("No se ha ejecutado el efecto");
+                        playerturn.ismyturn = true;
+                        playerturn.playmade = true;
                     }
                 }
-                else if (card != null && card.card.type != "Lure")
+                else if (card != null && card.card.type != "Lure" && opponentturn.passed == false)
                 {
                     playerturn.playmade = true;
                     playerturn.ismyturn = false;
                     GameFunctions.CheckTurn();
                 }
+
             }
             else if (othercard != null)
             {
@@ -167,10 +181,7 @@ public class CardManager : MonoBehaviour, IDragHandler, IDropHandler
                 playerturn.ismyturn = false;
                 GameFunctions.CheckTurn();
             }
-            if (opponentturn.passed == true)
-            {
-                playerturn.ismyturn = true;
-            }
+
         }
     }
     public void OnClick()

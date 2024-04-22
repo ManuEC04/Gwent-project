@@ -5,9 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
-    public void GameScene(string scenename)
+    public void Play()
     {
-        SceneManager.LoadScene(scenename);
+        SceneManager.LoadScene("Game");
+    }
+    public void Options ()
+    {
+        SceneManager.LoadScene("Options");
     }
     public void ExitGame()
     {

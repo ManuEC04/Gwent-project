@@ -195,7 +195,6 @@ public class GameFunctions : MonoBehaviour
 
         if (powercounter1.powfield < powercounter2.powfield)
         {
-            CheckLife();
             Debug.Log("El jugador 2 ha gando la ronda");
             ClearField();
             lifecounter1.playerlife --;
@@ -344,9 +343,6 @@ public class GameFunctions : MonoBehaviour
          player2graveyard.graveyard.Add(siegeincrease2.increasebox[0]);
          siegeincrease2.increasebox.RemoveAt(0);
          }
-
-
-
     }
     //Posicionar las cartas del cementerio
     public static void GraveyardPosition(RectTransform cardposition, List<GameObject> graveyard)
@@ -394,22 +390,31 @@ public class GameFunctions : MonoBehaviour
     {
         LifeCounter lifecounter1 = GameObject.Find("Player 1 Life Counter").GetComponent<LifeCounter>();
         LifeCounter lifecounter2 = GameObject.Find("Player 2 Life Counter").GetComponent<LifeCounter>();
-        if (lifecounter1.playerlife == 0)
+        if (lifecounter1.playerlife == 0 && lifecounter2.playerlife > 0)
         {
             Debug.Log("El jugador 2 ha ganado la partida");
-            SceneManager.LoadScene("Jugador2 Ha Ganado");
+            GameObject Player2Win = GameObject.Find("Player2Win");
+            GameObject Board = GameObject.Find("Board");
+            Player2Win.transform.SetParent(Board.transform);
+            Application.Quit();
             return;
         }
-        else if (lifecounter2.playerlife == 0)
+        else if (lifecounter2.playerlife == 0 && lifecounter1.playerlife > 0)
         {
             Debug.Log("El jugador 1 ha ganado la partida");
-            SceneManager.LoadScene("Jugador1 Ha Ganado");
+            GameObject Player1Win = GameObject.Find("Player1Win");
+            GameObject Board = GameObject.Find("Board");
+            Player1Win.transform.SetParent(Board.transform);
+            Application.Quit();
             return;
         }
         else if (lifecounter1.playerlife == 0 && lifecounter2.playerlife == 0)
         {
             Debug.Log("La partida ha quedado empatada");
-            SceneManager.LoadScene("Empate");
+            GameObject Empate = GameObject.Find("Empate");
+            GameObject Board = GameObject.Find("Board");
+            Empate.transform.SetParent(Board.transform);
+            Application.Quit();
             return;
         }
     }
@@ -420,8 +425,8 @@ public class GameFunctions : MonoBehaviour
         {
             while (hand.Count > 10)
             {
-                graveyard.graveyard.Add(hand[hand.Count - 1]);
-                hand.RemoveAt(hand.Count - 1);
+                graveyard.graveyard.Add(hand[hand.Count -1]);
+                hand.RemoveAt(hand.Count -1);
             }
         }
     }
