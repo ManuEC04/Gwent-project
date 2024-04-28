@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   picture: {fileID: 21300000, guid: f763898f03f15434a846ae58c993b7f5, type: 3}
   cardname: Odin
-  description: 
+  description: 'Efecto especial: Robar una carta del deck'
   faction: Nordics
   type: FactionLeader
   haseffect: 1

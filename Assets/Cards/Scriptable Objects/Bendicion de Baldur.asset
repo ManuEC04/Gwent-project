@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   picture: {fileID: 21300000, guid: ef1d3797187445a4b93ab33e595c8dff, type: 3}
   cardname: "Bendici\xF3n de Baldur"
-  description: 
+  description: Elimina todos los climas que haya en juego
   faction: Nordics
   type: Clearance
   haseffect: 1

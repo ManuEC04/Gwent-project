@@ -24,6 +24,10 @@ public class CardManager : MonoBehaviour, IDragHandler, IDropHandler
     private CardOutput card;
     private int power;
     private OtherCardOutput othercard;
+    private GameObject Cardinfo;
+    private GameObject OtherCardinfo;
+    private GameObject Canvas;
+    private GameObject Board;
     private Deck deck;
     private Hand hand;
     public Turn playerturn;
@@ -32,6 +36,7 @@ public class CardManager : MonoBehaviour, IDragHandler, IDropHandler
 
     void Awake()
     {
+
         Player1Visual = GameObject.Find("Player 1 Visual");
         Player2Visual = GameObject.Find("Player 2 Visual");
         Player1 = GameObject.Find("Player 1");
@@ -40,6 +45,12 @@ public class CardManager : MonoBehaviour, IDragHandler, IDropHandler
     }
     void Start()
     {
+        OtherCardinfo = GameObject.Find("OtherCardInfo");
+        Cardinfo = GameObject.Find("CardInfo");
+        Board = GameObject.Find("Fondo");
+        Canvas = GameObject.Find("Invisible");
+        OtherCardinfo.transform.SetParent(Canvas.transform);
+        Cardinfo.transform.SetParent(Canvas.transform);
         rectTransform = GetComponent<RectTransform>();
         posinicial = rectTransform.anchoredPosition;
         canvas = GetComponentInParent<Canvas>();
@@ -227,6 +238,40 @@ public class CardManager : MonoBehaviour, IDragHandler, IDropHandler
             {
                 return;
             }
+        }
+    }
+    void OnMouseEnter()
+    {
+        if (card != null)
+        {
+            Cardinfo.transform.SetParent(Board.transform);
+            Cardinfo.GetComponent<CardInfo>().card = card.card;
+            Cardinfo.GetComponent<CardInfo>().picture.sprite = card.card.picture;
+            Cardinfo.GetComponent<CardInfo>().nametext.text = card.card.cardname;
+            Cardinfo.GetComponent<CardInfo>().description.text = card.card.description;
+            Cardinfo.GetComponent<CardInfo>().power.text = card.card.power.ToString();
+            Cardinfo.GetComponent<CardInfo>().type.sprite = card.card.typeimage;
+            Cardinfo.GetComponent<CardInfo>().rank.sprite = card.card.rankicon;
+        }
+        else if (othercard != null)
+        {
+            OtherCardinfo.transform.SetParent(Board.transform);
+            OtherCardinfo.GetComponent<OtherCardInfo>().card = othercard.card;
+            OtherCardinfo.GetComponent<OtherCardInfo>().picture.sprite = othercard.card.picture;
+            OtherCardinfo.GetComponent<OtherCardInfo>().nametext.text = othercard.card.cardname;
+            OtherCardinfo.GetComponent<OtherCardInfo>().description.text = othercard.card.description;
+            OtherCardinfo.GetComponent<OtherCardInfo>().effecticon.sprite = othercard.card.effecticon;
+        }
+    }
+    void OnMouseExit()
+    {
+        if (card != null)
+        {
+            Cardinfo.transform.SetParent(Canvas.transform);
+        }
+        else if (othercard != null)
+        {
+            OtherCardinfo.transform.SetParent(Canvas.transform);
         }
     }
 }

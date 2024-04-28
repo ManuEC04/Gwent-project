@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   picture: {fileID: 21300000, guid: cb743c8778936784f89412b8716a96df, type: 3}
   cardname: Thor
-  description: 
+  description: Elimina la carta con mayor poder del campo del rival
   faction: Nordics
   type: Melee
-  haseffect: 0
+  haseffect: 1
   power: 7
   typeimage: {fileID: 21300000, guid: aa94d1d1591e60a40bfa255e1a7110de, type: 3}
   rank: Gold

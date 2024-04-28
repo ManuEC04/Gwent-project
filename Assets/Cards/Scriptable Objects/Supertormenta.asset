@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   picture: {fileID: 21300000, guid: facd0e6d5dfc4924fb8957bab9d0edca, type: 3}
   cardname: Supertormenta
-  description: 
+  description: Disminuye en 3 el poder de las filas de rango
   faction: Neutral
   type: Weather
   haseffect: 1

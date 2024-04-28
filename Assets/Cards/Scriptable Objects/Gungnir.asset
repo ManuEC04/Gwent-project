@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   picture: {fileID: 21300000, guid: c0e126cbc2a57794a9c5da2e81326e12, type: 3}
   cardname: Gungnir
-  description: 
+  description: Aumenta en 4 el poder de las filas de rango
   faction: Nordics
   type: Increase
   haseffect: 1

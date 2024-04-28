@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scritps\CardEffects.cs" />
+    <Compile Include="Assets\Scritps\OtherCardInfo.cs" />
     <Compile Include="Assets\Scritps\Redraw.cs" />
     <Compile Include="Assets\Scritps\OtherCards.cs" />
     <Compile Include="Assets\Scritps\SiegeRow.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="Assets\Scritps\CardInfo.cs" />
     <Compile Include="Assets\Scritps\Deck.cs" />
     <Compile Include="Assets\Scritps\TurnController.cs" />
+    <Compile Include="Assets\Scritps\OptionMenu.cs" />
     <Compile Include="Assets\Scritps\Hand.cs" />
     <Compile Include="Assets\Scritps\Card.cs" />
     <Compile Include="Assets\Scritps\MenuManager.cs" />
@@ -86,6 +88,7 @@
     <Compile Include="Assets\Scritps\CardManager.cs" />
     <Compile Include="Assets\Scritps\Turn.cs" />
     <Compile Include="Assets\Scritps\Ranged Row.cs" />
+    <Compile Include="Assets\Scritps\Winner.cs" />
     <Compile Include="Assets\Scritps\MeleeRow.cs" />
     <Compile Include="Assets\Scritps\IncreaseBox.cs" />
   </ItemGroup>

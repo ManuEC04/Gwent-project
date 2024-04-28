@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   picture: {fileID: 21300000, guid: 70385808deb3a5e48b5c2375316441e5, type: 3}
   cardname: Gjallarhorn
-  description: 
+  description: Aumenta en 2 el poder de las filas de asedio
   faction: Nordics
   type: Increase
   haseffect: 1

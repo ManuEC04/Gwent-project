@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   picture: {fileID: 21300000, guid: 34e896d53ed23d24f965b49ab080ebd7, type: 3}
   cardname: Fenrir
-  description: 
+  description: Multiplica su ataque por la cantidad de cartas iguales que haya en
+    el campo al invocarlo
   faction: Nordics
   type: Ranged
   haseffect: 1

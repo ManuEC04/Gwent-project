@@ -1,8 +1,10 @@
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 
 public class CardEffects : MonoBehaviour
 {
@@ -60,11 +62,12 @@ public class CardEffects : MonoBehaviour
         {
             if (cardoutput.card.cardname == "Thor")
             {
-                //Eliminar la carta con mas poder del rival
+                //Eliminar la carta con mayor poder en el campo del rival
+                ThorEffect(cardoutput);
             }
             else if (cardoutput.card.cardname == "Loki")
-            {
-                //Eliminar la carta con menos poder del rival
+            {   //Eliminar la carta con menor poder en el campo del rival
+                LokiEffect(cardoutput);
             }
             else if (cardoutput.card.cardname == "Fenrir")
             {
@@ -74,18 +77,22 @@ public class CardEffects : MonoBehaviour
             else if (cardoutput.card.cardname == "Berserker")
             {
                 //Limpia la fila del campo del rival con menos unidades
+                BerserkerEffect(cardoutput);
             }
             else if (cardoutput.card.cardname == "Freya")
             {
                 //Poner un aumento
+                FreyaEffect(cardoutput);
             }
             else if (cardoutput.card.cardname == "Drakkar")
             {
                 //Calcular el promedio de las cartas del rival. Luego igualar el poder de todas las cartas a ese promedio
+                DrakkarEffect(cardoutput);
             }
             else if (cardoutput.card.cardname == "Baldur")
             {
                 //Poner un clima
+                BaldurEffect(cardoutput);
             }
         }
         else
@@ -168,7 +175,7 @@ public class CardEffects : MonoBehaviour
             {
                 if (lure.lurechange != null)
                 {
-                    player1hand =  GameObject.Find("Player1Hand").GetComponent<Hand>();
+                    player1hand = GameObject.Find("Player1Hand").GetComponent<Hand>();
                     player1hand.hand.Add(lure.lurechange);
                     lure.lurechange.transform.SetParent(player1hand.transform);
 
@@ -235,7 +242,7 @@ public class CardEffects : MonoBehaviour
             {
                 if (lure.lurechange != null)
                 {
-                    player1hand =  GameObject.Find("Player2Hand").GetComponent<Hand>();
+                    player1hand = GameObject.Find("Player2Hand").GetComponent<Hand>();
                     player1hand.hand.Add(lure.lurechange);
                     lure.lurechange.transform.SetParent(player1hand.transform);
 
@@ -597,8 +604,653 @@ public class CardEffects : MonoBehaviour
         }
 
     }
+    public static void ThorEffect(CardOutput thor)
+    {
+        if (thor.effectexecuted == false)
+        {
+            CardOutput destroycard = new CardOutput();
+            bool isonmeleerow = false;
+            bool isonrangedrow = false;
+            bool isonsiegerow = false;
 
+            if (thor.tag == "Melee2")
+            {
+                Debug.Log("Se detecta que es la etiqueta 2");
+                MeleeRow player1meleerow = GameObject.Find("Player1 Melee Row").GetComponent<MeleeRow>();
+                RangedRow player1rangedrow = GameObject.Find("Player1 Ranged Row").GetComponent<RangedRow>();
+                SiegeRow player1siegerow = GameObject.Find("Player1 Siege Row").GetComponent<SiegeRow>();
+                Graveyard player1graveyard = GameObject.Find("Player1 Graveyard").GetComponent<Graveyard>();
+                ThorEffectFunction(player1meleerow, player1rangedrow, player1siegerow, player1graveyard, destroycard, thor, isonmeleerow, isonsiegerow, isonrangedrow);
+            }
+            else if (thor.tag == "Melee")
+            {
+                Debug.Log("Se detecta que es la etiqueta 1");
+                MeleeRow player2meleerow = GameObject.Find("Player2 Melee Row").GetComponent<MeleeRow>();
+                RangedRow player2rangedrow = GameObject.Find("Player2 Ranged Row").GetComponent<RangedRow>();
+                SiegeRow player2siegerow = GameObject.Find("Player2 Siege Row").GetComponent<SiegeRow>();
+                Graveyard player2graveyard = GameObject.Find("Player2 Graveyard").GetComponent<Graveyard>();
+                ThorEffectFunction(player2meleerow, player2rangedrow, player2siegerow, player2graveyard, destroycard, thor, isonmeleerow, isonsiegerow, isonrangedrow);
+            }
+        }
+
+    }
+    public static void ThorEffectFunction(MeleeRow player1meleerow, RangedRow player1rangedrow, SiegeRow player1siegerow, Graveyard player1graveyard, CardOutput destroycard, CardOutput thor, bool isonmeleerow, bool isonsiegerow, bool isonrangedrow)
+    {
+
+        for (int i = 0; i < player1meleerow.meleecards.Count; i++)
+        {
+            if (player1meleerow.meleecards != null && player1meleerow.meleecards[i].GetComponent<CardOutput>().powercard > destroycard.powercard || destroycard == null)
+            {
+                destroycard = player1meleerow.meleecards[i].GetComponent<CardOutput>();
+                isonmeleerow = true;
+                isonrangedrow = false;
+                isonsiegerow = false;
+            }
+            else { continue; }
+        }
+        for (int i = 0; i < player1rangedrow.rangedcards.Count; i++)
+        {
+
+            if (player1rangedrow.rangedcards != null && player1rangedrow.rangedcards[i].GetComponent<CardOutput>().powercard > destroycard.powercard || destroycard == null)
+            {
+                destroycard = player1rangedrow.rangedcards[i].GetComponent<CardOutput>();
+                isonmeleerow = false;
+                isonrangedrow = true;
+                isonsiegerow = false;
+            }
+            else { continue; }
+
+        }
+        for (int i = 0; i < player1siegerow.siegecards.Count; i++)
+        {
+            if (player1siegerow.siegecards != null && player1siegerow.siegecards[i].GetComponent<CardOutput>().powercard > destroycard.powercard || destroycard == null)
+            {
+                destroycard = player1siegerow.siegecards[i].GetComponent<CardOutput>();
+                isonmeleerow = false;
+                isonrangedrow = false;
+                isonsiegerow = true;
+            }
+            else { continue; }
+        }
+
+        if (isonmeleerow == true)
+        {
+            for (int i = 0; i < player1meleerow.meleecards.Count; i++)
+            {
+                if (player1meleerow.meleecards[i].GetComponent<CardOutput>() == destroycard)
+                {
+                    player1graveyard.graveyard.Add(player1meleerow.meleecards[i]);
+                    player1meleerow.meleecards[i].transform.SetParent(player1graveyard.transform);
+                    player1meleerow.meleecards.RemoveAt(i);
+                }
+                else { continue; }
+            }
+        }
+        else if (isonrangedrow == true)
+        {
+            for (int i = 0; i < player1rangedrow.rangedcards.Count; i++)
+            {
+                if (player1rangedrow.rangedcards[i].GetComponent<CardOutput>() == destroycard)
+                {
+                    player1graveyard.graveyard.Add(player1rangedrow.rangedcards[i]);
+                    player1rangedrow.rangedcards[i].transform.SetParent(player1graveyard.transform);
+                    player1rangedrow.rangedcards.RemoveAt(i);
+                }
+                else { continue; }
+            }
+        }
+        else if (isonsiegerow == true)
+        {
+            for (int i = 0; i < player1siegerow.siegecards.Count; i++)
+            {
+                if (player1siegerow.siegecards[i].GetComponent<CardOutput>() == destroycard)
+                {
+                    player1graveyard.graveyard.Add(player1siegerow.siegecards[i]);
+                    player1siegerow.siegecards[i].transform.SetParent(player1graveyard.transform);
+                    player1siegerow.siegecards.RemoveAt(i);
+                }
+                else { continue; }
+            }
+        }
+        thor.effectexecuted = true;
+    }
+    public static void LokiEffect(CardOutput loki)
+    {
+        if (loki.effectexecuted == false)
+        {
+            CardOutput destroycard = new CardOutput();
+            bool isonmeleerow = false;
+            bool isonrangedrow = false;
+            bool isonsiegerow = false;
+
+            if (loki.tag == "Ranged2")
+            {
+                MeleeRow player1meleerow = GameObject.Find("Player1 Melee Row").GetComponent<MeleeRow>();
+                RangedRow player1rangedrow = GameObject.Find("Player1 Ranged Row").GetComponent<RangedRow>();
+                SiegeRow player1siegerow = GameObject.Find("Player1 Siege Row").GetComponent<SiegeRow>();
+                Graveyard player1graveyard = GameObject.Find("Player1 Graveyard").GetComponent<Graveyard>();
+                LokiEffectFunction(player1meleerow, player1rangedrow, player1siegerow, player1graveyard, destroycard, loki, isonmeleerow, isonsiegerow, isonrangedrow);
+            }
+            else if (loki.tag == "Ranged")
+            {
+                MeleeRow player2meleerow = GameObject.Find("Player2 Melee Row").GetComponent<MeleeRow>();
+                RangedRow player2rangedrow = GameObject.Find("Player2 Ranged Row").GetComponent<RangedRow>();
+                SiegeRow player2siegerow = GameObject.Find("Player2 Siege Row").GetComponent<SiegeRow>();
+                Graveyard player2graveyard = GameObject.Find("Player2 Graveyard").GetComponent<Graveyard>();
+                LokiEffectFunction(player2meleerow, player2rangedrow, player2siegerow, player2graveyard, destroycard, loki, isonmeleerow, isonsiegerow, isonrangedrow);
+            }
+        }
+
+    }
+    public static void LokiEffectFunction(MeleeRow player1meleerow, RangedRow player1rangedrow, SiegeRow player1siegerow, Graveyard player1graveyard, CardOutput destroycard, CardOutput loki, bool isonmeleerow, bool isonsiegerow, bool isonrangedrow)
+    {
+
+        for (int i = 0; i < player1meleerow.meleecards.Count; i++)
+        {
+            if (player1meleerow.meleecards != null && player1meleerow.meleecards[i].GetComponent<CardOutput>().powercard < destroycard.powercard || destroycard == null)
+            {
+                destroycard = player1meleerow.meleecards[i].GetComponent<CardOutput>();
+                isonmeleerow = true;
+                isonrangedrow = false;
+                isonsiegerow = false;
+            }
+            else { continue; }
+        }
+        for (int i = 0; i < player1rangedrow.rangedcards.Count; i++)
+        {
+
+            if (player1rangedrow.rangedcards != null && player1rangedrow.rangedcards[i].GetComponent<CardOutput>().powercard < destroycard.powercard || destroycard == null)
+            {
+                destroycard = player1rangedrow.rangedcards[i].GetComponent<CardOutput>();
+                isonmeleerow = false;
+                isonrangedrow = true;
+                isonsiegerow = false;
+            }
+            else { continue; }
+
+        }
+        for (int i = 0; i < player1siegerow.siegecards.Count; i++)
+        {
+            if (player1siegerow.siegecards != null && player1siegerow.siegecards[i].GetComponent<CardOutput>().powercard < destroycard.powercard || destroycard == null)
+            {
+                destroycard = player1siegerow.siegecards[i].GetComponent<CardOutput>();
+                isonmeleerow = false;
+                isonrangedrow = false;
+                isonsiegerow = true;
+            }
+            else { continue; }
+        }
+
+        if (isonmeleerow == true)
+        {
+            for (int i = 0; i < player1meleerow.meleecards.Count; i++)
+            {
+                if (player1meleerow.meleecards[i].GetComponent<CardOutput>() == destroycard)
+                {
+                    player1graveyard.graveyard.Add(player1meleerow.meleecards[i]);
+                    player1meleerow.meleecards[i].transform.SetParent(player1graveyard.transform);
+                    player1meleerow.meleecards.RemoveAt(i);
+                }
+                else { continue; }
+            }
+        }
+        else if (isonrangedrow == true)
+        {
+            for (int i = 0; i < player1rangedrow.rangedcards.Count; i++)
+            {
+                if (player1rangedrow.rangedcards[i].GetComponent<CardOutput>() == destroycard)
+                {
+                    player1graveyard.graveyard.Add(player1rangedrow.rangedcards[i]);
+                    player1rangedrow.rangedcards[i].transform.SetParent(player1graveyard.transform);
+                    player1rangedrow.rangedcards.RemoveAt(i);
+                }
+                else { continue; }
+            }
+        }
+        else if (isonsiegerow == true)
+        {
+            for (int i = 0; i < player1siegerow.siegecards.Count; i++)
+            {
+                if (player1siegerow.siegecards[i].GetComponent<CardOutput>() == destroycard)
+                {
+                    player1graveyard.graveyard.Add(player1siegerow.siegecards[i]);
+                    player1siegerow.siegecards[i].transform.SetParent(player1graveyard.transform);
+                    player1siegerow.siegecards.RemoveAt(i);
+                }
+                else { continue; }
+            }
+        }
+        loki.effectexecuted = true;
+    }
+    public static void BerserkerEffect(CardOutput berserker)
+    {
+        if (berserker.effectexecuted == false)
+        {
+            if (berserker.tag == "Siege2")
+            {
+                MeleeRow player1meleerow = GameObject.Find("Player1 Melee Row").GetComponent<MeleeRow>();
+                RangedRow player1rangedrow = GameObject.Find("Player1 Ranged Row").GetComponent<RangedRow>();
+                SiegeRow player1siegerow = GameObject.Find("Player1 Siege Row").GetComponent<SiegeRow>();
+                Graveyard player1graveyard = GameObject.Find("Player1 Graveyard").GetComponent<Graveyard>();
+                BerserkerEffectFunction(berserker, player1meleerow, player1rangedrow, player1siegerow, player1graveyard);
+            }
+            else if (berserker.tag == "Siege")
+            {
+                MeleeRow player2meleerow = GameObject.Find("Player2 Melee Row").GetComponent<MeleeRow>();
+                RangedRow player2rangedrow = GameObject.Find("Player2 Ranged Row").GetComponent<RangedRow>();
+                SiegeRow player2siegerow = GameObject.Find("Player2 Siege Row").GetComponent<SiegeRow>();
+                Graveyard player2graveyard = GameObject.Find("Player2 Graveyard").GetComponent<Graveyard>();
+                BerserkerEffectFunction(berserker, player2meleerow, player2rangedrow, player2siegerow, player2graveyard);
+
+            }
+        }
+    }
+    public static void BerserkerEffectFunction(CardOutput berserker, MeleeRow player1meleerow, RangedRow player1rangedrow, SiegeRow player1siegerow, Graveyard player1graveyard)
+    {
+        int meleecount = 0;
+        int rangedcount = 0;
+        int siegecount = 0;
+
+        foreach (GameObject i in player1meleerow.meleecards)
+        {
+            meleecount++;
+        }
+        foreach (GameObject i in player1rangedrow.rangedcards)
+        {
+            rangedcount++;
+        }
+        foreach (GameObject i in player1siegerow.siegecards)
+        {
+            siegecount++;
+        }
+        if (meleecount != 0 && rangedcount != 0 && siegecount != 0)
+        {
+            if (meleecount < rangedcount && meleecount < siegecount)
+            {
+                for (int i = 0; i < player1meleerow.meleecards.Count; i++)
+                {
+                    player1graveyard.graveyard.Add(player1meleerow.meleecards[i]);
+                    player1meleerow.meleecards[i].transform.SetParent(player1graveyard.transform);
+                }
+                player1meleerow.meleecards.Clear();
+            }
+            else if (rangedcount < meleecount && rangedcount < siegecount)
+            {
+                for (int i = 0; i < player1rangedrow.rangedcards.Count; i++)
+                {
+                    player1graveyard.graveyard.Add(player1rangedrow.rangedcards[i]);
+                    player1rangedrow.rangedcards[i].transform.SetParent(player1graveyard.transform);
+                }
+                player1rangedrow.rangedcards.Clear();
+            }
+            else if (siegecount < meleecount && siegecount < rangedcount)
+            {
+                for (int i = 0; i < player1siegerow.siegecards.Count; i++)
+                {
+                    player1graveyard.graveyard.Add(player1siegerow.siegecards[i]);
+                    player1siegerow.siegecards[i].transform.SetParent(player1graveyard.transform);
+                }
+                player1siegerow.siegecards.Clear();
+            }
+            else
+            {
+                int k = Random.Range(0, 2);
+                if (k == 0)
+                {
+                    for (int i = 0; i < player1meleerow.meleecards.Count; i++)
+                    {
+                        player1graveyard.graveyard.Add(player1meleerow.meleecards[i]);
+                        player1meleerow.meleecards[i].transform.SetParent(player1graveyard.transform);
+
+                    }
+                    player1meleerow.meleecards.Clear();
+                }
+                else if (k == 1)
+                {
+                    for (int i = 0; i < player1rangedrow.rangedcards.Count; i++)
+                    {
+                        player1graveyard.graveyard.Add(player1rangedrow.rangedcards[i]);
+                        player1rangedrow.rangedcards[i].transform.SetParent(player1graveyard.transform);
+                    }
+                    player1rangedrow.rangedcards.Clear();
+                }
+                else
+                {
+                    for (int i = 0; i < player1siegerow.siegecards.Count; i++)
+                    {
+                        player1graveyard.graveyard.Add(player1siegerow.siegecards[i]);
+                        player1siegerow.siegecards[i].transform.SetParent(player1graveyard.transform);
+                    }
+                    player1siegerow.siegecards.Clear();
+                }
+            }
+        }
+        else if (meleecount == 0 && rangedcount != 0 && siegecount != 0)
+        {
+            if (rangedcount < meleecount)
+            {
+                for (int i = 0; i < player1rangedrow.rangedcards.Count; i++)
+                {
+                    player1graveyard.graveyard.Add(player1rangedrow.rangedcards[i]);
+                    player1rangedrow.rangedcards[i].transform.SetParent(player1graveyard.transform);
+                }
+                player1rangedrow.rangedcards.Clear();
+            }
+            else
+            {
+                for (int i = 0; i < player1siegerow.siegecards.Count; i++)
+                {
+                    player1graveyard.graveyard.Add(player1siegerow.siegecards[i]);
+                    player1siegerow.siegecards[i].transform.SetParent(player1graveyard.transform);
+                }
+                player1siegerow.siegecards.Clear();
+            }
+        }
+        else if (meleecount != 0 && rangedcount == 0 && siegecount != 0)
+        {
+            if (meleecount < siegecount)
+            {
+                for (int i = 0; i < player1meleerow.meleecards.Count; i++)
+                {
+                    player1graveyard.graveyard.Add(player1meleerow.meleecards[i]);
+                    player1meleerow.meleecards[i].transform.SetParent(player1graveyard.transform);
+                }
+                player1meleerow.meleecards.Clear();
+            }
+            else
+            {
+                for (int i = 0; i < player1siegerow.siegecards.Count; i++)
+                {
+                    player1graveyard.graveyard.Add(player1siegerow.siegecards[i]);
+                    player1siegerow.siegecards[i].transform.SetParent(player1graveyard.transform);
+                }
+                player1siegerow.siegecards.Clear();
+            }
+        }
+        else if (meleecount != 0 && rangedcount != 0 && siegecount == 0)
+        {
+            if (meleecount < rangedcount)
+            {
+                for (int i = 0; i < player1meleerow.meleecards.Count; i++)
+                {
+                    player1graveyard.graveyard.Add(player1meleerow.meleecards[i]);
+                    player1meleerow.meleecards[i].transform.SetParent(player1graveyard.transform);
+                }
+                player1meleerow.meleecards.Clear();
+            }
+            else
+            {
+                for (int i = 0; i < player1rangedrow.rangedcards.Count; i++)
+                {
+                    player1graveyard.graveyard.Add(player1rangedrow.rangedcards[i]);
+                    player1rangedrow.rangedcards[i].transform.SetParent(player1graveyard.transform);
+                }
+                player1rangedrow.rangedcards.Clear();
+            }
+        }
+        else if (meleecount != 0 && rangedcount == 0 && siegecount == 0)
+        {
+            for (int i = 0; i < player1meleerow.meleecards.Count; i++)
+            {
+                player1graveyard.graveyard.Add(player1meleerow.meleecards[i]);
+                player1meleerow.meleecards[i].transform.SetParent(player1graveyard.transform);
+            }
+            player1meleerow.meleecards.Clear();
+        }
+        else if (meleecount == 0 && rangedcount != 0 && siegecount == 0)
+        {
+            for (int i = 0; i < player1rangedrow.rangedcards.Count; i++)
+            {
+                player1graveyard.graveyard.Add(player1rangedrow.rangedcards[i]);
+                player1rangedrow.rangedcards[i].transform.SetParent(player1graveyard.transform);
+            }
+            player1rangedrow.rangedcards.Clear();
+        }
+        else if (meleecount == 0 && rangedcount == 0 && siegecount != 0)
+        {
+            for (int i = 0; i < player1siegerow.siegecards.Count; i++)
+            {
+
+                player1graveyard.graveyard.Add(player1siegerow.siegecards[i]);
+                player1siegerow.siegecards[i].transform.SetParent(player1graveyard.transform);
+            }
+            player1siegerow.siegecards.Clear();
+        }
+        berserker.effectexecuted = true;
+    }
+    public static void FreyaEffect(CardOutput freya)
+    {
+        if (freya.effectexecuted == false)
+        {
+            if (freya.tag == "Ranged2")
+            {
+                Deck player2deck = GameObject.Find("Player2Deck").GetComponent<Deck>();
+                GameObject meleeincrease = GameObject.Find("Player2 MeleeIncrease");
+                GameObject rangedincrease = GameObject.Find("Player2 RangedIncrease");
+                GameObject siegeincrease = GameObject.Find("Player2 SiegeIncrease");
+                for (int i = 0; i < player2deck.deck.Count; i++)
+                {
+                    if (player2deck.deck[i] != null && player2deck.deck[i].GetComponent<OtherCardOutput>() != null)
+                    {
+                        if (player2deck.deck[i].GetComponent<OtherCardOutput>().card.cardname == "Mjolnir")
+                        {
+                            meleeincrease.GetComponent<IncreaseBox>().increasebox.Add(player2deck.deck[i]);
+                            player2deck.deck[i].transform.SetParent(meleeincrease.transform);
+                            player2deck.deck[i].transform.position = meleeincrease.transform.position;
+                            player2deck.deck[i].GetComponent<OtherCardOutput>().isonthefield = true;
+                            player2deck.deck.RemoveAt(i);
+                            freya.effectexecuted = true;
+                        }
+                        else if (freya.effectexecuted == false && player2deck.deck[i].GetComponent<OtherCardOutput>().card.cardname == "Gungnir")
+                        {
+                            rangedincrease.GetComponent<IncreaseBox>().increasebox.Add(player2deck.deck[i]);
+                            player2deck.deck[i].transform.SetParent(rangedincrease.transform);
+                            player2deck.deck[i].transform.position = rangedincrease.transform.position;
+                            player2deck.deck[i].GetComponent<OtherCardOutput>().isonthefield = true;
+                            player2deck.deck.RemoveAt(i);
+                            freya.effectexecuted = true;
+                        }
+                        else if (freya.effectexecuted == false && player2deck.deck[i].GetComponent<OtherCardOutput>().card.cardname == "Gjallarhorn")
+                        {
+                            siegeincrease.GetComponent<IncreaseBox>().increasebox.Add(player2deck.deck[i]);
+                            player2deck.deck[i].transform.SetParent(siegeincrease.transform);
+                            player2deck.deck[i].transform.position = siegeincrease.transform.position;
+                            player2deck.deck[i].GetComponent<OtherCardOutput>().isonthefield = true;
+                            player2deck.deck.RemoveAt(i);
+                            freya.effectexecuted = true;
+                        }
+                    }
+                    else { continue; }
+                }
+            }
+            else if (freya.tag == "Ranged")
+            {
+                Deck player1deck = GameObject.Find("Player1Deck").GetComponent<Deck>();
+                GameObject meleeincrease = GameObject.Find("Player1 MeleeIncrease");
+                GameObject rangedincrease = GameObject.Find("Player1 RangedIncrease");
+                GameObject siegeincrease = GameObject.Find("Player1 SiegeIncrease");
+
+                for (int i = 0; i < player1deck.deck.Count; i++)
+                {
+                    if (player1deck.deck[i] != null && player1deck.deck[i].GetComponent<OtherCardOutput>() != null)
+                    {
+                        if (player1deck.deck[i].GetComponent<OtherCardOutput>().card.cardname == "Mjolnir")
+                        {
+                            meleeincrease.GetComponent<IncreaseBox>().increasebox.Add(player1deck.deck[i]);
+                            player1deck.deck[i].transform.SetParent(meleeincrease.transform);
+                            player1deck.deck[i].transform.position = meleeincrease.transform.position;
+                            player1deck.deck[i].GetComponent<OtherCardOutput>().isonthefield = true;
+                            player1deck.deck.RemoveAt(i);
+                            freya.effectexecuted = true;
+                        }
+                        else if (freya.effectexecuted == false && player1deck.deck[i].GetComponent<OtherCardOutput>().card.cardname == "Gungnir")
+                        {
+                            rangedincrease.GetComponent<IncreaseBox>().increasebox.Add(player1deck.deck[i]);
+                            player1deck.deck[i].transform.SetParent(rangedincrease.transform);
+                            player1deck.deck[i].transform.position = rangedincrease.transform.position;
+                            player1deck.deck[i].GetComponent<OtherCardOutput>().isonthefield = true;
+                            player1deck.deck.RemoveAt(i);
+                            freya.effectexecuted = true;
+                        }
+                        else if (freya.effectexecuted == false && player1deck.deck[i].GetComponent<OtherCardOutput>().card.cardname == "Gjallarhorn")
+                        {
+                            siegeincrease.GetComponent<IncreaseBox>().increasebox.Add(player1deck.deck[i]);
+                            player1deck.deck[i].transform.SetParent(siegeincrease.transform);
+                            player1deck.deck[i].transform.position = siegeincrease.transform.position;
+                            player1deck.deck[i].GetComponent<OtherCardOutput>().isonthefield = true;
+                            player1deck.deck.RemoveAt(i);
+                            freya.effectexecuted = true;
+                        }
+                    }
+                    else { continue; }
+                }
+            }
+            freya.effectexecuted = true;
+        }
+    }
+    public static void BaldurEffect(CardOutput Baldur)
+    {
+        if (Baldur.effectexecuted == false)
+        {
+            if (Baldur.tag == "Melee")
+            {
+                Deck player1deck = GameObject.Find("Player1Deck").GetComponent<Deck>();
+                GameObject weatherrow = GameObject.Find("WeatherRow");
+                for (int i = 0; i < player1deck.deck.Count; i++)
+                {
+                    if (player1deck.deck[i] != null && player1deck.deck[i].GetComponent<OtherCardOutput>() != null)
+                    {
+                        if (player1deck.deck[i].GetComponent<OtherCardOutput>().card.type == "Weather" && player1deck.deck[i].GetComponent<OtherCardOutput>().card.cardname != "Bendición de Baldur")
+                        {
+                            weatherrow.GetComponent<WeatherRow>().weathercards.Add(player1deck.deck[i]);
+                            player1deck.deck[i].transform.SetParent(weatherrow.transform);
+                            player1deck.deck[i].transform.position = weatherrow.transform.position;
+                            player1deck.deck[i].GetComponent<OtherCardOutput>().isonthefield = true;
+                            player1deck.deck.RemoveAt(i);
+                            Baldur.effectexecuted = true;
+                            return;
+                        }
+                    }
+                    else { continue; }
+                }
+            }
+            else if (Baldur.tag == "Melee2")
+            {
+                Deck player2deck = GameObject.Find("Player2Deck").GetComponent<Deck>();
+                GameObject weatherrow = GameObject.Find("WeatherRow");
+                for (int i = 0; i < player2deck.deck.Count; i++)
+                {
+                    if (player2deck.deck[i] != null && player2deck.deck[i].GetComponent<OtherCardOutput>() != null)
+                    {
+                        if (player2deck.deck[i].GetComponent<OtherCardOutput>().card.type == "Weather" && player2deck.deck[i].GetComponent<OtherCardOutput>().card.cardname != "Bendición de Baldur")
+                        {
+                            weatherrow.GetComponent<WeatherRow>().weathercards.Add(player2deck.deck[i]);
+                            player2deck.deck[i].transform.SetParent(weatherrow.transform);
+                            player2deck.deck[i].transform.position = weatherrow.transform.position;
+                            player2deck.deck[i].GetComponent<OtherCardOutput>().isonthefield = true;
+                            player2deck.deck.RemoveAt(i);
+                            Baldur.effectexecuted = true;
+                            return;
+                        }
+                    }
+                    else { continue; }
+                }
+            }
+
+        }
+    }
+    public static void DrakkarEffect(CardOutput drakkar)
+    {
+        if (drakkar.effectexecuted == false)
+        {
+            MeleeRow player1meleerow = GameObject.Find("Player1 Melee Row").GetComponent<MeleeRow>();
+            RangedRow player1rangedrow = GameObject.Find("Player1 Ranged Row").GetComponent<RangedRow>();
+            SiegeRow player1siegerow = GameObject.Find("Player1 Siege Row").GetComponent<SiegeRow>();
+            MeleeRow player2meleerow = GameObject.Find("Player2 Melee Row").GetComponent<MeleeRow>();
+            RangedRow player2rangedrow = GameObject.Find("Player2 Ranged Row").GetComponent<RangedRow>();
+            SiegeRow player2siegerow = GameObject.Find("Player2 Siege Row").GetComponent<SiegeRow>();
+            int powertotal;
+            int count;
+
+            if (drakkar.tag == "Siege")
+            {
+                powertotal = 0;
+                count = 0;
+
+                foreach (GameObject i in player2meleerow.meleecards)
+                {
+                    powertotal += i.GetComponent<CardOutput>().powercard;
+                    count++;
+                }
+                foreach (GameObject i in player2rangedrow.rangedcards)
+                {
+                    powertotal += i.GetComponent<CardOutput>().powercard;
+                    count++;
+                }
+                foreach (GameObject i in player2siegerow.siegecards)
+                {
+                    powertotal += i.GetComponent<CardOutput>().powercard;
+                    count++;
+                }
+                if (count != 0)
+                {
+                    powertotal = powertotal / count;
+                }
+                else { powertotal = 0; }
+                foreach (GameObject i in player1meleerow.meleecards)
+                {
+                    i.GetComponent<CardOutput>().powercard = powertotal;
+                }
+                foreach (GameObject i in player1rangedrow.rangedcards)
+                {
+                    i.GetComponent<CardOutput>().powercard = powertotal;
+                }
+                foreach (GameObject i in player1siegerow.siegecards)
+                {
+                    i.GetComponent<CardOutput>().powercard = powertotal;
+                }
+            }
+            else if (drakkar.tag == "Siege2")
+            {
+                powertotal = 0;
+                count = 0;
+
+                foreach (GameObject i in player1meleerow.meleecards)
+                {
+                    powertotal += i.GetComponent<CardOutput>().powercard;
+                    count++;
+                }
+                foreach (GameObject i in player1rangedrow.rangedcards)
+                {
+                    powertotal += i.GetComponent<CardOutput>().powercard;
+                    count++;
+                }
+                foreach (GameObject i in player1siegerow.siegecards)
+                {
+                    powertotal += i.GetComponent<CardOutput>().powercard;
+                    count++;
+                }
+                if (count != 0)
+                {
+                    powertotal = powertotal / count;
+                }
+                else { powertotal = 0; }
+                foreach (GameObject i in player2meleerow.meleecards)
+                {
+                    i.GetComponent<CardOutput>().powercard = powertotal;
+                }
+                foreach (GameObject i in player2rangedrow.rangedcards)
+                {
+                    i.GetComponent<CardOutput>().powercard = powertotal;
+                }
+                foreach (GameObject i in player2siegerow.siegecards)
+                {
+                    i.GetComponent<CardOutput>().powercard = powertotal;
+                }
+            }
+            drakkar.effectexecuted = true;
+        }
+    }
 }
-
 
 

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   picture: {fileID: 21300000, guid: 6ae4f30019f34974c89acae77a62b102, type: 3}
   cardname: Loki
-  description: 
+  description: Elimina la carta con menor poder del campo del rival
   faction: Nordics
   type: Ranged
   haseffect: 1

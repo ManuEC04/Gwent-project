@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   picture: {fileID: 21300000, guid: 48cced68d16afc54fa8a15a053837217, type: 3}
   cardname: "Se\xF1uelo de Loki"
-  description: 
+  description: Devuelve una carta de tu campo a la mano
   faction: Nordics
   type: Lure
   haseffect: 1

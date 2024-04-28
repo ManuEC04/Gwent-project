@@ -34,8 +34,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 15.34491, y: -341.97394}
-  m_SizeDelta: {x: 294.6899, y: 110.8136}
+  m_AnchoredPosition: {x: 4.8558, y: -341.97394}
+  m_SizeDelta: {x: 460.34, y: 110.8136}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5700066350730920067
 CanvasRenderer:
@@ -67,7 +67,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 35
+    m_FontSize: 27
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -117,8 +117,8 @@ RectTransform:
   - {fileID: 4745793732907199276}
   - {fileID: 4411007353909424248}
   - {fileID: 1126210204400204}
-  - {fileID: 289945083355006513}
   - {fileID: 4048076894312180956}
+  - {fileID: 289945083355006513}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -171,7 +171,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &6931274233711318373
 MonoBehaviour:
   m_ObjectHideFlags: 0

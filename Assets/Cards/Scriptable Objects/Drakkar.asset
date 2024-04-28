@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   picture: {fileID: 21300000, guid: b7ff9a75b52ddb44f9bfeb454a1c6e59, type: 3}
   cardname: Drakkar
-  description: 
+  description: Calcula el promedio del poder total de las cartas del rival e iguala
+    las cartas de tu campo a ese promedio
   faction: Nordics
   type: Siege
   haseffect: 1

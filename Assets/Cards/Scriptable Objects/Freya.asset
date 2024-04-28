@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   picture: {fileID: 21300000, guid: d2817fa4e2ae49d429973a6efdb24666, type: 3}
   cardname: Freya
-  description: 
+  description: Invoca al campo un aumento del deck
   faction: Nordics
   type: Ranged
   haseffect: 1

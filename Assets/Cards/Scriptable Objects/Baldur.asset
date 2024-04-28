@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   picture: {fileID: 21300000, guid: d786023c0337e144c9d5451a6e464060, type: 3}
   cardname: Baldur
-  description: 
+  description: Invoca al campo un clima del deck
   faction: Nordics
   type: Melee
   haseffect: 1

@@ -32,52 +32,52 @@ public class GameFunctions : MonoBehaviour
         }
     }
     //Robar 10 Cartas al inicio de la primera ronda
-    public static void FirstDraw(List<GameObject> deck, List<GameObject> hand , float horizontalpos, float verticalpos, float distance)
+    public static void FirstDraw(List<GameObject> deck, List<GameObject> hand, float horizontalpos, float verticalpos, float distance)
     {
         //DeckRandom(deck);
         for (int i = 0; i <= 9; i++)
         {
-            
+
             hand.Add(deck[i]);
             deck.RemoveAt(i);
         }
-        CheckHandPosition(hand , horizontalpos ,verticalpos , distance);
+        CheckHandPosition(hand, horizontalpos, verticalpos, distance);
     }
     //Redraw
-    public static void Redraw(Hand hand , Deck deck , float horizontalpos , float verticalpos , float distance)
+    public static void Redraw(Hand hand, Deck deck, float horizontalpos, float verticalpos, float distance)
     {
-      DeckRandom(deck.deck);
-      hand.hand[9].transform.SetParent(deck.gameObject.transform); hand.hand[9].transform.position = deck.deck[6].transform.position;
-      hand.hand[8].transform.SetParent(deck.gameObject.transform); hand.hand[8].transform.position = deck.deck[6].gameObject.transform.position;
-      deck.deck.Add(hand.hand[9]);
-      deck.deck.Add(hand.hand[8]);
-      hand.hand.RemoveAt(9);
-      hand.hand.RemoveAt(8);
-      deck.deck[0].transform.SetParent(hand.gameObject.transform);
-      deck.deck[1].transform.SetParent(hand.gameObject.transform);
-      hand.hand.Add(deck.deck[0]);
-      hand.hand.Add(deck.deck[1]);
-      deck.deck.RemoveAt(0);
-      deck.deck.RemoveAt(1);
-      CheckHandPosition(hand.hand ,horizontalpos , verticalpos , distance);
+        DeckRandom(deck.deck);
+        hand.hand[9].transform.SetParent(deck.gameObject.transform); hand.hand[9].transform.position = deck.deck[6].transform.position;
+        hand.hand[8].transform.SetParent(deck.gameObject.transform); hand.hand[8].transform.position = deck.deck[6].gameObject.transform.position;
+        deck.deck.Add(hand.hand[9]);
+        deck.deck.Add(hand.hand[8]);
+        hand.hand.RemoveAt(9);
+        hand.hand.RemoveAt(8);
+        deck.deck[0].transform.SetParent(hand.gameObject.transform);
+        deck.deck[1].transform.SetParent(hand.gameObject.transform);
+        hand.hand.Add(deck.deck[0]);
+        hand.hand.Add(deck.deck[1]);
+        deck.deck.RemoveAt(0);
+        deck.deck.RemoveAt(1);
+        CheckHandPosition(hand.hand, horizontalpos, verticalpos, distance);
 
     }
     //Ajustar posiciones de la mano
-    public static void CheckHandPosition(List <GameObject>hand , float horizontalpos , float verticalpos , float distance)
+    public static void CheckHandPosition(List<GameObject> hand, float horizontalpos, float verticalpos, float distance)
     {
-         for (int i = 0; i < hand.Count; i++)
+        distance = 0;
+        for (int i = 0; i < hand.Count; i++)
         {
-           hand[i].transform.position = new Vector3(horizontalpos + distance, verticalpos, 0f);
+            hand[i].transform.position = new Vector3(horizontalpos + distance, verticalpos, 0f);
             distance += 85;
-            if(hand[i].GetComponent<CardOutput>()!=null)
+            if (hand[i].GetComponent<CardOutput>() != null)
             {
                 hand[i].GetComponent<CardOutput>().isonthefield = false;
                 hand[i].GetComponent<CardOutput>().affectedbyeffect = false;
                 hand[i].GetComponent<CardOutput>().affectedbyweather = false;
                 hand[i].GetComponent<CardManager>().received = false;
-
             }
-            else if(hand[i].GetComponent<OtherCardOutput>()!=null)
+            else if (hand[i].GetComponent<OtherCardOutput>() != null)
             {
                 hand[i].GetComponent<OtherCardOutput>().isonthefield = false;
                 hand[i].GetComponent<CardManager>().received = false;
@@ -99,8 +99,9 @@ public class GameFunctions : MonoBehaviour
                 hand.Add(deck[i]);
                 deck.RemoveAt(i);
             }
+            CheckHandPosition(hand, horizontalpos, verticalpos, distance);
         }
-        CheckHandPosition(hand , horizontalpos ,verticalpos , distance);
+
     }
     //Verificar que jugador esta activado 
     public static void CheckVisualTurn(GameObject Player1, GameObject Player2, GameObject Player1Visual, GameObject Player2Visual)
@@ -190,17 +191,18 @@ public class GameFunctions : MonoBehaviour
         GameObject Player2powcounter = GameObject.Find("Player 2 Power Counter");
         PowerCounter powercounter1 = Player1powcounter.GetComponent<PowerCounter>();
         PowerCounter powercounter2 = Player2powcounter.GetComponent<PowerCounter>();
-        LifeCounter lifecounter1 =  GameObject.Find("Player 1 Life Counter").GetComponent<LifeCounter>();
-        LifeCounter lifecounter2 =  GameObject.Find("Player 2 Life Counter").GetComponent<LifeCounter>();
+        LifeCounter lifecounter1 = GameObject.Find("Player 1 Life Counter").GetComponent<LifeCounter>();
+        LifeCounter lifecounter2 = GameObject.Find("Player 2 Life Counter").GetComponent<LifeCounter>();
 
         if (powercounter1.powfield < powercounter2.powfield)
         {
             Debug.Log("El jugador 2 ha gando la ronda");
             ClearField();
-            lifecounter1.playerlife --;
+            lifecounter1.playerlife--;
             CheckLife();
             player2turn.ismyturn = true;
             player2turn.passed = false;
+            player2turn.playmade = false;
             player2turn.DrawExecuted = false;
             player1turn.ismyturn = false;
             player1turn.DrawExecuted = false;
@@ -217,6 +219,7 @@ public class GameFunctions : MonoBehaviour
             player2turn.passed = false;
             player2turn.DrawExecuted = false;
             player1turn.ismyturn = true;
+            player1turn.playmade = false;
             player1turn.DrawExecuted = false;
             player1turn.passed = false;
             player1turn.playmade = false;
@@ -229,6 +232,7 @@ public class GameFunctions : MonoBehaviour
             lifecounter2.playerlife--;
             CheckLife();
             player2turn.ismyturn = true;
+            player2turn.playmade = false;
             player2turn.passed = false;
             player2turn.DrawExecuted = false;
             player1turn.ismyturn = false;
@@ -306,43 +310,43 @@ public class GameFunctions : MonoBehaviour
             player1graveyard.graveyard.Add(weatherrow.weathercards[i]);
         }
         weatherrow.weathercards.Clear();
-         
-         if(meleeincrease.increasebox.Count == 1)
-         {
-         meleeincrease.increasebox[0].transform.SetParent(player1graveyard.transform);
-         player1graveyard.graveyard.Add(meleeincrease.increasebox[0]);
-         meleeincrease.increasebox.RemoveAt(0);
-         }
-         if(rangedincrease.increasebox.Count == 1)
-         {
-         rangedincrease.increasebox[0].transform.SetParent(player1graveyard.transform);
-         player1graveyard.graveyard.Add(rangedincrease.increasebox[0]);
-         rangedincrease.increasebox.RemoveAt(0);
-         }
-         if(siegeincrease.increasebox.Count == 1)
-         {
-         siegeincrease.increasebox[0].transform.SetParent(player1graveyard.transform);
-         player1graveyard.graveyard.Add(siegeincrease.increasebox[0]);
-         siegeincrease.increasebox.RemoveAt(0);
-         }
-         if(meleeincrease2.increasebox.Count == 1)
-         {
-         meleeincrease2.increasebox[0].transform.SetParent(player2graveyard.transform);
-         player2graveyard.graveyard.Add(meleeincrease2.increasebox[0]);
-         meleeincrease2.increasebox.RemoveAt(0);
-         }
-         if(rangedincrease2.increasebox.Count == 1)
-         {
-         rangedincrease2.increasebox[0].transform.SetParent(player2graveyard.transform);
-         player2graveyard.graveyard.Add(rangedincrease2.increasebox[0]);
-         rangedincrease2.increasebox.RemoveAt(0);
-         }
-         if(siegeincrease2.increasebox.Count == 1)
-         {
-         siegeincrease2.increasebox[0].transform.SetParent(player2graveyard.transform);
-         player2graveyard.graveyard.Add(siegeincrease2.increasebox[0]);
-         siegeincrease2.increasebox.RemoveAt(0);
-         }
+
+        if (meleeincrease.increasebox.Count == 1)
+        {
+            meleeincrease.increasebox[0].transform.SetParent(player1graveyard.transform);
+            player1graveyard.graveyard.Add(meleeincrease.increasebox[0]);
+            meleeincrease.increasebox.RemoveAt(0);
+        }
+        if (rangedincrease.increasebox.Count == 1)
+        {
+            rangedincrease.increasebox[0].transform.SetParent(player1graveyard.transform);
+            player1graveyard.graveyard.Add(rangedincrease.increasebox[0]);
+            rangedincrease.increasebox.RemoveAt(0);
+        }
+        if (siegeincrease.increasebox.Count == 1)
+        {
+            siegeincrease.increasebox[0].transform.SetParent(player1graveyard.transform);
+            player1graveyard.graveyard.Add(siegeincrease.increasebox[0]);
+            siegeincrease.increasebox.RemoveAt(0);
+        }
+        if (meleeincrease2.increasebox.Count == 1)
+        {
+            meleeincrease2.increasebox[0].transform.SetParent(player2graveyard.transform);
+            player2graveyard.graveyard.Add(meleeincrease2.increasebox[0]);
+            meleeincrease2.increasebox.RemoveAt(0);
+        }
+        if (rangedincrease2.increasebox.Count == 1)
+        {
+            rangedincrease2.increasebox[0].transform.SetParent(player2graveyard.transform);
+            player2graveyard.graveyard.Add(rangedincrease2.increasebox[0]);
+            rangedincrease2.increasebox.RemoveAt(0);
+        }
+        if (siegeincrease2.increasebox.Count == 1)
+        {
+            siegeincrease2.increasebox[0].transform.SetParent(player2graveyard.transform);
+            player2graveyard.graveyard.Add(siegeincrease2.increasebox[0]);
+            siegeincrease2.increasebox.RemoveAt(0);
+        }
     }
     //Posicionar las cartas del cementerio
     public static void GraveyardPosition(RectTransform cardposition, List<GameObject> graveyard)
@@ -394,8 +398,8 @@ public class GameFunctions : MonoBehaviour
         {
             Debug.Log("El jugador 2 ha ganado la partida");
             GameObject Player2Win = GameObject.Find("Player2Win");
-            GameObject Board = GameObject.Find("Board");
-            Player2Win.transform.SetParent(Board.transform);
+            GameObject Winner = GameObject.Find("Winner");
+            Player2Win.transform.SetParent(Winner.transform);
             Application.Quit();
             return;
         }
@@ -403,8 +407,8 @@ public class GameFunctions : MonoBehaviour
         {
             Debug.Log("El jugador 1 ha ganado la partida");
             GameObject Player1Win = GameObject.Find("Player1Win");
-            GameObject Board = GameObject.Find("Board");
-            Player1Win.transform.SetParent(Board.transform);
+            GameObject Winner = GameObject.Find("Winner");
+            Player1Win.transform.SetParent(Winner.transform);
             Application.Quit();
             return;
         }
@@ -412,8 +416,8 @@ public class GameFunctions : MonoBehaviour
         {
             Debug.Log("La partida ha quedado empatada");
             GameObject Empate = GameObject.Find("Empate");
-            GameObject Board = GameObject.Find("Board");
-            Empate.transform.SetParent(Board.transform);
+        GameObject Winner = GameObject.Find("Winner");
+            Empate.transform.SetParent(Winner.transform);
             Application.Quit();
             return;
         }
@@ -425,74 +429,75 @@ public class GameFunctions : MonoBehaviour
         {
             while (hand.Count > 10)
             {
-                graveyard.graveyard.Add(hand[hand.Count -1]);
-                hand.RemoveAt(hand.Count -1);
+                graveyard.graveyard.Add(hand[hand.Count - 1]);
+                hand.RemoveAt(hand.Count - 1);
             }
         }
     }
     //Posicionar las cartas de la casilla de Aumento
 
-    public static void IncreaseOnField(GameObject Increase, List<GameObject>box , string tag, Collider2D other)
+    public static void IncreaseOnField(GameObject Increase, List<GameObject> box, string tag, Collider2D other)
     {
-       if(box.Count < 1){
-       if (other.gameObject.CompareTag(tag))
-       {
-       RectTransform boxposition = Increase.GetComponent<RectTransform>();
-       box.Add(other.gameObject);
-       box[0].transform.position = boxposition.position;
-       box[0].transform.SetParent(Increase.transform);
-       }
-       }
+        if (box.Count < 1)
+        {
+            if (other.gameObject.CompareTag(tag))
+            {
+                RectTransform boxposition = Increase.GetComponent<RectTransform>();
+                box.Add(other.gameObject);
+                box[0].transform.position = boxposition.position;
+                box[0].transform.SetParent(Increase.transform);
+            }
+        }
     }
     // Verifica si hay climas en juego
 
     public static bool CheckWeatherOnField()
     {
         WeatherRow weatherRow = GameObject.Find("WeatherRow").GetComponent<WeatherRow>();
-        for(int i = 0 ; i < weatherRow.weathercards.Count ; i++)
+        for (int i = 0; i < weatherRow.weathercards.Count; i++)
         {
-            if(weatherRow.weathercards[i] != null)
+            if (weatherRow.weathercards[i] != null)
             {
                 return true;
             }
-            else{continue;}
+            else { continue; }
         }
         return false;
     }
     //Limpiar las posiciones de la fila
-    public static void ClearPositions(List<GameObject>cards , List<GameObject>rowposition)
+    public static void ClearPositions(List<GameObject> cards, List<GameObject> rowposition)
     {
-         if(cards.Count == 0)
-      {
-         rowposition.Clear();
-      }
+        if (cards.Count == 0)
+        {
+            rowposition.Clear();
+        }
     }
-    public static bool CheckFieldNoNull(List<GameObject> meleerow , List<GameObject>rangedrow , List<GameObject>siegerow)
+    public static bool CheckFieldNoNull(List<GameObject> meleerow, List<GameObject> rangedrow, List<GameObject> siegerow)
     {
-      for(int i = 0 ; i < meleerow.Count ; i++)
-      {
-        if(meleerow[i] != null && meleerow[i].GetComponent<CardOutput>().card.type != "Lure" && meleerow[i].GetComponent<CardOutput>().card.rank != "Gold")
+        for (int i = 0; i < meleerow.Count; i++)
         {
-            return true;
+            if (meleerow[i] != null && meleerow[i].GetComponent<CardOutput>().card.type != "Lure" && meleerow[i].GetComponent<CardOutput>().card.rank != "Gold")
+            {
+                return true;
+            }
+            else { continue; }
         }
-        else{continue;}
-      }
-      for(int i = 0 ; i < rangedrow.Count ; i++)
-      {
-        if(rangedrow[i] != null && rangedrow[i].GetComponent<CardOutput>().card.rank != "Gold")
+        for (int i = 0; i < rangedrow.Count; i++)
         {
-            return true;
+            if (rangedrow[i] != null && rangedrow[i].GetComponent<CardOutput>().card.rank != "Gold")
+            {
+                return true;
+            }
+            else { continue; }
         }
-        else{continue;}
-      }
-      for(int i = 0 ; i < siegerow.Count ; i++ )
-      {
-        if(siegerow[i] != null && siegerow[i].GetComponent<CardOutput>().card.rank != "Gold")
+        for (int i = 0; i < siegerow.Count; i++)
         {
-            return true;
+            if (siegerow[i] != null && siegerow[i].GetComponent<CardOutput>().card.rank != "Gold")
+            {
+                return true;
+            }
+            else { continue; }
         }
-        else{continue;}
-      }
-      return false;
+        return false;
     }
 }
