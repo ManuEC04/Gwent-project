@@ -22,7 +22,6 @@ public class CardManager : MonoBehaviour, IDragHandler, IDropHandler
     private GameObject Player1;
     private GameObject Player2;
     private CardOutput card;
-    private int power;
     private OtherCardOutput othercard;
     private GameObject Cardinfo;
     private GameObject OtherCardinfo;
@@ -66,7 +65,6 @@ public class CardManager : MonoBehaviour, IDragHandler, IDropHandler
             if (gameObject.tag == "Melee" || gameObject.tag == "Ranged" || gameObject.tag == "Siege" || gameObject.tag == "Lure")
             {
                 card = GetComponent<CardOutput>();
-                power = card.powercard;
             }
             else if (gameObject.tag == "Weather" || gameObject.tag == "MeleeIncrease" || gameObject.tag == "RangedIncrease" || gameObject.tag == "SiegeIncrease")
             {
@@ -81,7 +79,6 @@ public class CardManager : MonoBehaviour, IDragHandler, IDropHandler
             if (gameObject.tag == "Melee2" || gameObject.tag == "Ranged2" || gameObject.tag == "Siege2" || gameObject.tag == "Lure")
             {
                 card = GetComponent<CardOutput>();
-                power = card.powercard;
             }
             else if (gameObject.tag == "Weather" || gameObject.tag == "MeleeIncrease2" || gameObject.tag == "RangedIncrease2" || gameObject.tag == "SiegeIncrease2")
             {
@@ -109,7 +106,10 @@ public class CardManager : MonoBehaviour, IDragHandler, IDropHandler
 
             if (card.isonthefield == false)
             {
-                card.powercard = power;
+                card.powercard = card.card.power;
+                card.effectexecuted = false;
+                card.affectedbyeffect = false;
+                card.affectedbyweather = false;
             }
         }
         else if (othercard != null)

@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public class GameFunctions : MonoBehaviour
@@ -84,24 +83,15 @@ public class GameFunctions : MonoBehaviour
             }
         }
     }
-
-
-
-
     //Robar 2 cartas al inicio e cada ronda
     public static void StartRoundDraw(List<GameObject> deck, List<GameObject> hand, float horizontalpos, float verticalpos, float distance)
     {
-
         distance = 0;
-        {
-            for (int i = 0; i < 2; i++)
-            {
-                hand.Add(deck[i]);
-                deck.RemoveAt(i);
-            }
-            CheckHandPosition(hand, horizontalpos, verticalpos, distance);
-        }
-
+        hand.Add(deck[0]);
+        hand.Add(deck[1]);
+        deck.RemoveAt(0);
+        deck.RemoveAt(0);
+        CheckHandPosition(hand, horizontalpos, verticalpos, distance);
     }
     //Verificar que jugador esta activado 
     public static void CheckVisualTurn(GameObject Player1, GameObject Player2, GameObject Player1Visual, GameObject Player2Visual)
@@ -416,7 +406,7 @@ public class GameFunctions : MonoBehaviour
         {
             Debug.Log("La partida ha quedado empatada");
             GameObject Empate = GameObject.Find("Empate");
-        GameObject Winner = GameObject.Find("Winner");
+            GameObject Winner = GameObject.Find("Winner");
             Empate.transform.SetParent(Winner.transform);
             Application.Quit();
             return;

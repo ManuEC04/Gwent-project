@@ -1,7 +1,4 @@
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,8 +20,8 @@ public class PowerCounter : MonoBehaviour
     }
     void Update()
     {
-        power.text = powfield.ToString();
         GetPower();
+        power.text = powfield.ToString();
     }
     public void GetPower()
     {
@@ -45,4 +42,5 @@ public class PowerCounter : MonoBehaviour
         }
         powfield = powmelee + powranged + powsiege;
     }
+
 }

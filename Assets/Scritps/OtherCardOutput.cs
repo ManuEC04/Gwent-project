@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class OtherCardOutput : MonoBehaviour
 {
     public OtherCard card;
-    public CardEffects effect;
     public Image picture;
     public Text nametext;
     public Text description;

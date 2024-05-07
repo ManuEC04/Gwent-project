@@ -25,8 +25,8 @@ public class CardOutput : MonoBehaviour
     nametext.text = card.cardname;
     description.text = card.description;
     powercard = card.power;
-      type.sprite = card.typeimage;
-      rank.sprite = card.rankicon;
+    type.sprite = card.typeimage;
+    rank.sprite = card.rankicon;
   }
   void Update()
   {

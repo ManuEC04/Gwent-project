@@ -1,15 +1,10 @@
 using System.Collections.Generic;
-using System.Data.Common;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Unity.VisualScripting;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
 
 public class CardEffects : MonoBehaviour
 {
     //Efecto de la carta lider
-
     public void Drawcard()
     {
         Turn playerturn = GetComponentInParent<Turn>();
@@ -122,6 +117,7 @@ public class CardEffects : MonoBehaviour
             }
             else if (card.card.cardname == "Bendición de Baldur")
             {
+                //Carta de despeje
                 BaldurBlessing();
             }
         }
@@ -162,7 +158,7 @@ public class CardEffects : MonoBehaviour
         }
     }
     //Efecto de la carta señuelo
-    public static void LureEffect(CardOutput card, Lure lure)
+    static void LureEffect(CardOutput card, Lure lure)
     {
         if (card.gameObject.tag == "Melee")
         {
@@ -299,7 +295,7 @@ public class CardEffects : MonoBehaviour
             }
         }
     }
-    public static void MjolnirEffect(OtherCardOutput card)
+    static void MjolnirEffect(OtherCardOutput card)
     {
         MeleeRow meleerow = null;
         if (card.gameObject.tag == "MeleeIncrease")
@@ -325,7 +321,7 @@ public class CardEffects : MonoBehaviour
         }
     }
     //Efecto de Gungnir
-    public static void GungnirEffect(OtherCardOutput card)
+    static void GungnirEffect(OtherCardOutput card)
     {
         RangedRow rangedrow = null;
         if (card.gameObject.tag == "RangedIncrease")
@@ -350,7 +346,7 @@ public class CardEffects : MonoBehaviour
             else { continue; }
         }
     }
-    public static void GjallarhornEffect(OtherCardOutput card)
+    static void GjallarhornEffect(OtherCardOutput card)
     {
         SiegeRow siegerow = null;
         if (card.gameObject.tag == "SiegeIncrease")
@@ -391,7 +387,7 @@ public class CardEffects : MonoBehaviour
         }
     }
     //Effecto de la carta Fenrir
-    public static void FenrirEffect(CardOutput fenrir)
+    static void FenrirEffect(CardOutput fenrir)
     {
         fenrir.affectedbyeffect = true;
         int n = 0;
@@ -418,7 +414,7 @@ public class CardEffects : MonoBehaviour
         fenrir.effectexecuted = true;
     }
     //Efecto del clima Supertormenta
-    public static void SupertormentaEffect()
+    static void SupertormentaEffect()
     {
         GameObject Player1Field = GameObject.Find("Player1 Rows");
         MeleeRow meleerow1 = Player1Field.GetComponentInChildren<MeleeRow>();
@@ -451,7 +447,7 @@ public class CardEffects : MonoBehaviour
         }
     }
     //Efecto del clima Frio de Nilfheim
-    public static void NilfheimEffect()
+    static void NilfheimEffect()
     {
         GameObject Player1Field = GameObject.Find("Player1 Rows");
         SiegeRow siegerow1 = Player1Field.GetComponentInChildren<SiegeRow>();
@@ -484,7 +480,7 @@ public class CardEffects : MonoBehaviour
         }
     }
     //Efecto del clima Fuego de Hell
-    public static void AlfheimEffect()
+    static void AlfheimEffect()
     {
         GameObject Player1Field = GameObject.Find("Player1 Rows");
         RangedRow rangedrow1 = Player1Field.GetComponentInChildren<RangedRow>();
@@ -516,8 +512,9 @@ public class CardEffects : MonoBehaviour
             }
         }
     }
-    public static void BaldurBlessing()
+    static void BaldurBlessing()
     {
+
         WeatherRow weatherRow = GameObject.Find("WeatherRow").GetComponent<WeatherRow>();
         MeleeRow player1meleerow = GameObject.Find("Player1 Melee Row").GetComponent<MeleeRow>();
         RangedRow player1rangedrow = GameObject.Find("Player1 Ranged Row").GetComponent<RangedRow>();
@@ -529,66 +526,12 @@ public class CardEffects : MonoBehaviour
         Graveyard player2graveyard = GameObject.Find("Player2 Graveyard").GetComponent<Graveyard>();
         Turn player1turn = GameObject.Find("Player1Turn").GetComponent<Turn>();
         Turn player2turn = GameObject.Find("Player2Turn").GetComponent<Turn>();
-
-        foreach (GameObject i in player1meleerow.meleecards)
-        {
-            if (i.GetComponent<CardOutput>().affectedbyweather == true)
-            {
-                i.GetComponent<CardOutput>().powercard += 3;
-                i.GetComponent<CardOutput>().affectedbyweather = false;
-            }
-            else { continue; }
-        }
-        foreach (GameObject i in player2meleerow.meleecards)
-        {
-            if (i.GetComponent<CardOutput>().affectedbyweather == true)
-            {
-                i.GetComponent<CardOutput>().powercard += 3;
-                i.GetComponent<CardOutput>().affectedbyweather = false;
-            }
-            else { continue; }
-        }
-        foreach (GameObject i in player1rangedrow.rangedcards)
-        {
-            if (i.GetComponent<CardOutput>().affectedbyweather == true)
-            {
-                i.GetComponent<CardOutput>().powercard += 2;
-                i.GetComponent<CardOutput>().affectedbyweather = false;
-            }
-            else { continue; }
-        }
-        foreach (GameObject i in player2rangedrow.rangedcards)
-        {
-            if (i.GetComponent<CardOutput>().affectedbyweather == true)
-            {
-                i.GetComponent<CardOutput>().powercard += 2;
-                i.GetComponent<CardOutput>().affectedbyweather = false;
-            }
-            else { continue; }
-        }
-        foreach (GameObject i in player1siegerow.siegecards)
-        {
-            if (i.GetComponent<CardOutput>().affectedbyweather == true)
-            {
-                i.GetComponent<CardOutput>().powercard += 4;
-                i.GetComponent<CardOutput>().affectedbyweather = false;
-            }
-            else { continue; }
-        }
-        foreach (GameObject i in player2siegerow.siegecards)
-        {
-            if (i.GetComponent<CardOutput>().affectedbyweather == true)
-            {
-                i.GetComponent<CardOutput>().powercard += 4;
-                i.GetComponent<CardOutput>().affectedbyweather = false;
-            }
-            else { continue; }
-        }
         if (!player1turn.ismyturn)
         {
             for (int i = 0; i < weatherRow.weathercards.Count; i++)
             {
                 player1graveyard.graveyard.Add(weatherRow.weathercards[i]);
+                weatherRow.weathercards[i].GetComponent<OtherCardOutput>().isonthefield = false;
                 weatherRow.weathercards[i].transform.SetParent(player1graveyard.transform);
             }
             weatherRow.weathercards.Clear();
@@ -598,13 +541,36 @@ public class CardEffects : MonoBehaviour
             for (int i = 0; i < weatherRow.weathercards.Count; i++)
             {
                 player2graveyard.graveyard.Add(weatherRow.weathercards[i]);
+                weatherRow.weathercards[i].GetComponent<OtherCardOutput>().isonthefield = false;
                 weatherRow.weathercards[i].transform.SetParent(player2graveyard.transform);
             }
             weatherRow.weathercards.Clear();
         }
+        BaldurBlessingRestore(player1meleerow.meleecards, 3);
+        BaldurBlessingRestore(player2meleerow.meleecards, 3);
+        BaldurBlessingRestore(player1rangedrow.rangedcards, 2);
+        BaldurBlessingRestore(player2rangedrow.rangedcards, 2);
+        BaldurBlessingRestore(player1siegerow.siegecards, 4);
+        BaldurBlessingRestore(player2siegerow.siegecards, 4);
 
     }
-    public static void ThorEffect(CardOutput thor)
+    static void BaldurBlessingRestore(List<GameObject> list, int power)
+    {
+        for (int i = 0; i < list.Count; i++)
+        {
+            if (list[i].GetComponent<CardOutput>().affectedbyweather == true)
+            {
+                list[i].GetComponent<CardOutput>().powercard += power;
+                list[i].GetComponent<CardOutput>().affectedbyweather = false;
+            }
+            else
+            {
+                continue;
+            }
+        }
+
+    }
+    static void ThorEffect(CardOutput thor)
     {
         if (thor.effectexecuted == false)
         {
@@ -615,7 +581,6 @@ public class CardEffects : MonoBehaviour
 
             if (thor.tag == "Melee2")
             {
-                Debug.Log("Se detecta que es la etiqueta 2");
                 MeleeRow player1meleerow = GameObject.Find("Player1 Melee Row").GetComponent<MeleeRow>();
                 RangedRow player1rangedrow = GameObject.Find("Player1 Ranged Row").GetComponent<RangedRow>();
                 SiegeRow player1siegerow = GameObject.Find("Player1 Siege Row").GetComponent<SiegeRow>();
@@ -624,7 +589,6 @@ public class CardEffects : MonoBehaviour
             }
             else if (thor.tag == "Melee")
             {
-                Debug.Log("Se detecta que es la etiqueta 1");
                 MeleeRow player2meleerow = GameObject.Find("Player2 Melee Row").GetComponent<MeleeRow>();
                 RangedRow player2rangedrow = GameObject.Find("Player2 Ranged Row").GetComponent<RangedRow>();
                 SiegeRow player2siegerow = GameObject.Find("Player2 Siege Row").GetComponent<SiegeRow>();
@@ -634,7 +598,7 @@ public class CardEffects : MonoBehaviour
         }
 
     }
-    public static void ThorEffectFunction(MeleeRow player1meleerow, RangedRow player1rangedrow, SiegeRow player1siegerow, Graveyard player1graveyard, CardOutput destroycard, CardOutput thor, bool isonmeleerow, bool isonsiegerow, bool isonrangedrow)
+    static void ThorEffectFunction(MeleeRow player1meleerow, RangedRow player1rangedrow, SiegeRow player1siegerow, Graveyard player1graveyard, CardOutput destroycard, CardOutput thor, bool isonmeleerow, bool isonsiegerow, bool isonrangedrow)
     {
 
         for (int i = 0; i < player1meleerow.meleecards.Count; i++)
@@ -714,7 +678,7 @@ public class CardEffects : MonoBehaviour
         }
         thor.effectexecuted = true;
     }
-    public static void LokiEffect(CardOutput loki)
+    static void LokiEffect(CardOutput loki)
     {
         if (loki.effectexecuted == false)
         {
@@ -742,7 +706,7 @@ public class CardEffects : MonoBehaviour
         }
 
     }
-    public static void LokiEffectFunction(MeleeRow player1meleerow, RangedRow player1rangedrow, SiegeRow player1siegerow, Graveyard player1graveyard, CardOutput destroycard, CardOutput loki, bool isonmeleerow, bool isonsiegerow, bool isonrangedrow)
+    static void LokiEffectFunction(MeleeRow player1meleerow, RangedRow player1rangedrow, SiegeRow player1siegerow, Graveyard player1graveyard, CardOutput destroycard, CardOutput loki, bool isonmeleerow, bool isonsiegerow, bool isonrangedrow)
     {
 
         for (int i = 0; i < player1meleerow.meleecards.Count; i++)
@@ -822,7 +786,7 @@ public class CardEffects : MonoBehaviour
         }
         loki.effectexecuted = true;
     }
-    public static void BerserkerEffect(CardOutput berserker)
+    static void BerserkerEffect(CardOutput berserker)
     {
         if (berserker.effectexecuted == false)
         {
@@ -845,7 +809,7 @@ public class CardEffects : MonoBehaviour
             }
         }
     }
-    public static void BerserkerEffectFunction(CardOutput berserker, MeleeRow player1meleerow, RangedRow player1rangedrow, SiegeRow player1siegerow, Graveyard player1graveyard)
+    static void BerserkerEffectFunction(CardOutput berserker, MeleeRow player1meleerow, RangedRow player1rangedrow, SiegeRow player1siegerow, Graveyard player1graveyard)
     {
         int meleecount = 0;
         int rangedcount = 0;
@@ -1018,7 +982,7 @@ public class CardEffects : MonoBehaviour
         }
         berserker.effectexecuted = true;
     }
-    public static void FreyaEffect(CardOutput freya)
+    static void FreyaEffect(CardOutput freya)
     {
         if (freya.effectexecuted == false)
         {
@@ -1028,40 +992,8 @@ public class CardEffects : MonoBehaviour
                 GameObject meleeincrease = GameObject.Find("Player2 MeleeIncrease");
                 GameObject rangedincrease = GameObject.Find("Player2 RangedIncrease");
                 GameObject siegeincrease = GameObject.Find("Player2 SiegeIncrease");
-                for (int i = 0; i < player2deck.deck.Count; i++)
-                {
-                    if (player2deck.deck[i] != null && player2deck.deck[i].GetComponent<OtherCardOutput>() != null)
-                    {
-                        if (player2deck.deck[i].GetComponent<OtherCardOutput>().card.cardname == "Mjolnir")
-                        {
-                            meleeincrease.GetComponent<IncreaseBox>().increasebox.Add(player2deck.deck[i]);
-                            player2deck.deck[i].transform.SetParent(meleeincrease.transform);
-                            player2deck.deck[i].transform.position = meleeincrease.transform.position;
-                            player2deck.deck[i].GetComponent<OtherCardOutput>().isonthefield = true;
-                            player2deck.deck.RemoveAt(i);
-                            freya.effectexecuted = true;
-                        }
-                        else if (freya.effectexecuted == false && player2deck.deck[i].GetComponent<OtherCardOutput>().card.cardname == "Gungnir")
-                        {
-                            rangedincrease.GetComponent<IncreaseBox>().increasebox.Add(player2deck.deck[i]);
-                            player2deck.deck[i].transform.SetParent(rangedincrease.transform);
-                            player2deck.deck[i].transform.position = rangedincrease.transform.position;
-                            player2deck.deck[i].GetComponent<OtherCardOutput>().isonthefield = true;
-                            player2deck.deck.RemoveAt(i);
-                            freya.effectexecuted = true;
-                        }
-                        else if (freya.effectexecuted == false && player2deck.deck[i].GetComponent<OtherCardOutput>().card.cardname == "Gjallarhorn")
-                        {
-                            siegeincrease.GetComponent<IncreaseBox>().increasebox.Add(player2deck.deck[i]);
-                            player2deck.deck[i].transform.SetParent(siegeincrease.transform);
-                            player2deck.deck[i].transform.position = siegeincrease.transform.position;
-                            player2deck.deck[i].GetComponent<OtherCardOutput>().isonthefield = true;
-                            player2deck.deck.RemoveAt(i);
-                            freya.effectexecuted = true;
-                        }
-                    }
-                    else { continue; }
-                }
+                FreyaEffectFunction(freya, player2deck, meleeincrease, rangedincrease, siegeincrease);
+                freya.effectexecuted = true;
             }
             else if (freya.tag == "Ranged")
             {
@@ -1069,46 +1001,49 @@ public class CardEffects : MonoBehaviour
                 GameObject meleeincrease = GameObject.Find("Player1 MeleeIncrease");
                 GameObject rangedincrease = GameObject.Find("Player1 RangedIncrease");
                 GameObject siegeincrease = GameObject.Find("Player1 SiegeIncrease");
-
-                for (int i = 0; i < player1deck.deck.Count; i++)
-                {
-                    if (player1deck.deck[i] != null && player1deck.deck[i].GetComponent<OtherCardOutput>() != null)
-                    {
-                        if (player1deck.deck[i].GetComponent<OtherCardOutput>().card.cardname == "Mjolnir")
-                        {
-                            meleeincrease.GetComponent<IncreaseBox>().increasebox.Add(player1deck.deck[i]);
-                            player1deck.deck[i].transform.SetParent(meleeincrease.transform);
-                            player1deck.deck[i].transform.position = meleeincrease.transform.position;
-                            player1deck.deck[i].GetComponent<OtherCardOutput>().isonthefield = true;
-                            player1deck.deck.RemoveAt(i);
-                            freya.effectexecuted = true;
-                        }
-                        else if (freya.effectexecuted == false && player1deck.deck[i].GetComponent<OtherCardOutput>().card.cardname == "Gungnir")
-                        {
-                            rangedincrease.GetComponent<IncreaseBox>().increasebox.Add(player1deck.deck[i]);
-                            player1deck.deck[i].transform.SetParent(rangedincrease.transform);
-                            player1deck.deck[i].transform.position = rangedincrease.transform.position;
-                            player1deck.deck[i].GetComponent<OtherCardOutput>().isonthefield = true;
-                            player1deck.deck.RemoveAt(i);
-                            freya.effectexecuted = true;
-                        }
-                        else if (freya.effectexecuted == false && player1deck.deck[i].GetComponent<OtherCardOutput>().card.cardname == "Gjallarhorn")
-                        {
-                            siegeincrease.GetComponent<IncreaseBox>().increasebox.Add(player1deck.deck[i]);
-                            player1deck.deck[i].transform.SetParent(siegeincrease.transform);
-                            player1deck.deck[i].transform.position = siegeincrease.transform.position;
-                            player1deck.deck[i].GetComponent<OtherCardOutput>().isonthefield = true;
-                            player1deck.deck.RemoveAt(i);
-                            freya.effectexecuted = true;
-                        }
-                    }
-                    else { continue; }
-                }
+                FreyaEffectFunction(freya, player1deck, meleeincrease, rangedincrease, siegeincrease);
+                freya.effectexecuted = true;
             }
-            freya.effectexecuted = true;
         }
     }
-    public static void BaldurEffect(CardOutput Baldur)
+    static void FreyaEffectFunction(CardOutput freya, Deck player2deck, GameObject meleeincrease, GameObject rangedincrease, GameObject siegeincrease)
+    {
+        for (int i = 0; i < player2deck.deck.Count; i++)
+        {
+            if (player2deck.deck[i] != null && player2deck.deck[i].GetComponent<OtherCardOutput>() != null)
+            {
+                if (player2deck.deck[i].GetComponent<OtherCardOutput>().card.cardname == "Mjolnir")
+                {
+                    meleeincrease.GetComponent<IncreaseBox>().increasebox.Add(player2deck.deck[i]);
+                    player2deck.deck[i].transform.SetParent(meleeincrease.transform);
+                    player2deck.deck[i].transform.position = meleeincrease.transform.position;
+                    player2deck.deck[i].GetComponent<OtherCardOutput>().isonthefield = true;
+                    player2deck.deck.RemoveAt(i);
+                    return;
+                }
+                else if (freya.effectexecuted == false && player2deck.deck[i].GetComponent<OtherCardOutput>().card.cardname == "Gungnir")
+                {
+                    rangedincrease.GetComponent<IncreaseBox>().increasebox.Add(player2deck.deck[i]);
+                    player2deck.deck[i].transform.SetParent(rangedincrease.transform);
+                    player2deck.deck[i].transform.position = rangedincrease.transform.position;
+                    player2deck.deck[i].GetComponent<OtherCardOutput>().isonthefield = true;
+                    player2deck.deck.RemoveAt(i);
+                    return;
+                }
+                else if (freya.effectexecuted == false && player2deck.deck[i].GetComponent<OtherCardOutput>().card.cardname == "Gjallarhorn")
+                {
+                    siegeincrease.GetComponent<IncreaseBox>().increasebox.Add(player2deck.deck[i]);
+                    player2deck.deck[i].transform.SetParent(siegeincrease.transform);
+                    player2deck.deck[i].transform.position = siegeincrease.transform.position;
+                    player2deck.deck[i].GetComponent<OtherCardOutput>().isonthefield = true;
+                    player2deck.deck.RemoveAt(i);
+                    return;
+                }
+            }
+            else { continue; }
+        }
+    }
+    static void BaldurEffect(CardOutput Baldur)
     {
         if (Baldur.effectexecuted == false)
         {
@@ -1159,7 +1094,7 @@ public class CardEffects : MonoBehaviour
 
         }
     }
-    public static void DrakkarEffect(CardOutput drakkar)
+    static void DrakkarEffect(CardOutput drakkar)
     {
         if (drakkar.effectexecuted == false)
         {
