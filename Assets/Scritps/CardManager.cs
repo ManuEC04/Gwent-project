@@ -208,7 +208,7 @@ public class CardManager : MonoBehaviour, IDragHandler, IDropHandler
                 }
                 else
                 {
-                    if (!CardEffects.CheckRankCard(gameObject))
+                    if (!CardEffects.CheckRankCard(gameObject) && playerturn.ismyturn == true)
                     {
                         if (gameObject.GetComponent<CardOutput>().isonthefield)
                         {
@@ -225,7 +225,7 @@ public class CardManager : MonoBehaviour, IDragHandler, IDropHandler
                 }
                 else
                 {
-                    if (!CardEffects.CheckRankCard(gameObject))
+                    if (!CardEffects.CheckRankCard(gameObject) && playerturn.ismyturn == true)
                     {
                         if (gameObject.GetComponent<CardOutput>().isonthefield)
                         {

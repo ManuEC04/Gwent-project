@@ -33,7 +33,7 @@ public class GameFunctions : MonoBehaviour
     //Robar 10 Cartas al inicio de la primera ronda
     public static void FirstDraw(List<GameObject> deck, List<GameObject> hand, float horizontalpos, float verticalpos, float distance)
     {
-        //DeckRandom(deck);
+        DeckRandom(deck);
         for (int i = 0; i <= 9; i++)
         {
 
@@ -88,9 +88,9 @@ public class GameFunctions : MonoBehaviour
     {
         distance = 0;
         hand.Add(deck[0]);
+        deck.RemoveAt(0);
         hand.Add(deck[1]);
-        deck.RemoveAt(0);
-        deck.RemoveAt(0);
+        deck.RemoveAt(1);
         CheckHandPosition(hand, horizontalpos, verticalpos, distance);
     }
     //Verificar que jugador esta activado 

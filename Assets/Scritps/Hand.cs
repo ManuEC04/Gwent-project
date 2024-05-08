@@ -49,14 +49,11 @@ public class Hand : MonoBehaviour
         else if (playerturn.FirstDrawExecuted == true && playerturn.RedrawExecuted == true && playerturn.DrawExecuted == false)
         {
             GameFunctions.StartRoundDraw(playerdeck.deck, hand, horizontalpos, verticalpos, distance);
+            GameFunctions.CheckHandCount(hand, graveyard);
             GameFunctions.ChangeParent(hand, playerhand);
             playerturn.DrawExecuted = true;
             playerturn.StartRoundDraw = true;
         }
-    }
-    void Update()
-    {
-        GameFunctions.CheckHandCount(hand, graveyard);
     }
 
 }

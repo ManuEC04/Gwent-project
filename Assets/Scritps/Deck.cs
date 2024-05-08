@@ -8,7 +8,7 @@ public class Deck : MonoBehaviour
 
     void Start()
 {
-    GameFunctions.DeckRandom(deck);
+   GameFunctions.DeckRandom(deck);
 }
 
 }
