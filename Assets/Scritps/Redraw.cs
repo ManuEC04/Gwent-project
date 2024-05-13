@@ -8,11 +8,8 @@ public Hand playerhand;
 public Deck playerdeck;
 public Turn playerturn;
 public GameObject redraw;
-
 private float horizontalpos;
-
 private float verticalpos;
-
 private float distance;
 
 void Start()

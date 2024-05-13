@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Assertions.Must;
-
 public class CardEffects : MonoBehaviour
 {
     //Efecto de la carta lider
@@ -98,6 +96,7 @@ public class CardEffects : MonoBehaviour
     //Buscar cual es el efecto de la carta de clima
     public static void CheckWeatherEffect(OtherCardOutput card)
     {
+
         if (card.isonthefield == true)
         {
             if (card.card.cardname == "Supertormenta")
@@ -212,11 +211,14 @@ public class CardEffects : MonoBehaviour
                             else { continue; }
                         }
                     }
-                    GameFunctions.CheckHandPosition(player1hand.hand, player1hand.horizontalpos, player1hand.verticalpos, player1hand.distance);
+                    GameFunctions.CheckHandPosition(player1hand.hand, player1hand.horizontalpos, player1hand.verticalpos);
                     card.effectexecuted = true;
                     lure.lurechange.GetComponent<CardManager>().isOverDropZone = false;
                     lure.lurechange = null;
-                    card.GetComponent<CardManager>().playerturn.playmade = true;
+                    if (!card.GetComponent<CardManager>().opponentturn.playmade)
+                    {
+                        card.GetComponent<CardManager>().playerturn.playmade = true;
+                    }
                     GameFunctions.CheckTurn();
                 }
             }
@@ -274,12 +276,11 @@ public class CardEffects : MonoBehaviour
                             if (siegerow1.siegecards[i] == lure.lurechange)
                             {
                                 siegerow1.siegecards.RemoveAt(i);
-
                             }
                             else { continue; }
                         }
                     }
-                    GameFunctions.CheckHandPosition(player1hand.hand, player1hand.horizontalpos, player1hand.verticalpos, player1hand.distance);
+                    GameFunctions.CheckHandPosition(player1hand.hand, player1hand.horizontalpos, player1hand.verticalpos);
                     card.effectexecuted = true;
                     lure.lurechange.GetComponent<CardManager>().isOverDropZone = false;
                     lure.lurechange = null;
@@ -295,6 +296,25 @@ public class CardEffects : MonoBehaviour
             }
         }
     }
+
+    // Incrementar el poder de una fila
+    static void IncreaseFunction(List<GameObject> player, int n)
+    {
+        for (int i = 0; i < player.Count; i++)
+        {
+            if (!CheckRankCard(player[i]))
+            {
+                if (player[i].GetComponent<CardOutput>().buffed == false)
+                {
+                    player[i].GetComponent<CardOutput>().powercard += n;
+                    player[i].GetComponent<CardOutput>().buffed = true;
+                }
+                else { continue; }
+            }
+            else { continue; }
+        }
+    }
+    //Efecto de Mjolnir
     static void MjolnirEffect(OtherCardOutput card)
     {
         MeleeRow meleerow = null;
@@ -306,19 +326,7 @@ public class CardEffects : MonoBehaviour
         {
             meleerow = GameObject.Find("Player2 Melee Row").GetComponent<MeleeRow>();
         }
-        for (int i = 0; i < meleerow.meleecards.Count; i++)
-        {
-            if (!CheckRankCard(meleerow.meleecards[i]))
-            {
-                if (meleerow.meleecards[i].GetComponent<CardOutput>().buffed == false)
-                {
-                    meleerow.meleecards[i].GetComponent<CardOutput>().powercard += 3;
-                    meleerow.meleecards[i].GetComponent<CardOutput>().buffed = true;
-                }
-                else { continue; }
-            }
-            else { continue; }
-        }
+        IncreaseFunction(meleerow.meleecards, 3);
     }
     //Efecto de Gungnir
     static void GungnirEffect(OtherCardOutput card)
@@ -332,20 +340,9 @@ public class CardEffects : MonoBehaviour
         {
             rangedrow = GameObject.Find("Player2 Ranged Row").GetComponent<RangedRow>();
         }
-        for (int i = 0; i < rangedrow.rangedcards.Count; i++)
-        {
-            if (!CheckRankCard(rangedrow.rangedcards[i]))
-            {
-                if (rangedrow.rangedcards[i].GetComponent<CardOutput>().buffed == false)
-                {
-                    rangedrow.rangedcards[i].GetComponent<CardOutput>().powercard += 4;
-                    rangedrow.rangedcards[i].GetComponent<CardOutput>().buffed = true;
-                }
-                else { continue; }
-            }
-            else { continue; }
-        }
+        IncreaseFunction(rangedrow.rangedcards, 4);
     }
+    //Efecto de Gjallahorn
     static void GjallarhornEffect(OtherCardOutput card)
     {
         SiegeRow siegerow = null;
@@ -357,21 +354,8 @@ public class CardEffects : MonoBehaviour
         {
             siegerow = GameObject.Find("Player2 Siege Row").GetComponent<SiegeRow>();
         }
-        for (int i = 0; i < siegerow.siegecards.Count; i++)
-        {
-            if (!CheckRankCard(siegerow.siegecards[i]))
-            {
-                if (siegerow.siegecards[i].GetComponent<CardOutput>().buffed == false)
-                {
-                    siegerow.siegecards[i].GetComponent<CardOutput>().powercard += 2;
-                    siegerow.siegecards[i].GetComponent<CardOutput>().buffed = true;
-                }
-                else { continue; }
-            }
-            else { continue; }
-        }
+        IncreaseFunction(siegerow.siegecards, 2);
     }
-
     //Verificar si la carta es de tipo oro
     public static bool CheckRankCard(GameObject gameObject)
     {
@@ -413,6 +397,22 @@ public class CardEffects : MonoBehaviour
         fenrir.powercard = fenrir.powercard * n;
         fenrir.effectexecuted = true;
     }
+    //Funcion para disminuir el poder de una fila
+    static void WeatherFunction(List<GameObject> player, int n)
+    {
+        for (int i = 0; i < player.Count; i++)
+        {
+            if (player[i].GetComponent<CardOutput>().affectedbyweather == false)
+            {
+                if (!CheckRankCard(player[i]))
+                {
+                    player[i].GetComponent<CardOutput>().affectedbyweather = true;
+                    player[i].GetComponent<CardOutput>().powercard -= n;
+                }
+                else { continue; }
+            }
+        }
+    }
     //Efecto del clima Supertormenta
     static void SupertormentaEffect()
     {
@@ -420,31 +420,8 @@ public class CardEffects : MonoBehaviour
         MeleeRow meleerow1 = Player1Field.GetComponentInChildren<MeleeRow>();
         GameObject Player2Field = GameObject.Find("Player2 Rows");
         MeleeRow meleerow2 = Player2Field.GetComponentInChildren<MeleeRow>();
-
-        for (int i = 0; i < meleerow1.meleecards.Count; i++)
-        {
-            if (meleerow1.meleecards[i].GetComponent<CardOutput>().affectedbyweather == false)
-            {
-                if (!CheckRankCard(meleerow1.meleecards[i]))
-                {
-                    meleerow1.meleecards[i].GetComponent<CardOutput>().affectedbyweather = true;
-                    meleerow1.meleecards[i].GetComponent<CardOutput>().powercard -= 3;
-                }
-                else { continue; }
-            }
-        }
-        for (int i = 0; i < meleerow2.meleecards.Count; i++)
-        {
-            if (meleerow2.meleecards[i].GetComponent<CardOutput>().affectedbyweather == false)
-            {
-                if (!CheckRankCard(meleerow2.meleecards[i]))
-                {
-                    meleerow2.meleecards[i].GetComponent<CardOutput>().affectedbyweather = true;
-                    meleerow2.meleecards[i].GetComponent<CardOutput>().powercard -= 3;
-                }
-                else { continue; }
-            }
-        }
+        WeatherFunction(meleerow1.meleecards, 3);
+        WeatherFunction(meleerow2.meleecards, 3);
     }
     //Efecto del clima Frio de Nilfheim
     static void NilfheimEffect()
@@ -453,31 +430,8 @@ public class CardEffects : MonoBehaviour
         SiegeRow siegerow1 = Player1Field.GetComponentInChildren<SiegeRow>();
         GameObject Player2Field = GameObject.Find("Player2 Rows");
         SiegeRow siegerow2 = Player2Field.GetComponentInChildren<SiegeRow>();
-
-        for (int i = 0; i < siegerow1.siegecards.Count; i++)
-        {
-            if (siegerow1.siegecards[i].GetComponent<CardOutput>().affectedbyweather == false)
-            {
-                if (!CheckRankCard(siegerow1.siegecards[i]))
-                {
-                    siegerow1.siegecards[i].GetComponent<CardOutput>().affectedbyweather = true;
-                    siegerow1.siegecards[i].GetComponent<CardOutput>().powercard -= 4;
-                }
-                else { continue; }
-            }
-        }
-        for (int i = 0; i < siegerow2.siegecards.Count; i++)
-        {
-            if (siegerow2.siegecards[i].GetComponent<CardOutput>().affectedbyweather == false)
-            {
-                if (!CheckRankCard(siegerow2.siegecards[i]))
-                {
-                    siegerow2.siegecards[i].GetComponent<CardOutput>().affectedbyweather = true;
-                    siegerow2.siegecards[i].GetComponent<CardOutput>().powercard -= 4;
-                }
-                else { continue; }
-            }
-        }
+        WeatherFunction(siegerow1.siegecards, 4);
+        WeatherFunction(siegerow2.siegecards, 4);
     }
     //Efecto del clima Fuego de Hell
     static void AlfheimEffect()
@@ -486,32 +440,10 @@ public class CardEffects : MonoBehaviour
         RangedRow rangedrow1 = Player1Field.GetComponentInChildren<RangedRow>();
         GameObject Player2Field = GameObject.Find("Player2 Rows");
         RangedRow rangedrow2 = Player2Field.GetComponentInChildren<RangedRow>();
-
-        for (int i = 0; i < rangedrow1.rangedcards.Count; i++)
-        {
-            if (rangedrow1.rangedcards[i].GetComponent<CardOutput>().affectedbyweather == false)
-            {
-                if (!CheckRankCard(rangedrow1.rangedcards[i]))
-                {
-                    rangedrow1.rangedcards[i].GetComponent<CardOutput>().affectedbyweather = true;
-                    rangedrow1.rangedcards[i].GetComponent<CardOutput>().powercard -= 2;
-                }
-                else { continue; }
-            }
-        }
-        for (int i = 0; i < rangedrow2.rangedcards.Count; i++)
-        {
-            if (rangedrow2.rangedcards[i].GetComponent<CardOutput>().affectedbyweather == false)
-            {
-                if (!CheckRankCard(rangedrow2.rangedcards[i]))
-                {
-                    rangedrow2.rangedcards[i].GetComponent<CardOutput>().affectedbyweather = true;
-                    rangedrow2.rangedcards[i].GetComponent<CardOutput>().powercard -= 2;
-                }
-                else { continue; }
-            }
-        }
+        WeatherFunction(rangedrow1.rangedcards, 2);
+        WeatherFunction(rangedrow2.rangedcards, 2);
     }
+    //Efecto de Bendicion de Baldur
     static void BaldurBlessing()
     {
 
@@ -523,29 +455,15 @@ public class CardEffects : MonoBehaviour
         RangedRow player2rangedrow = GameObject.Find("Player2 Ranged Row").GetComponent<RangedRow>();
         SiegeRow player2siegerow = GameObject.Find("Player2 Siege Row").GetComponent<SiegeRow>();
         Graveyard player1graveyard = GameObject.Find("Player1 Graveyard").GetComponent<Graveyard>();
-        Graveyard player2graveyard = GameObject.Find("Player2 Graveyard").GetComponent<Graveyard>();
-        Turn player1turn = GameObject.Find("Player1Turn").GetComponent<Turn>();
-        Turn player2turn = GameObject.Find("Player2Turn").GetComponent<Turn>();
-        if (!player1turn.ismyturn)
+
+        for (int i = 0; i < weatherRow.weathercards.Count; i++)
         {
-            for (int i = 0; i < weatherRow.weathercards.Count; i++)
-            {
-                player1graveyard.graveyard.Add(weatherRow.weathercards[i]);
-                weatherRow.weathercards[i].GetComponent<OtherCardOutput>().isonthefield = false;
-                weatherRow.weathercards[i].transform.SetParent(player1graveyard.transform);
-            }
-            weatherRow.weathercards.Clear();
+            player1graveyard.graveyard.Add(weatherRow.weathercards[i]);
+            weatherRow.weathercards[i].GetComponent<OtherCardOutput>().isonthefield = false;
+            weatherRow.weathercards[i].transform.SetParent(player1graveyard.transform);
         }
-        else if (!player2turn.ismyturn)
-        {
-            for (int i = 0; i < weatherRow.weathercards.Count; i++)
-            {
-                player2graveyard.graveyard.Add(weatherRow.weathercards[i]);
-                weatherRow.weathercards[i].GetComponent<OtherCardOutput>().isonthefield = false;
-                weatherRow.weathercards[i].transform.SetParent(player2graveyard.transform);
-            }
-            weatherRow.weathercards.Clear();
-        }
+        weatherRow.weathercards.Clear();
+
         BaldurBlessingRestore(player1meleerow.meleecards, 3);
         BaldurBlessingRestore(player2meleerow.meleecards, 3);
         BaldurBlessingRestore(player1rangedrow.rangedcards, 2);
@@ -554,6 +472,7 @@ public class CardEffects : MonoBehaviour
         BaldurBlessingRestore(player2siegerow.siegecards, 4);
 
     }
+    //Funcion para restaurar el poder cuando una carta esta afectada por clima
     static void BaldurBlessingRestore(List<GameObject> list, int power)
     {
         for (int i = 0; i < list.Count; i++)
@@ -570,6 +489,7 @@ public class CardEffects : MonoBehaviour
         }
 
     }
+    //Efecto de la carta Thor
     static void ThorEffect(CardOutput thor)
     {
         if (thor.effectexecuted == false)
@@ -598,6 +518,7 @@ public class CardEffects : MonoBehaviour
         }
 
     }
+    //Funcion para buscar la carta con mayor poder y destruirla
     static void ThorEffectFunction(MeleeRow player1meleerow, RangedRow player1rangedrow, SiegeRow player1siegerow, Graveyard player1graveyard, CardOutput destroycard, CardOutput thor, bool isonmeleerow, bool isonsiegerow, bool isonrangedrow)
     {
 
@@ -678,6 +599,7 @@ public class CardEffects : MonoBehaviour
         }
         thor.effectexecuted = true;
     }
+    //Efecto de la carta Loki
     static void LokiEffect(CardOutput loki)
     {
         if (loki.effectexecuted == false)
@@ -706,6 +628,7 @@ public class CardEffects : MonoBehaviour
         }
 
     }
+    //Funcion para buscar la carta con menor poder y destruirla
     static void LokiEffectFunction(MeleeRow player1meleerow, RangedRow player1rangedrow, SiegeRow player1siegerow, Graveyard player1graveyard, CardOutput destroycard, CardOutput loki, bool isonmeleerow, bool isonsiegerow, bool isonrangedrow)
     {
 
@@ -786,6 +709,7 @@ public class CardEffects : MonoBehaviour
         }
         loki.effectexecuted = true;
     }
+    //Efecto de la carta Berserker
     static void BerserkerEffect(CardOutput berserker)
     {
         if (berserker.effectexecuted == false)
@@ -805,10 +729,10 @@ public class CardEffects : MonoBehaviour
                 SiegeRow player2siegerow = GameObject.Find("Player2 Siege Row").GetComponent<SiegeRow>();
                 Graveyard player2graveyard = GameObject.Find("Player2 Graveyard").GetComponent<Graveyard>();
                 BerserkerEffectFunction(berserker, player2meleerow, player2rangedrow, player2siegerow, player2graveyard);
-
             }
         }
     }
+    //Funcion para buscar la fila con menor numero de cartas y limpiarla
     static void BerserkerEffectFunction(CardOutput berserker, MeleeRow player1meleerow, RangedRow player1rangedrow, SiegeRow player1siegerow, Graveyard player1graveyard)
     {
         int meleecount = 0;
@@ -982,6 +906,7 @@ public class CardEffects : MonoBehaviour
         }
         berserker.effectexecuted = true;
     }
+    //Efecto de la carta Freya
     static void FreyaEffect(CardOutput freya)
     {
         if (freya.effectexecuted == false)
@@ -1006,6 +931,7 @@ public class CardEffects : MonoBehaviour
             }
         }
     }
+    //Funcion para buscar un Incremento en el mazo y llevarlo al campo
     static void FreyaEffectFunction(CardOutput freya, Deck player2deck, GameObject meleeincrease, GameObject rangedincrease, GameObject siegeincrease)
     {
         for (int i = 0; i < player2deck.deck.Count; i++)
@@ -1043,6 +969,7 @@ public class CardEffects : MonoBehaviour
             else { continue; }
         }
     }
+    //Efecto de la carta Baldur
     static void BaldurEffect(CardOutput Baldur)
     {
         if (Baldur.effectexecuted == false)
@@ -1094,6 +1021,7 @@ public class CardEffects : MonoBehaviour
 
         }
     }
+    //Efecto de la carta Drakkar
     static void DrakkarEffect(CardOutput drakkar)
     {
         if (drakkar.effectexecuted == false)

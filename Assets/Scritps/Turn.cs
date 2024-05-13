@@ -12,10 +12,6 @@ public class Turn : MonoBehaviour
     public bool ismyturn = false;
     public bool passed = false;
     public bool playmade = false;
-    public void EndMyTurn()
-    {
-        ismyturn = false;
-    }
     public void Pass()
     {
       if(FirstDrawExecuted && DrawExecuted)

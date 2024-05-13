@@ -34,41 +34,38 @@ public class GameFunctions : MonoBehaviour
     public static void FirstDraw(List<GameObject> deck, List<GameObject> hand, float horizontalpos, float verticalpos, float distance)
     {
         DeckRandom(deck);
-        for (int i = 0; i <= 9; i++)
+        for (int i = 0; i < 10; i++)
         {
-
-            hand.Add(deck[i]);
-            deck.RemoveAt(i);
+            hand.Add(deck[0]);
+            deck.Remove(deck[0]);
         }
-        CheckHandPosition(hand, horizontalpos, verticalpos, distance);
+        CheckHandPosition(hand, horizontalpos, verticalpos);
     }
     //Redraw
     public static void Redraw(Hand hand, Deck deck, float horizontalpos, float verticalpos, float distance)
     {
-        DeckRandom(deck.deck);
         hand.hand[9].transform.SetParent(deck.gameObject.transform); hand.hand[9].transform.position = deck.deck[6].transform.position;
         hand.hand[8].transform.SetParent(deck.gameObject.transform); hand.hand[8].transform.position = deck.deck[6].gameObject.transform.position;
         deck.deck.Add(hand.hand[9]);
         deck.deck.Add(hand.hand[8]);
-        hand.hand.RemoveAt(9);
-        hand.hand.RemoveAt(8);
+        hand.hand.Remove(hand.hand[9]);
+        hand.hand.Remove(hand.hand[8]);
+        DeckRandom(deck.deck);
         deck.deck[0].transform.SetParent(hand.gameObject.transform);
         deck.deck[1].transform.SetParent(hand.gameObject.transform);
         hand.hand.Add(deck.deck[0]);
-        hand.hand.Add(deck.deck[1]);
-        deck.deck.RemoveAt(0);
-        deck.deck.RemoveAt(1);
-        CheckHandPosition(hand.hand, horizontalpos, verticalpos, distance);
+        deck.deck.Remove(deck.deck[0]);
+        hand.hand.Add(deck.deck[0]);
+        deck.deck.Remove(deck.deck[0]);
+        CheckHandPosition(hand.hand, horizontalpos, verticalpos);
 
     }
     //Ajustar posiciones de la mano
-    public static void CheckHandPosition(List<GameObject> hand, float horizontalpos, float verticalpos, float distance)
+    public static void CheckHandPosition(List<GameObject> hand, float horizontalpos, float verticalpos)
     {
-        distance = 0;
+        int distance = 0;
         for (int i = 0; i < hand.Count; i++)
         {
-            hand[i].transform.position = new Vector3(horizontalpos + distance, verticalpos, 0f);
-            distance += 85;
             if (hand[i].GetComponent<CardOutput>() != null)
             {
                 hand[i].GetComponent<CardOutput>().isonthefield = false;
@@ -81,17 +78,18 @@ public class GameFunctions : MonoBehaviour
                 hand[i].GetComponent<OtherCardOutput>().isonthefield = false;
                 hand[i].GetComponent<CardManager>().received = false;
             }
+            hand[i].transform.position = new Vector3(horizontalpos + distance, verticalpos, 0f);
+            distance += 85;
         }
     }
     //Robar 2 cartas al inicio e cada ronda
-    public static void StartRoundDraw(List<GameObject> deck, List<GameObject> hand, float horizontalpos, float verticalpos, float distance)
+    public static void StartRoundDraw(List<GameObject> deck, List<GameObject> hand, float horizontalpos, float verticalpos)
     {
-        distance = 0;
         hand.Add(deck[0]);
         deck.RemoveAt(0);
-        hand.Add(deck[1]);
-        deck.RemoveAt(1);
-        CheckHandPosition(hand, horizontalpos, verticalpos, distance);
+        hand.Add(deck[3]);
+        deck.RemoveAt(3);
+        CheckHandPosition(hand, horizontalpos, verticalpos);
     }
     //Verificar que jugador esta activado 
     public static void CheckVisualTurn(GameObject Player1, GameObject Player2, GameObject Player1Visual, GameObject Player2Visual)

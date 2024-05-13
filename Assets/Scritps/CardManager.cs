@@ -1,17 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Numerics;
-using JetBrains.Annotations;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.XR;
-
 public class CardManager : MonoBehaviour, IDragHandler, IDropHandler
 {
     private RectTransform rectTransform;
     private Canvas canvas;
-    public UnityEngine.Vector3 posinicial;
+    public Vector3 posinicial;
     public bool received = false;
     public bool received2 = false;
     public bool isOverDropZone = false;
@@ -30,7 +23,7 @@ public class CardManager : MonoBehaviour, IDragHandler, IDropHandler
     private Deck deck;
     private Hand hand;
     public Turn playerturn;
-    private Turn opponentturn;
+    public Turn opponentturn;
     Lure lurecard;
 
     void Awake()
@@ -121,6 +114,7 @@ public class CardManager : MonoBehaviour, IDragHandler, IDropHandler
         if (opponentturn.passed == true)
         {
             playerturn.ismyturn = true;
+            playerturn.playmade = false;
         }
 
     }
@@ -240,6 +234,7 @@ public class CardManager : MonoBehaviour, IDragHandler, IDropHandler
             }
         }
     }
+    //Funcion para mostrar la informacion de la carta al posicionar el mouse encima
     void OnMouseEnter()
     {
         if (card != null)

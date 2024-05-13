@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class Deck : MonoBehaviour
 {
-    public List<GameObject> deck = new List<GameObject>();
-
+      public List<GameObject> deck = new List<GameObject>();
     void Start()
-{
-   GameFunctions.DeckRandom(deck);
-}
-
+    {
+        GameFunctions.DeckRandom(deck);
+    }
 }
 
 
